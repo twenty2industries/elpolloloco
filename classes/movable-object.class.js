@@ -7,6 +7,7 @@ class MovableObject {
   imageCache = {};
   speed = 0.15
   currentImage = 0;
+  otherDirection = false; // to flip an image
 
   //loadImage('img/test.png') das wäre theoretisch das Argument
   loadImage(path) {

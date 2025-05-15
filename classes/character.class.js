@@ -10,6 +10,7 @@ class Character extends MovableObject {
     "img/2_character_pepe/2_walk/W-25.png",
     "img/2_character_pepe/2_walk/W-26.png",
   ];
+  world;
 
   constructor() {
     //wird immer als aller erstes ausgeführt sobald new Character erstellt wird
@@ -22,11 +23,14 @@ class Character extends MovableObject {
     setInterval(() => {
       if (Keyboard.RIGHT) {
         this.x += this.speed;
+        this.otherDirection = false;
       }
 
       if (Keyboard.LEFT) {
         this.x -= this.speed;
+        this.otherDirection = true;
       }
+      this.world.camera_x = -this.x;      
     }, 1000 / 60);
 
     setInterval(() => {
