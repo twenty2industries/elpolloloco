@@ -24,6 +24,4 @@ class Chicken extends MovableObject {
       this.currentImage++;
     }, 150);
   }
-
-
 }
