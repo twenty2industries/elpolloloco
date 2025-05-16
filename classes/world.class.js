@@ -1,10 +1,8 @@
 class World {
   character = new Character();
 
-  enemies = [new Chicken(), new Chicken(), new Chicken()];
-
-  clouds = [new Cloud()];
-
+  level = level1;
+  
   backgroundObjects = [];
 
   canvas;
@@ -32,8 +30,8 @@ class World {
 
     this.addObjectsToMap(this.backgroundObjects);
     this.addToMap(this.character);
-    this.addObjectsToMap(this.clouds);
-    this.addObjectsToMap(this.enemies);
+    this.addObjectsToMap(this.level.clouds);
+    this.addObjectsToMap(this.level.enemies);
 
     this.ctx.translate(-this.camera_x, 0);
 
