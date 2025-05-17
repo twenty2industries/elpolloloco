@@ -36,37 +36,43 @@ class Character extends MovableObject {
     this.animate();
   }
 
-  
   isAboveGround() {
     return this.y < 230;
   }
 
-
   animate() {
     setInterval(() => {
+      //movement right & left
       if (Keyboard.RIGHT && this.x < Level.level_end_x) {
-        this.x += this.speed;
+        this.moveRight();
         this.otherDirection = false;
       }
-
       if (Keyboard.LEFT && this.x > 100) {
-        this.x -= this.speed;
+        this.moveLeft();
         this.otherDirection = true;
       }
+      //movement SPACE / jump
+      if (Keyboard.SPACE) {
+        this.jump();
+      }
+      //movement camera
       this.world.camera_x = -this.x + 100;
     }, 1000 / 60);
 
+    //#region playAnimation
     setInterval(() => {
+      //animation for movement right & left
       if (Keyboard.RIGHT || Keyboard.LEFT) {
         this.playAnimation(this.IMAGES_WALKING);
       }
     }, 100);
-
     setInterval(() => {
+      //playAnimation for movement up / jump
       if (this.isAboveGround()) {
         this.playAnimation(this.IMAGES_JUMP);
       }
-    }, 90);
+    }, 200);
+    //#endregion
   }
 
   applyGravity() {
@@ -79,5 +85,8 @@ class Character extends MovableObject {
     }, 1000 / 60);
   }
 
-  jump() {}
+  moveRight() {
+    this.x += this.speed;
+  }
+
 }

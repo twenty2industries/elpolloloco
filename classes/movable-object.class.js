@@ -5,7 +5,7 @@ class MovableObject {
   height = 150;
   width = 100;
   imageCache = {};
-  speed = 0.15
+  speed = 0.15;
   currentImage = 0;
   otherDirection = false; // to flip an image
 
@@ -15,29 +15,52 @@ class MovableObject {
     this.img.src = path;
   }
 
-  loadImages(arr) { //Array
-    arr.forEach((path) => { //path is the argument from loadImages(arr)
+  loadImages(arr) {
+    //Array
+    arr.forEach((path) => {
+      //path is the argument from loadImages(arr)
       let img = new Image();
       img.src = path;
       this.imageCache[path] = img;
     });
   }
 
-  moveRight() {
-    //methode for moving the character right
-    console.log("Moving right");
+  draw(ctx) {
+    ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+  }
+
+  drawFrame(ctx) {
+    if (this instanceof Character || this instanceof Chicken || this instanceof Endboss) {
+      ctx.beginPath();
+      ctx.lineWidth = "4";
+      ctx.strokeStyle = "blue";
+      ctx.rect(this.x, this.y, this.width, this.height);
+      ctx.stroke();
+    }
   }
 
   moveLeft() {
-    setInterval(() => {
-      this.x -= this.speed;
-    }, 1000 / 60); // 60 FPS
+    this.x -= this.speed;
   }
 
-  playAnimation(imgs){
-      let i = this.currentImage % imgs.length;
-      let path = imgs[i];
-      this.img = this.imageCache[path];
-      this.currentImage++;
+  playAnimation(imgs) {
+    let i = this.currentImage % imgs.length;
+    let path = imgs[i];
+    this.img = this.imageCache[path];
+    this.currentImage++;
+  }
+
+  jump() {
+    if (!this.isAboveGround()) {
+      this.speedY = 15;
+      this.y -= this.speedY;
+    }
+  }
+  //character.isColliding(chicken);
+    isColliding(mo){
+    return this.x + this.width > mo.x &&
+          this.y + this.height > mo.y &&
+          this.x < mo.x &&
+          this.y < mo.y + mo.height;
   }
 }
