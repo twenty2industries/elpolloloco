@@ -1,6 +1,6 @@
 class Character extends MovableObject {
   height = 200;
-  y = 230;
+  y = 0;
   speed = 10;
   IMAGES_WALKING = [
     "img/2_character_pepe/2_walk/W-21.png",
@@ -11,11 +11,14 @@ class Character extends MovableObject {
     "img/2_character_pepe/2_walk/W-26.png",
   ];
   world;
+  speedY = 0;
+  acceleration = 0.5;
 
   constructor() {
     //wird immer als aller erstes ausgeführt sobald new Character erstellt wird
     super().loadImage("img/2_character_pepe/2_walk/W-21.png");
     this.loadImages(this.IMAGES_WALKING);
+    this.applyGravity();
     this.animate();
   }
 
@@ -40,5 +43,15 @@ class Character extends MovableObject {
     }, 100);
   }
 
+  applyGravity(){
+    setInterval(() => {
+      if (this.y <= 230) {
+      this.y -= this.speedY;
+      this.speedY -= this.acceleration;
+      console.log(this.acceleration);
+      }
+    }, 1000 / 60);
+  }
+  
   jump() {}
 }

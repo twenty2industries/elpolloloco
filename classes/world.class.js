@@ -2,12 +2,15 @@ class World {
   character = new Character();
 
   level = level1;
-  
+
   backgroundObjects = [];
 
   canvas;
+
   ctx;
+
   keyboard;
+
   static camera_x = 0;
 
   constructor(canvas, keyboard) {
@@ -25,16 +28,12 @@ class World {
 
   draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
     this.ctx.translate(this.camera_x, 0);
-
     this.addObjectsToMap(this.backgroundObjects);
     this.addToMap(this.character);
     this.addObjectsToMap(this.level.clouds);
     this.addObjectsToMap(this.level.enemies);
-
     this.ctx.translate(-this.camera_x, 0);
-
     //draw() wird immer wieder aufgerufen
     let self = this;
     requestAnimationFrame(function () {
@@ -42,6 +41,7 @@ class World {
     });
   }
 
+  
   addObjectsToMap(mo) {
     mo.forEach((o) => {
       this.addToMap(o);
