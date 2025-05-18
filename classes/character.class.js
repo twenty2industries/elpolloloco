@@ -33,6 +33,12 @@ class Character extends MovableObject {
     "img/2_character_pepe/5_dead/D-57.png",
   ];
 
+  IMAGES_HURT = [
+    "img/2_character_pepe/4_hurt/H-41.png",
+    "img/2_character_pepe/4_hurt/H-42.png",
+    "img/2_character_pepe/4_hurt/H-43.png",
+  ];
+
   world;
   speedY = 0;
   acceleration = 0.5;
@@ -42,6 +48,7 @@ class Character extends MovableObject {
     super().loadImage("img/2_character_pepe/2_walk/W-21.png");
     this.loadImages(this.IMAGES_JUMP); // jump animation
     this.loadImages(this.IMAGES_WALKING); // walking animation
+    this.loadImages(this.IMAGES_HURT); // hurt animation
     this.loadImages(this.IMAGES_DEAD); // dead animation
     this.applyGravity();
     this.animate();
@@ -89,7 +96,7 @@ class Character extends MovableObject {
     //playAnimation for movement DEAD
     setInterval(() => {
       if (this.isDead()) {
-        this.playAnimationDead(this.IMAGES_DEAD);
+        this.playAnimation(this.IMAGES_DEAD);
       }
     }, 100);
     //#endregion

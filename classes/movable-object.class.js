@@ -55,12 +55,6 @@ class MovableObject {
     this.currentImage++;
   }
 
-    playAnimationDead(imgs) {
-    let i = this.currentImage % imgs.length;
-    let path = imgs[i];
-    this.img = this.imageCache[path];
-  }
-
   jump() {
     if (!this.isAboveGround()) {
       this.speedY = 15;
@@ -80,7 +74,9 @@ class MovableObject {
 
   hit(){
     this.energy -= 5;
-    if (this.energy < 0) {
+    console.log(this.energy);
+    
+    if (this.energy <= 0) {
       this.energy = 0;
     }
   }

@@ -32,6 +32,7 @@ class World {
       this.level.enemies.forEach((enemy) => {
         if (this.character.isColliding(enemy)) {
           this.character.hit(); //energy is the healthbar
+          this.character.playAnimation(this.character.IMAGES_HURT);
         }
       });
     }, 100);
