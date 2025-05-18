@@ -8,6 +8,7 @@ class MovableObject {
   speed = 0.15;
   currentImage = 0;
   otherDirection = false; // to flip an image
+  energy = 100; //healthbar property 
 
   //loadImage('img/test.png') das wäre theoretisch das Argument
   loadImage(path) {
@@ -30,7 +31,11 @@ class MovableObject {
   }
 
   drawFrame(ctx) {
-    if (this instanceof Character || this instanceof Chicken || this instanceof Endboss) {
+    if (
+      this instanceof Character ||
+      this instanceof Chicken ||
+      this instanceof Endboss
+    ) {
       ctx.beginPath();
       ctx.lineWidth = "4";
       ctx.strokeStyle = "blue";
@@ -50,17 +55,37 @@ class MovableObject {
     this.currentImage++;
   }
 
+    playAnimationDead(imgs) {
+    let i = this.currentImage % imgs.length;
+    let path = imgs[i];
+    this.img = this.imageCache[path];
+  }
+
   jump() {
     if (!this.isAboveGround()) {
       this.speedY = 15;
       this.y -= this.speedY;
     }
   }
+
   //character.isColliding(chicken);
-    isColliding(mo){
-    return this.x + this.width > mo.x &&
-          this.y + this.height > mo.y &&
-          this.x < mo.x &&
-          this.y < mo.y + mo.height;
+  isColliding(mo) {
+    return (
+      this.x + this.width > mo.x &&
+      this.y + this.height > mo.y &&
+      this.x < mo.x &&
+      this.y < mo.y + mo.height
+    );
+  }
+
+  hit(){
+    this.energy -= 5;
+    if (this.energy < 0) {
+      this.energy = 0;
+    }
+  }
+
+  isDead(){
+    return this.energy == 0;
   }
 }

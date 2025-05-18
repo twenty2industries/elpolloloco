@@ -23,6 +23,16 @@ class Character extends MovableObject {
     "img/2_character_pepe/3_jump/J-39.png",
   ];
 
+  IMAGES_DEAD = [
+    "img/2_character_pepe/5_dead/D-51.png",
+    "img/2_character_pepe/5_dead/D-52.png",
+    "img/2_character_pepe/5_dead/D-53.png",
+    "img/2_character_pepe/5_dead/D-54.png",
+    "img/2_character_pepe/5_dead/D-55.png",
+    "img/2_character_pepe/5_dead/D-56.png",
+    "img/2_character_pepe/5_dead/D-57.png",
+  ];
+
   world;
   speedY = 0;
   acceleration = 0.5;
@@ -32,6 +42,7 @@ class Character extends MovableObject {
     super().loadImage("img/2_character_pepe/2_walk/W-21.png");
     this.loadImages(this.IMAGES_JUMP); // jump animation
     this.loadImages(this.IMAGES_WALKING); // walking animation
+    this.loadImages(this.IMAGES_DEAD); // dead animation
     this.applyGravity();
     this.animate();
   }
@@ -60,18 +71,27 @@ class Character extends MovableObject {
     }, 1000 / 60);
 
     //#region playAnimation
+    //animation for movement right & left
+
     setInterval(() => {
-      //animation for movement right & left
       if (Keyboard.RIGHT || Keyboard.LEFT) {
         this.playAnimation(this.IMAGES_WALKING);
       }
     }, 100);
+
+    //playAnimation for movement up / jump
     setInterval(() => {
-      //playAnimation for movement up / jump
       if (this.isAboveGround()) {
         this.playAnimation(this.IMAGES_JUMP);
       }
     }, 200);
+
+    //playAnimation for movement DEAD
+    setInterval(() => {
+      if (this.isDead()) {
+        this.playAnimationDead(this.IMAGES_DEAD);
+      }
+    }, 100);
     //#endregion
   }
 
@@ -88,5 +108,4 @@ class Character extends MovableObject {
   moveRight() {
     this.x += this.speed;
   }
-
 }
