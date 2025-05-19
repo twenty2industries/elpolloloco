@@ -15,6 +15,7 @@ class World {
 
   statusbar = new Statusbar();
   coinbar = new Coinbar();
+  bottlebar = new Bottlebar();
 
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext("2d");
@@ -50,7 +51,9 @@ class World {
     this.addObjectsToMap(this.level.enemies);
     this.ctx.translate(-this.camera_x, 0);
     this.addToMap(this.statusbar);
-    this.addToMap(this.coinbar)
+    this.addToMap(this.coinbar);
+        this.addToMap(this.bottlebar);
+
 
     //draw() wird immer wieder aufgerufen
     let self = this;
