@@ -14,6 +14,7 @@ class World {
   static camera_x = 0;
 
   statusbar = new Statusbar();
+  coinbar = new Coinbar();
 
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext("2d");
@@ -26,7 +27,7 @@ class World {
   }
 
   setWorld() {
-    this.character.world = this; //why? this is die instanz aus world? 
+    this.character.world = this; //why? this is die instanz aus world?
   }
 
   checkCollisions() {
@@ -48,7 +49,8 @@ class World {
     this.addObjectsToMap(this.level.clouds);
     this.addObjectsToMap(this.level.enemies);
     this.ctx.translate(-this.camera_x, 0);
-        this.addToMap(this.statusbar);
+    this.addToMap(this.statusbar);
+    this.addToMap(this.coinbar)
 
     //draw() wird immer wieder aufgerufen
     let self = this;
