@@ -1,7 +1,8 @@
 class Character extends MovableObject {
   height = 200;
-  y = 0;
+  y = 230;
   speed = 10;
+
   IMAGES_WALKING = [
     "img/2_character_pepe/2_walk/W-21.png",
     "img/2_character_pepe/2_walk/W-22.png",
@@ -39,6 +40,20 @@ class Character extends MovableObject {
     "img/2_character_pepe/4_hurt/H-43.png",
   ];
 
+  IMAGES_IDLE = [
+    "img/2_character_pepe/1_idle/idle/I-1.png",
+    "img/2_character_pepe/1_idle/idle/I-2.png",
+    "img/2_character_pepe/1_idle/idle/I-3.png",
+    "img/2_character_pepe/1_idle/idle/I-4.png",
+    "img/2_character_pepe/1_idle/idle/I-5.png",
+    "img/2_character_pepe/1_idle/idle/I-6.png",
+    "img/2_character_pepe/1_idle/idle/I-7.png",
+    "img/2_character_pepe/1_idle/idle/I-8.png",
+    "img/2_character_pepe/1_idle/idle/I-9.png",
+    "img/2_character_pepe/1_idle/idle/I-10.png",
+  ];
+
+
   world;
   speedY = 0;
   acceleration = 0.5;
@@ -52,6 +67,7 @@ class Character extends MovableObject {
     this.loadImages(this.IMAGES_DEAD); // dead animation
     this.applyGravity();
     this.animate();
+    
   }
 
   isAboveGround() {
@@ -99,6 +115,21 @@ class Character extends MovableObject {
         this.playAnimation(this.IMAGES_DEAD);
       }
     }, 100);
+
+    //playAnimation for movement hurt
+    setInterval(() => {
+      if (this.isHurt()) {
+        this.playAnimation(this.IMAGES_HURT);
+      }
+    }, 100);
+/*     //playAnimation for movement idle
+    setInterval(() => {
+      if (!Keyboard.RIGHT || Keyboard.LEFT || Keyboard.UP || Keyboard.SPACE || Keyboard.down) {
+        console.log(this.idle);
+        this.playAnimation(this.IMAGES_IDLE);
+      }
+    }, 100); */
+
     //#endregion
   }
 

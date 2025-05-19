@@ -13,6 +13,8 @@ class World {
 
   static camera_x = 0;
 
+  statusbar = new Statusbar();
+
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext("2d");
     this.canvas = canvas;
@@ -24,7 +26,7 @@ class World {
   }
 
   setWorld() {
-    this.character.world = this; //why?
+    this.character.world = this; //why? this is die instanz aus world? 
   }
 
   checkCollisions() {
@@ -32,7 +34,7 @@ class World {
       this.level.enemies.forEach((enemy) => {
         if (this.character.isColliding(enemy)) {
           this.character.hit(); //energy is the healthbar
-          this.character.playAnimation(this.character.IMAGES_HURT);
+          this.statusbar.setPercentage(this.character.energy);
         }
       });
     }, 100);
@@ -46,6 +48,8 @@ class World {
     this.addObjectsToMap(this.level.clouds);
     this.addObjectsToMap(this.level.enemies);
     this.ctx.translate(-this.camera_x, 0);
+        this.addToMap(this.statusbar);
+
     //draw() wird immer wieder aufgerufen
     let self = this;
     requestAnimationFrame(function () {

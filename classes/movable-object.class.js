@@ -1,20 +1,9 @@
-class MovableObject {
-  x = 120;
-  y = 280;
-  img;
-  height = 150;
-  width = 100;
-  imageCache = {};
+class MovableObject extends DrawableObject {
   speed = 0.15;
-  currentImage = 0;
   otherDirection = false; // to flip an image
-  energy = 100; //healthbar property 
-
-  //loadImage('img/test.png') das wäre theoretisch das Argument
-  loadImage(path) {
-    this.img = new Image(); // this.img = document.getElemtById("image") <img id="image" src>
-    this.img.src = path;
-  }
+  energy = 100; //healthbar property
+  lastHit = 0;
+  idle = false
 
   loadImages(arr) {
     //Array
@@ -24,24 +13,6 @@ class MovableObject {
       img.src = path;
       this.imageCache[path] = img;
     });
-  }
-
-  draw(ctx) {
-    ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
-  }
-
-  drawFrame(ctx) {
-    if (
-      this instanceof Character ||
-      this instanceof Chicken ||
-      this instanceof Endboss
-    ) {
-      ctx.beginPath();
-      ctx.lineWidth = "4";
-      ctx.strokeStyle = "blue";
-      ctx.rect(this.x, this.y, this.width, this.height);
-      ctx.stroke();
-    }
   }
 
   moveLeft() {
@@ -72,16 +43,22 @@ class MovableObject {
     );
   }
 
-  hit(){
+  hit() {
     this.energy -= 5;
-    console.log(this.energy);
-    
-    if (this.energy <= 0) {
+    if (this.energy < 0) {
       this.energy = 0;
+    } else {
+      this.lastHit = new Date().getTime(); // last collision contact getting safed to calculate timepassed
     }
   }
 
-  isDead(){
+  isDead() {
     return this.energy == 0;
+  }
+
+  isHurt() {
+    let timePassed = new Date().getTime() - this.lastHit; // difference in ms
+    timePassed = timePassed / 1000; // difference in s
+    return timePassed < 0.7; // if char got hit in the last 5 sec // isHurt true
   }
 }
