@@ -1,9 +1,13 @@
 class MovableObject extends DrawableObject {
+  //#region attributes
   speed = 0.15;
   otherDirection = false; // to flip an image
   energy = 100; //healthbar property
   lastHit = 0;
-  idle = false
+  idle = false;
+  isDeadQuery = false; // um die animation dead zu stopppen IF Abfrage
+  //#endregion
+  //#region methods
 
   loadImages(arr) {
     //Array
@@ -44,11 +48,13 @@ class MovableObject extends DrawableObject {
   }
 
   hit() {
+    if (this.isDeadQuery) return; //
     this.energy -= 5;
-    if (this.energy < 0) {
+    if (this.energy <= 0 && this.isDeadQuery === false) {
       this.energy = 0;
-    } else {
-      this.lastHit = new Date().getTime(); // last collision contact getting safed to calculate timepassed
+      this.isDeadQuery = true;
+    } else if (this.energy > 0) {
+      this.lastHit = new Date().getTime(); // last collision contact getting saved to calculate time passed
     }
   }
 
@@ -61,4 +67,19 @@ class MovableObject extends DrawableObject {
     timePassed = timePassed / 1000; // difference in s
     return timePassed < 0.7; // if char got hit in the last 5 sec // isHurt true
   }
+
+  isAboveGround() {
+    return this.y < 230;
+  }
+
+  applyGravity() {
+    setInterval(() => {
+      if (this.isAboveGround() || this.speedY > 0) {
+        // this.y smaller than 230
+        this.y -= this.speedY; // attribute this.y from character -= speed for gravity
+        this.speedY -= this.acceleration; // speed for gravity -= acceleration, the character will fall faster every interval
+      }
+    }, 1000 / 60);
+  }
+  //#endregion
 }

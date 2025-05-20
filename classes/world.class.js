@@ -1,4 +1,5 @@
 class World {
+  //#region attributes
   character = new Character();
 
   level = level1;
@@ -11,12 +12,14 @@ class World {
 
   keyboard;
 
-  static camera_x = 0;
+  camera_x = 0;
 
   statusbar = new Statusbar();
   coinbar = new Coinbar();
   bottlebar = new Bottlebar();
 
+  throwableBottle = new ThrowableObject();
+//#endregion
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext("2d");
     this.canvas = canvas;
@@ -49,11 +52,11 @@ class World {
     this.addToMap(this.character);
     this.addObjectsToMap(this.level.clouds);
     this.addObjectsToMap(this.level.enemies);
+    this.addToMap(this.throwableBottle);
     this.ctx.translate(-this.camera_x, 0);
     this.addToMap(this.statusbar);
     this.addToMap(this.coinbar);
-        this.addToMap(this.bottlebar);
-
+    this.addToMap(this.bottlebar);
 
     //draw() wird immer wieder aufgerufen
     let self = this;

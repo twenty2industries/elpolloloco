@@ -12,6 +12,7 @@ document.addEventListener("keydown", (event) => {
   event.keyCode == 38? Keyboard.UP = true : false;
   event.keyCode == 40? Keyboard.DOWN = true : false;
   event.keyCode == 32? Keyboard.SPACE = true : false;
+  event.keyCode == 70? Keyboard.F = true : false;
 });
 
 document.addEventListener("keyup", (event) => {
@@ -20,4 +21,6 @@ document.addEventListener("keyup", (event) => {
   event.keyCode == 38? Keyboard.UP = false : true;
   event.keyCode == 40? Keyboard.DOWN = false : true;
   event.keyCode == 32? Keyboard.SPACE = false : true;
+    event.keyCode == 70? Keyboard.F = false : true; 
+
 });

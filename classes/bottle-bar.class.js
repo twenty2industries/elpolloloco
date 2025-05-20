@@ -5,9 +5,7 @@ class Bottlebar extends DrawableObject {
   width = 130;
 
 
-
   constructor() {
-    super().loadImage(Statusbar.IMAGES_STATUS_BOTTLE[0]);
+    super().loadImage(Statusbar.IMAGES_STATUS_BOTTLE[5]);
   }
-
 }

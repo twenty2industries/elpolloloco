@@ -7,7 +7,7 @@ class Coinbar extends DrawableObject {
 
 
   constructor() {
-    super().loadImage(Statusbar.IMAGES_STATUS_COIN[0]);
+    super().loadImage(Statusbar.IMAGES_STATUS_COIN[5]);
   }
 
 }

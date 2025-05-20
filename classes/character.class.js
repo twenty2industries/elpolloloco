@@ -1,4 +1,5 @@
 class Character extends MovableObject {
+  //#region attributes
   height = 200;
   y = 230;
   speed = 10;
@@ -53,11 +54,11 @@ class Character extends MovableObject {
     "img/2_character_pepe/1_idle/idle/I-10.png",
   ];
 
-
   world;
   speedY = 0;
   acceleration = 0.5;
-
+  //#endregion
+  //#region constructor
   constructor() {
     //wird immer als aller erstes ausgeführt sobald new Character erstellt wird
     super().loadImage("img/2_character_pepe/2_walk/W-21.png");
@@ -67,13 +68,9 @@ class Character extends MovableObject {
     this.loadImages(this.IMAGES_DEAD); // dead animation
     this.applyGravity();
     this.animate();
-    
   }
-
-  isAboveGround() {
-    return this.y < 230;
-  }
-
+  //#endregion
+  //#region methods
   animate() {
     setInterval(() => {
       //movement right & left
@@ -93,9 +90,7 @@ class Character extends MovableObject {
       this.world.camera_x = -this.x + 100;
     }, 1000 / 60);
 
-    //#region playAnimation
     //animation for movement right & left
-
     setInterval(() => {
       if (Keyboard.RIGHT || Keyboard.LEFT) {
         this.playAnimation(this.IMAGES_WALKING);
@@ -107,11 +102,11 @@ class Character extends MovableObject {
       if (this.isAboveGround()) {
         this.playAnimation(this.IMAGES_JUMP);
       }
-    }, 200);
+    }, 300);
 
     //playAnimation for movement DEAD
     setInterval(() => {
-      if (this.isDead()) {
+      if (this.isDead() && this.isDeadQuery) {
         this.playAnimation(this.IMAGES_DEAD);
       }
     }, 100);
@@ -122,28 +117,9 @@ class Character extends MovableObject {
         this.playAnimation(this.IMAGES_HURT);
       }
     }, 100);
-/*     //playAnimation for movement idle
-    setInterval(() => {
-      if (!Keyboard.RIGHT || Keyboard.LEFT || Keyboard.UP || Keyboard.SPACE || Keyboard.down) {
-        console.log(this.idle);
-        this.playAnimation(this.IMAGES_IDLE);
-      }
-    }, 100); */
-
-    //#endregion
   }
-
-  applyGravity() {
-    setInterval(() => {
-      if (this.isAboveGround()) {
-        // this.y smaller than 230
-        this.y -= this.speedY; // attribute this.y from character -= speed for gravity
-        this.speedY -= this.acceleration; // speed for gravity -= acceleration, the character will fall faster every interval
-      }
-    }, 1000 / 60);
-  }
-
   moveRight() {
     this.x += this.speed;
   }
+  //#endregion
 }
