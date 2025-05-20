@@ -15,10 +15,10 @@ class World {
 
   camera_x = 0;
 
-  healtbar = new Healthbar(); 
+  healtbar = new Healthbar();
   coinbar = new Coinbar();
   bottlebar = new Bottlebar();
-  
+
   //#endregion
   //#region constructor
   constructor(canvas, keyboard) {
@@ -29,6 +29,8 @@ class World {
     this.repeatMap();
     this.setWorld(); //why?
     this.checkCollisions();
+    this.checkCollectibleBottleCollision();
+    this.checkCollectibleCoinCollision();
   }
   //#endregion
   //#region methods
@@ -47,25 +49,43 @@ class World {
     }, 100);
   }
 
-draw() {
+  checkCollectibleBottleCollision() {
+    setInterval(() => {
+      this.level.bottles.forEach((bottle) => {
+        if (this.character.isColliding(bottle)) {
+          console.log("FLASCHE BERÜHRT");
+        }
+      });
+    }, 100);
+  }
+
+  checkCollectibleCoinCollision() {
+    setInterval(() => {
+      this.level.coins.forEach((coin) => {
+        if (this.character.isColliding(coin)) {
+          console.log("COIN BERÜHRT");
+        }
+      });
+    }, 100);
+  }
+
+  draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    
-    // background camera offset 
+
+    // background camera offset
     this.ctx.translate(this.camera_x, 0);
     this.addObjectsToMap(this.backgroundObjects);
-    this.addObjectsToMap(this.level.clouds); 
-    this.addToMap(this.character); 
-    this.addObjectsToMap(this.level.enemies); 
+    this.addObjectsToMap(this.level.clouds);
+    this.addToMap(this.character);
+    this.addObjectsToMap(this.level.enemies);
     this.addObjectsToMap(this.level.bottles);
-    this.addObjectsToMap(this.level.coins); 
+    this.addObjectsToMap(this.level.coins);
     this.ctx.translate(-this.camera_x, 0);
 
-    // fixed ui elements 
+    // fixed ui elements
     this.addToMap(this.healtbar);
     this.addToMap(this.coinbar);
     this.addToMap(this.bottlebar);
-
-
 
     //draw() wird immer wieder aufgerufen
     let self = this;
