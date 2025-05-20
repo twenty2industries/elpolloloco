@@ -1,5 +1,5 @@
 class DrawableObject {
-//#region attributes
+  //#region attributes
   img;
   imageCache = {};
   currentImage = 0;
@@ -12,11 +12,15 @@ class DrawableObject {
   rY;
   rW;
   rH;
+
+  coinStatus;
+  bottleStatus;
+
   //#endregion
-//#region constructor
+  //#region constructor
   constructor() {}
   //#endregion
-//#region methods
+  //#region methods
   loadImage(path) {
     this.img = new Image(); // this.img = document.getElemtById("image") <img id="image" src>
     this.img.src = path;
@@ -30,7 +34,9 @@ class DrawableObject {
     if (
       this instanceof Character ||
       this instanceof Chicken ||
-      this instanceof Endboss
+      this instanceof Endboss ||
+      this instanceof AirItems ||
+      this instanceof GroundItems
     ) {
       ctx.beginPath();
       ctx.lineWidth = "4";

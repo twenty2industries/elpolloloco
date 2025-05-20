@@ -27,7 +27,7 @@ class Chicken extends MovableObject {
     }, 1000 / 60);
 
     setInterval(() => {
-      this.playAnimation(this.IMAGES_WALKING);
+      this.playAnimation(ImageHub.CHICKEN_IMAGES_WALKING);
     }, 150);
   }
   //#endregion

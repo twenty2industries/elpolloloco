@@ -5,7 +5,9 @@ class ImageHub {
     "img/6_salsa_bottle/2_salsa_bottle_on_ground.png",
   ];
   // air
-  static coin = ["img/8_coin/coin_1.png", "img/8_coin/coin_2.png"];
+  static coin = [
+    "img/8_coin/coin_1.png", "img/8_coin/coin_2.png"
+  ];
 
   //character
   static CHARACTER_IMAGES_WALKING = [
