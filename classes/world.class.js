@@ -15,7 +15,7 @@ class World {
 
   camera_x = 0;
 
-  statusbar = new Statusbar();
+  healtbar = new Healthbar(); 
   coinbar = new Coinbar();
   bottlebar = new Bottlebar();
   
@@ -41,7 +41,7 @@ class World {
       this.level.enemies.forEach((enemy) => {
         if (this.character.isColliding(enemy)) {
           this.character.hit(); //energy is the healthbar
-          this.statusbar.setPercentage(this.character.energy);
+          this.healtbar.setPercentage(this.character.energy);
         }
       });
     }, 100);
@@ -61,7 +61,7 @@ draw() {
     this.ctx.translate(-this.camera_x, 0);
 
     // fixed ui elements 
-    this.addToMap(this.statusbar);
+    this.addToMap(this.healtbar);
     this.addToMap(this.coinbar);
     this.addToMap(this.bottlebar);
 
@@ -97,29 +97,29 @@ draw() {
     const mapLength = 3595; // endpoint so the map does not keep on loading
     for (let i = 0; i < mapLength; i += startPoint * 2) {
       this.backgroundObjects.push(
-        new BackgroundObject("img/5_background/layers/air.png", i)
+        new BackgroundObject(ImageHub.IMAGES_BACKGROUND[0], i)
       ); // i = layer 1 position i += 719 * 2 = start with 0, 1438, 2876
       this.backgroundObjects.push(
-        new BackgroundObject("img/5_background/layers/3_third_layer/1.png", i)
+        new BackgroundObject(ImageHub.IMAGES_BACKGROUND[1], i)
       );
       this.backgroundObjects.push(
-        new BackgroundObject("img/5_background/layers/2_second_layer/1.png", i)
+        new BackgroundObject(ImageHub.IMAGES_BACKGROUND[2], i)
       );
       this.backgroundObjects.push(
-        new BackgroundObject("img/5_background/layers/1_first_layer/1.png", i)
+        new BackgroundObject(ImageHub.IMAGES_BACKGROUND[3], i)
       );
       let i2 = i + startPoint; // i2= layer 2 start position i2 += (value i = 0, 1438, 2876) + 719 = add at 719, 2157, 3595
       this.backgroundObjects.push(
-        new BackgroundObject("img/5_background/layers/air.png", i2)
+        new BackgroundObject(ImageHub.IMAGES_BACKGROUND[4], i2)
       );
       this.backgroundObjects.push(
-        new BackgroundObject("img/5_background/layers/3_third_layer/2.png", i2)
+        new BackgroundObject(ImageHub.IMAGES_BACKGROUND[5], i2)
       );
       this.backgroundObjects.push(
-        new BackgroundObject("img/5_background/layers/2_second_layer/2.png", i2)
+        new BackgroundObject(ImageHub.IMAGES_BACKGROUND[6], i2)
       );
       this.backgroundObjects.push(
-        new BackgroundObject("img/5_background/layers/1_first_layer/2.png", i2)
+        new BackgroundObject(ImageHub.IMAGES_BACKGROUND[7], i2)
       );
     }
   }

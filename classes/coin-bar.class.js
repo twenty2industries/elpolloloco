@@ -1,5 +1,5 @@
 class Coinbar extends DrawableObject {
-  //#region attributes
+//#region attributes
   y = 40;
   x = 20;
   height = 40;
@@ -8,7 +8,7 @@ class Coinbar extends DrawableObject {
 
 //#region methods
   constructor() {
-    super().loadImage(Statusbar.IMAGES_STATUS_COIN[5]);
+    super().loadImage(ImageHub.IMAGES_STATUS_COIN[5]);
   }
 //#endregion
 }
