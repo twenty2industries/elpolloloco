@@ -4,6 +4,15 @@ class Character extends MovableObject {
   y = 230;
   speed = 10;
 
+  rX;
+
+  offset = {
+    top: 1,
+    right: 80,
+    bottom: 92,
+    left: 80,
+  };
+
   IMAGES_WALKING = [
     "img/2_character_pepe/2_walk/W-21.png",
     "img/2_character_pepe/2_walk/W-22.png",
@@ -108,6 +117,7 @@ class Character extends MovableObject {
     setInterval(() => {
       if (this.isDead() && this.isDeadQuery) {
         this.playAnimation(this.IMAGES_DEAD);
+        this.isDeadQuery = false; // turn off dead animation; issue with method hit(), need to be solved
       }
     }, 100);
 

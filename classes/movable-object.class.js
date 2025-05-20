@@ -6,6 +6,8 @@ class MovableObject extends DrawableObject {
   lastHit = 0;
   idle = false;
   isDeadQuery = false; // um die animation dead zu stopppen IF Abfrage
+  static minimumDistance = 100; // minimum distance between spawnspoints for salstabottle & coins
+
   //#endregion
   //#region methods
 
@@ -32,7 +34,7 @@ class MovableObject extends DrawableObject {
 
   jump() {
     if (!this.isAboveGround()) {
-      this.speedY = 15;
+      this.speedY = 11;
       this.y -= this.speedY;
     }
   }
@@ -69,7 +71,7 @@ class MovableObject extends DrawableObject {
   }
 
   isAboveGround() {
-    return this.y < 230;
+    return this.y < 230; 
   }
 
   applyGravity() {
@@ -79,7 +81,7 @@ class MovableObject extends DrawableObject {
         this.y -= this.speedY; // attribute this.y from character -= speed for gravity
         this.speedY -= this.acceleration; // speed for gravity -= acceleration, the character will fall faster every interval
       }
-    }, 1000 / 60);
+    }, 1000 / 60)  ;
   }
   //#endregion
 }

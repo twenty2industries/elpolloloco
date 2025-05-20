@@ -1,5 +1,6 @@
 class World {
   //#region attributes
+
   character = new Character();
 
   level = level1;
@@ -17,9 +18,9 @@ class World {
   statusbar = new Statusbar();
   coinbar = new Coinbar();
   bottlebar = new Bottlebar();
-
-  throwableBottle = new ThrowableObject();
-//#endregion
+  
+  //#endregion
+  //#region constructor
   constructor(canvas, keyboard) {
     this.ctx = canvas.getContext("2d");
     this.canvas = canvas;
@@ -29,7 +30,8 @@ class World {
     this.setWorld(); //why?
     this.checkCollisions();
   }
-
+  //#endregion
+  //#region methods
   setWorld() {
     this.character.world = this; //why? this is die instanz aus world?
   }
@@ -45,18 +47,25 @@ class World {
     }, 100);
   }
 
-  draw() {
+draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    
+    // background camera offset 
     this.ctx.translate(this.camera_x, 0);
     this.addObjectsToMap(this.backgroundObjects);
-    this.addToMap(this.character);
-    this.addObjectsToMap(this.level.clouds);
-    this.addObjectsToMap(this.level.enemies);
-    this.addToMap(this.throwableBottle);
+    this.addObjectsToMap(this.level.clouds); 
+    this.addToMap(this.character); 
+    this.addObjectsToMap(this.level.enemies); 
+    this.addObjectsToMap(this.level.bottles);
+    this.addObjectsToMap(this.level.coins); 
     this.ctx.translate(-this.camera_x, 0);
+
+    // fixed ui elements 
     this.addToMap(this.statusbar);
     this.addToMap(this.coinbar);
     this.addToMap(this.bottlebar);
+
+
 
     //draw() wird immer wieder aufgerufen
     let self = this;
@@ -126,4 +135,5 @@ class World {
     mo.x = mo.x * -1; // flip the x-coordinate here
     this.ctx.restore();
   }
+  //#endregion
 }
