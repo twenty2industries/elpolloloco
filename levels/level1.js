@@ -1,4 +1,5 @@
 const level1 = new Level(
+  //#region attributes
   [new Chicken(), new Chicken(), new Chicken(), new Endboss()],
 
   [new Cloud()],
@@ -18,4 +19,5 @@ const level1 = new Level(
     new AirItems(ImageHub.coin[1]),
     new AirItems(ImageHub.coin[0]),
   ]
+  //#endregion
 );

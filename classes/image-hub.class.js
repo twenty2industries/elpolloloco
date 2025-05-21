@@ -1,4 +1,5 @@
 class ImageHub {
+//#region attributes
   // grounditems
   static salsabottle = [
     "img/6_salsa_bottle/1_salsa_bottle_on_ground.png",
@@ -118,4 +119,5 @@ class ImageHub {
     "img/4_enemie_boss_chicken/2_alert/G11.png",
     "img/4_enemie_boss_chicken/2_alert/G12.png",
   ];
+  //#endregion
 }

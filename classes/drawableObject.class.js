@@ -8,6 +8,13 @@ class DrawableObject {
   height = 150;
   width = 100;
 
+    offset = {
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
+  };
+
   rX;
   rY;
   rW;
@@ -18,7 +25,9 @@ class DrawableObject {
 
   //#endregion
   //#region constructor
-  constructor() {}
+  constructor() {
+    this.getRealFrame();
+  }
   //#endregion
   //#region methods
   loadImage(path) {

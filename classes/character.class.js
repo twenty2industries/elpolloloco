@@ -65,9 +65,9 @@ class Character extends MovableObject {
 
     //playAnimation for movement DEAD
     setInterval(() => {
-      if (this.isDead() && this.isDeadQuery) {
+      if (this.isDead() && this.isDeadFlag) {
         this.playAnimation(ImageHub.CHARACTER_IMAGES_DEAD);
-        this.isDeadQuery = false; // turn off dead animation; issue with method hit(), need to be solved
+        this.isDeadFlag = false; // turn off dead animation; issue with method hit(), need to be solved
       }
     }, 100);
 

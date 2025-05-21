@@ -5,7 +5,7 @@ class MovableObject extends DrawableObject {
   energy = 100; //healthbar property
   lastHit = 0;
   idle = false;
-  isDeadQuery = false; // um die animation dead zu stopppen IF Abfrage
+  isDeadFlag = false; // um die animation dead zu stopppen IF Abfrage
   static minimumDistance = 100; // minimum distance between spawnspoints for salstabottle & coins
 
   //#endregion
@@ -50,14 +50,18 @@ class MovableObject extends DrawableObject {
   }
 
   hit() {
-    if (this.isDeadQuery) return; //
+    if (this.isDeadFlag) return; //
     this.energy -= 5;
-    if (this.energy <= 0 && this.isDeadQuery === false) {
+    if (this.energy <= 0 && !this.isDeadFlag) {
       this.energy = 0;
-      this.isDeadQuery = true;
+      this.isDeadFlag = true;
+      console.log(this.energy);
+      
     } else if (this.energy > 0) {
       this.lastHit = new Date().getTime(); // last collision contact getting saved to calculate time passed
     }
+    console.log(this.energy);
+    
   }
 
   isDead() {

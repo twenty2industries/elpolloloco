@@ -15,6 +15,8 @@ class World {
 
   camera_x = 0;
 
+  throwableBottle = new ThrowableObject();
+
   healtbar = new Healthbar();
   coinbar = new Coinbar();
   bottlebar = new Bottlebar();
@@ -77,6 +79,8 @@ class World {
     this.addObjectsToMap(this.backgroundObjects);
     this.addObjectsToMap(this.level.clouds);
     this.addToMap(this.character);
+        this.addToMap(this.throwableBottle);
+
     this.addObjectsToMap(this.level.enemies);
     this.addObjectsToMap(this.level.bottles);
     this.addObjectsToMap(this.level.coins);
