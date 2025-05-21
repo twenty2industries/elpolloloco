@@ -2,7 +2,11 @@ class MovableObject extends DrawableObject {
   //#region attributes
   speed = 0.15;
   otherDirection = false; // to flip an image
+
   energy = 100; //healthbar property
+  bottles = 100; //bottlebar
+  coins = 100; //coinsbar
+
   lastHit = 0;
   idle = false;
   isDeadFlag = false; // um die animation dead zu stopppen IF Abfrage
@@ -56,12 +60,29 @@ class MovableObject extends DrawableObject {
       this.energy = 0;
       this.isDeadFlag = true;
       console.log(this.energy);
-      
     } else if (this.energy > 0) {
       this.lastHit = new Date().getTime(); // last collision contact getting saved to calculate time passed
     }
     console.log(this.energy);
-    
+  }
+
+  hitBottle() {
+    this.bottles -= 20;
+    if (this.bottles <= 0) {
+      this.bottles = 0;
+    }
+  }
+
+  hitCoin() {
+    if (this.coin == 100) {
+      return
+    }
+    this.coins -= 20;
+    if (this.coins <= 0) {
+      this.coins = 0;
+          console.log(this.coins);
+
+    }
   }
 
   isDead() {
@@ -75,7 +96,7 @@ class MovableObject extends DrawableObject {
   }
 
   isAboveGround() {
-    return this.y < 230; 
+    return this.y < 230;
   }
 
   applyGravity() {
@@ -85,7 +106,7 @@ class MovableObject extends DrawableObject {
         this.y -= this.speedY; // attribute this.y from character -= speed for gravity
         this.speedY -= this.acceleration; // speed for gravity -= acceleration, the character will fall faster every interval
       }
-    }, 1000 / 60)  ;
+    }, 1000 / 60);
   }
   //#endregion
 }

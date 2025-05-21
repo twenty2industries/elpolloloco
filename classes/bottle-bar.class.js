@@ -7,7 +7,7 @@ class Bottlebar extends DrawableObject {
 //#endregion
 //#region constructor
   constructor() {
-    super().loadImage(ImageHub.IMAGES_STATUS_BOTTLE[5]);
+    super().loadImage(ImageHub.IMAGES_STATUS_BOTTLE[0]);
   }
   //#endregion
 }

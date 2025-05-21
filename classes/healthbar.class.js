@@ -11,26 +11,5 @@ class Healthbar extends DrawableObject {
   }
 //#endregion
 //#region methods
-  setPercentage(percentage) {
-      if (percentage > 100) {
-        this.loadImage(ImageHub.IMAGES_STATUS_HEALTH[0]);
-        return;
-      } else if (percentage > 80) {
-        this.loadImage(ImageHub.IMAGES_STATUS_HEALTH[1]);
-        return;
-      } else if (percentage > 60) {
-        this.loadImage(ImageHub.IMAGES_STATUS_HEALTH[2]);
-        return;
-      } else if (percentage > 40) {
-        this.loadImage(ImageHub.IMAGES_STATUS_HEALTH[3]);
-        return;
-      } else if (percentage > 20) {
-        this.loadImage(ImageHub.IMAGES_STATUS_HEALTH[4]);
-        return;
-      } else if (percentage == 0) {
-        this.loadImage(ImageHub.IMAGES_STATUS_HEALTH[5]);
-        return;
-      }
-  }
-  //#endregion
+//#endregion
 }

@@ -33,6 +33,7 @@ class World {
     this.checkCollisions();
     this.checkCollectibleBottleCollision();
     this.checkCollectibleCoinCollision();
+    this.checkCollectibleStatus();
   }
   //#endregion
   //#region methods
@@ -45,7 +46,10 @@ class World {
       this.level.enemies.forEach((enemy) => {
         if (this.character.isColliding(enemy)) {
           this.character.hit(); //energy is the healthbar
-          this.healtbar.setPercentage(this.character.energy);
+          this.healtbar.setPercentage(
+            this.character.energy,
+            ImageHub.IMAGES_STATUS_HEALTH
+          ); // energy
         }
       });
     }, 100);
@@ -55,16 +59,34 @@ class World {
     setInterval(() => {
       this.level.bottles.forEach((bottle) => {
         if (this.character.isColliding(bottle)) {
+          this.character.hitBottle();
+          this.bottlebar.setPercentage(
+            this.character.bottles,
+            ImageHub.IMAGES_STATUS_BOTTLE
+          ); // bottle bar status
           console.log("FLASCHE BERÜHRT");
         }
       });
     }, 100);
   }
 
+checkCollectibleStatus(){
+  setInterval(() => {
+    this.bottlebar.setPercentage(
+            this.character.bottles,
+            ImageHub.IMAGES_STATUS_BOTTLE
+          )
+  }, 100);
+}
   checkCollectibleCoinCollision() {
     setInterval(() => {
       this.level.coins.forEach((coin) => {
         if (this.character.isColliding(coin)) {
+          this.character.hitCoin();
+          this.coinbar.setPercentage(
+            this.character.coins,
+            ImageHub.IMAGES_STATUS_COIN
+          ); // coin bar status
           console.log("COIN BERÜHRT");
         }
       });
@@ -79,8 +101,8 @@ class World {
     this.addObjectsToMap(this.backgroundObjects);
     this.addObjectsToMap(this.level.clouds);
     this.addToMap(this.character);
-        this.addToMap(this.throwableBottle);
-
+/*     this.addToMap(this.throwableBottle);
+ */
     this.addObjectsToMap(this.level.enemies);
     this.addObjectsToMap(this.level.bottles);
     this.addObjectsToMap(this.level.coins);

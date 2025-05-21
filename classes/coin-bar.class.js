@@ -8,7 +8,7 @@ class Coinbar extends DrawableObject {
 
 //#region methods
   constructor() {
-    super().loadImage(ImageHub.IMAGES_STATUS_COIN[5]);
+    super().loadImage(ImageHub.IMAGES_STATUS_COIN[0]);
   }
 //#endregion
 }

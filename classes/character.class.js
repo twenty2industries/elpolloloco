@@ -16,6 +16,8 @@ class Character extends MovableObject {
   world;
   speedY = 0;
   acceleration = 0.5;
+
+  drawableObjektInstance = new DrawableObject();
   //#endregion
   //#region constructor
   constructor() {
@@ -45,9 +47,18 @@ class Character extends MovableObject {
       if (Keyboard.SPACE) {
         this.jump();
       }
+
+          // Werfen (F) – einfachste Methode ohne Interval
+    if (Keyboard.F && this.bottles >= 100) {
+      this.bottles += 20;
+      console.log(this.bottles);
+      Keyboard.F = false; // Verhindert Dauerfeuer
+    }
+
       //movement camera
       this.world.camera_x = -this.x + 100;
     }, 1000 / 60);
+
 
     //animation for movement right & left
     setInterval(() => {

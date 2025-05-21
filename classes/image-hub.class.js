@@ -72,21 +72,21 @@ class ImageHub {
   ];
 
   static IMAGES_STATUS_COIN = [
-    "img/7_statusbars/1_statusbar/1_statusbar_coin/blue/100.png",
-    "img/7_statusbars/1_statusbar/1_statusbar_coin/blue/80.png",
-    "img/7_statusbars/1_statusbar/1_statusbar_coin/blue/60.png",
-    "img/7_statusbars/1_statusbar/1_statusbar_coin/blue40.png",
-    "img/7_statusbars/1_statusbar/1_statusbar_coin/blue/20.png",
     "img/7_statusbars/1_statusbar/1_statusbar_coin/blue/0.png",
+    "img/7_statusbars/1_statusbar/1_statusbar_coin/blue/20.png",
+    "img/7_statusbars/1_statusbar/1_statusbar_coin/blue/40.png",
+    "img/7_statusbars/1_statusbar/1_statusbar_coin/blue/60.png",
+    "img/7_statusbars/1_statusbar/1_statusbar_coin/blue/80.png",
+    "img/7_statusbars/1_statusbar/1_statusbar_coin/blue/100.png",
   ];
 
   static IMAGES_STATUS_BOTTLE = [
-    "img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/100.png",
-    "img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/80.png",
-    "img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/60.png",
-    "img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/40.png",
-    "img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/20.png",
     "img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/0.png",
+    "img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/20.png",
+    "img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/40.png",
+    "img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/60.png",
+    "img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/80.png",
+    "img/7_statusbars/1_statusbar/3_statusbar_bottle/blue/100.png",
   ];
 
   //background
