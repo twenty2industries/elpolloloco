@@ -91,9 +91,10 @@ class World {
   }
 
   checkThrowObjects() {
-    if (Keyboard.F) {
+    if (Keyboard.F && this.character.bottles < 100) {
       let bottle = new ThrowableObject(this.character.x, this.character.y);
       this.throwableBottle.push(bottle);
+      this.character.bottles += 20;
     }
   }
 

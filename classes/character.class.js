@@ -48,6 +48,7 @@ class Character extends MovableObject {
       if (Keyboard.SPACE) {
         this.jump();
       }
+
           //movement camera
       this.world.camera_x = -this.x + 100;
     }, 1000 / 60);

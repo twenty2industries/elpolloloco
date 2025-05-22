@@ -11,6 +11,8 @@ class ThrowableObject extends MovableObject {
   //#endregion
   //#region methods
   throw() {
+    console.log(this.bottles);
+    
     this.speedY = 20;
     this.applyGravity(); // sobald activ verschwindet die flasche
     setInterval(() => {

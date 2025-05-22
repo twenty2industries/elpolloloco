@@ -8,7 +8,7 @@ class DrawableObject {
   height = 150;
   width = 100;
 
-    offset = {
+  offset = {
     top: 0,
     right: 0,
     bottom: 0,
@@ -63,26 +63,26 @@ class DrawableObject {
     this.rW = this.width - this.offset.left - this.offset.right;
     this.rH = this.height - this.offset.top - this.offset.bottom;
   }
-    setPercentage(percentage, imgPath) {
-      if (percentage > 100) {
-        this.loadImage(imgPath[0]);
-        return;
-      } else if (percentage > 80) {
-        this.loadImage(imgPath[1]);
-        return;
-      } else if (percentage > 60) {
-        this.loadImage(imgPath[2]);
-        return;
-      } else if (percentage > 40) {
-        this.loadImage(imgPath[3]);
-        return;
-      } else if (percentage > 20) {
-        this.loadImage(imgPath[4]);
-        return;
-      } else if (percentage == 0) {
-        this.loadImage(imgPath[5]);
-        return;
-      }
+  setPercentage(percentage, imgPath) {
+    if (percentage > 100) {
+      this.loadImage(imgPath[0]);
+      return;
+    } else if (percentage > 80) {
+      this.loadImage(imgPath[1]);
+      return;
+    } else if (percentage > 60) {
+      this.loadImage(imgPath[2]);
+      return;
+    } else if (percentage > 40) {
+      this.loadImage(imgPath[3]);
+      return;
+    } else if (percentage > 20) {
+      this.loadImage(imgPath[4]);
+      return;
+    } else if (percentage == 0) {
+      this.loadImage(imgPath[5]);
+      return;
+    }
   }
   //#endregion
 }
