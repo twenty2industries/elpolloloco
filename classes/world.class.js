@@ -15,7 +15,7 @@ class World {
 
   camera_x = 0;
 
-  throwableBottle = new ThrowableObject();
+  throwableBottle = [new ThrowableObject()];
 
   healtbar = new Healthbar();
   coinbar = new Coinbar();
@@ -33,13 +33,10 @@ class World {
     this.checkCollisions();
     this.checkCollectibleBottleCollision();
     this.checkCollectibleCoinCollision();
-    this.checkCollectibleStatus();
+    this.run();
   }
   //#endregion
   //#region methods
-  setWorld() {
-    this.character.world = this; //why? this is die instanz aus world?
-  }
 
   checkCollisions() {
     setInterval(() => {
@@ -64,20 +61,13 @@ class World {
             this.character.bottles,
             ImageHub.IMAGES_STATUS_BOTTLE
           ); // bottle bar status
-          console.log("FLASCHE BERÜHRT");
+          /*           console.log("FLASCHE BERÜHRT");
+           */
         }
       });
     }, 100);
   }
 
-checkCollectibleStatus(){
-  setInterval(() => {
-    this.bottlebar.setPercentage(
-            this.character.bottles,
-            ImageHub.IMAGES_STATUS_BOTTLE
-          )
-  }, 100);
-}
   checkCollectibleCoinCollision() {
     setInterval(() => {
       this.level.coins.forEach((coin) => {
@@ -87,10 +77,24 @@ checkCollectibleStatus(){
             this.character.coins,
             ImageHub.IMAGES_STATUS_COIN
           ); // coin bar status
-          console.log("COIN BERÜHRT");
+          /*           console.log("COIN BERÜHRT");
+           */
         }
       });
     }, 100);
+  }
+
+  run() {
+    setInterval(() => {
+      this.checkThrowObjects();
+    }, 200);
+  }
+
+  checkThrowObjects() {
+    if (Keyboard.F) {
+      let bottle = new ThrowableObject(this.character.x, this.character.y);
+      this.throwableBottle.push(bottle);
+    }
   }
 
   draw() {
@@ -101,9 +105,10 @@ checkCollectibleStatus(){
     this.addObjectsToMap(this.backgroundObjects);
     this.addObjectsToMap(this.level.clouds);
     this.addToMap(this.character);
-/*     this.addToMap(this.throwableBottle);
- */
+
     this.addObjectsToMap(this.level.enemies);
+    this.addObjectsToMap(this.throwableBottle);
+
     this.addObjectsToMap(this.level.bottles);
     this.addObjectsToMap(this.level.coins);
     this.ctx.translate(-this.camera_x, 0);
@@ -119,6 +124,15 @@ checkCollectibleStatus(){
       self.draw();
     });
   }
+
+  setWorld() {
+    this.character.world = this; //why? this is die instanz aus world?
+  }
+
+  /*   run(){ // method with setinterval to store methods that need setinterval 
+    setInterval(() => {
+    }, 200);
+  } */
 
   addObjectsToMap(mo) {
     mo.forEach((o) => {

@@ -6,6 +6,7 @@ class MovableObject extends DrawableObject {
   energy = 100; //healthbar property
   bottles = 100; //bottlebar
   coins = 100; //coinsbar
+  acceleration = 2;
 
   lastHit = 0;
   idle = false;
@@ -59,11 +60,9 @@ class MovableObject extends DrawableObject {
     if (this.energy <= 0 && !this.isDeadFlag) {
       this.energy = 0;
       this.isDeadFlag = true;
-      console.log(this.energy);
     } else if (this.energy > 0) {
       this.lastHit = new Date().getTime(); // last collision contact getting saved to calculate time passed
     }
-    console.log(this.energy);
   }
 
   hitBottle() {
@@ -75,13 +74,11 @@ class MovableObject extends DrawableObject {
 
   hitCoin() {
     if (this.coin == 100) {
-      return
+      return;
     }
     this.coins -= 20;
     if (this.coins <= 0) {
       this.coins = 0;
-          console.log(this.coins);
-
     }
   }
 
@@ -96,7 +93,11 @@ class MovableObject extends DrawableObject {
   }
 
   isAboveGround() {
-    return this.y < 230;
+    if (this instanceof ThrowableObject) { //Throwable object should always fall 
+      return true;
+    } else {
+      return this.y < 230;
+    }
   }
 
   applyGravity() {
@@ -108,5 +109,6 @@ class MovableObject extends DrawableObject {
       }
     }, 1000 / 60);
   }
+
   //#endregion
 }
