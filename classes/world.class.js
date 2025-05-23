@@ -30,65 +30,78 @@ class World {
     this.draw();
     this.repeatMap();
     this.setWorld(); //why?
-    this.checkCollisions();
-    this.checkCollectibleBottleCollision();
-    this.checkCollectibleCoinCollision();
     this.run();
   }
   //#endregion
   //#region methods
-
+//#region collision methods
   checkCollisions() {
-    setInterval(() => {
-      this.level.enemies.forEach((enemy) => {
-        if (this.character.isColliding(enemy)) {
-          this.character.hit(); //energy is the healthbar
-          this.healtbar.setPercentage(
-            this.character.energy,
-            ImageHub.IMAGES_STATUS_HEALTH
-          ); // energy
-        }
-      });
-    }, 100);
+    this.level.enemies.forEach((enemy) => {
+      if (this.character.isColliding(enemy)) {
+        this.character.hit(); //energy is the healthbar
+        this.healtbar.setPercentage(
+          this.character.energy,
+          ImageHub.IMAGES_STATUS_HEALTH
+        ); // energy
+      }
+    });
   }
 
-checkCollectibleBottleCollision() {
-  setInterval(() => {
+  checkCollisionsBottle() {
+    for (let i = 0; i < this.throwableBottle.length; i++) {
+      const bottle = this.throwableBottle[i]; // the for loop is nesseccary, .isColliding() method only exist for individual ThrowableObject instances not for the array itself 
+      this.level.enemies.forEach((enemy) => { //for every instanze of enemies
+        if (bottle.isColliding(enemy)) { // check if the bottle instance is colliding with enemy instanc
+          console.log(enemy + " wurde getroffen!");
+        }
+      });
+    }
+  }
+
+  checkCollectibleBottleCollision() {
     for (let i = 0; i < this.level.bottles.length; i++) {
       if (this.character.isColliding(this.level.bottles[i])) {
-        this.level.bottles.splice(i, 1); // removest the coin from array level
-        this.character.hitBottle(); 
-        this.bottlebar.setPercentage(this.character.bottles, ImageHub.IMAGES_STATUS_BOTTLE);
+        // checks the exact collided object
+        this.level.bottles.splice(i, 1); // removest the bottle from array level
+        this.character.hitBottle();
+        this.bottlebar.setPercentage(
+          this.character.bottles,
+          ImageHub.IMAGES_STATUS_BOTTLE
+        );
         break; // is a better option to return for multiple execution than return
       }
     }
-  }, 100);
-}
+  }
 
-checkCollectibleCoinCollision() {
-  setInterval(() => {
+  checkCollectibleCoinCollision() {
     for (let i = 0; i < this.level.coins.length; i++) {
       if (this.character.isColliding(this.level.coins[i])) {
         this.level.coins.splice(i, 1); // removest the coin from array level
-        this.character.hitCoin(); 
-        this.coinbar.setPercentage(this.character.coins, ImageHub.IMAGES_STATUS_COIN);
+        this.character.hitCoin();
+        this.coinbar.setPercentage(
+          this.character.coins,
+          ImageHub.IMAGES_STATUS_COIN
+        );
         break; // is a better option to return for multiple execution than return
       }
     }
-  }, 100);
-}
-
+  }
+//#endregion
   run() {
     setInterval(() => {
+      this.checkCollisions();
       this.checkThrowObjects();
-    }, 200);
+      this.checkCollectibleBottleCollision();
+      this.checkCollectibleCoinCollision();
+      this.checkCollisionsBottle();
+    }, 100);
   }
 
   checkThrowObjects() {
     if (Keyboard.F && this.character.bottles <= 100) {
       let bottle = new ThrowableObject(this.character.x, this.character.y);
       this.throwableBottle.push(bottle);
-      this.character.bottles += 20
+      this.character.bottles += 20;
       this.bottlebar.setPercentage(
         this.character.bottles,
         ImageHub.IMAGES_STATUS_BOTTLE
