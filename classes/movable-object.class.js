@@ -17,7 +17,6 @@ class MovableObject extends DrawableObject {
   //#region methods
 
   loadImages(arr) {
-    //Array
     arr.forEach((path) => {
       //path is the argument from loadImages(arr)
       let img = new Image();
@@ -65,18 +64,15 @@ class MovableObject extends DrawableObject {
     }
   }
 
-hitBottle() {
-  if (this.bottles >= 20) {
-
-    this.bottles -= 20;
-        console.log(this.bottles + "abfrage 1");
-
-  } else {
-    this.bottles = 0;
-        console.log(this.bottles + "abfrage 2");
-
+  hitBottle() {
+    if (this.bottles >= 20) {
+      this.bottles -= 20;
+      console.log(this.bottles + "abfrage 1");
+    } else {
+      this.bottles = 0;
+      console.log(this.bottles + "abfrage 2");
+    }
   }
-}
 
   hitCoin() {
     if (this.coin == 100) {
@@ -99,7 +95,8 @@ hitBottle() {
   }
 
   isAboveGround() {
-    if (this instanceof ThrowableObject) { //Throwable object should always fall 
+    if (this instanceof ThrowableObject) {
+      //Throwable object should always fall
       return true;
     } else {
       return this.y < 230;

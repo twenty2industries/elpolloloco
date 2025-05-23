@@ -21,3 +21,35 @@ const level1 = new Level(
   ]
   //#endregion
 );
+
+
+/*   checkCollectibleCoinCollision() {
+    setInterval(() => {
+      if (this.character.isColliding(coin)) {
+        for (let i = 0; i < this.level.coins.length; i++) {
+          const element = this.level.coins[index];
+          console.log(element);
+          this.character.hitCoin();
+                    this.coinbar.setPercentage(
+            this.character.coins,
+            ImageHub.IMAGES_STATUS_COIN
+          );
+        }
+      }
+    }, 100);
+  }
+ */
+/* 
+    checkCollectibleCoinCollision() {
+    setInterval(() => {
+      this.level.coins.forEach((coin) => {
+        if (this.character.isColliding(coin)) {
+          this.character.hitCoin();
+          this.coinbar.setPercentage(
+            this.character.coins,
+            ImageHub.IMAGES_STATUS_COIN
+          );
+        }
+      });
+    }, 100);
+  } */

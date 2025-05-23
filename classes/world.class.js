@@ -52,37 +52,31 @@ class World {
     }, 100);
   }
 
-  checkCollectibleBottleCollision() {
-    setInterval(() => {
-      this.level.bottles.forEach((bottle) => {
-        if (this.character.isColliding(bottle)) {
-          this.character.hitBottle();
-          this.bottlebar.setPercentage(
-            this.character.bottles,
-            ImageHub.IMAGES_STATUS_BOTTLE
-          ); // bottle bar status
-          /*           console.log("FLASCHE BERÜHRT");
-           */
-        }
-      });
-    }, 100);
-  }
+checkCollectibleBottleCollision() {
+  setInterval(() => {
+    for (let i = 0; i < this.level.bottles.length; i++) {
+      if (this.character.isColliding(this.level.bottles[i])) {
+        this.level.bottles.splice(i, 1); // removest the coin from array level
+        this.character.hitBottle(); 
+        this.bottlebar.setPercentage(this.character.bottles, ImageHub.IMAGES_STATUS_BOTTLE);
+        break; // is a better option to return for multiple execution than return
+      }
+    }
+  }, 100);
+}
 
-  checkCollectibleCoinCollision() {
-    setInterval(() => {
-      this.level.coins.forEach((coin) => {
-        if (this.character.isColliding(coin)) {
-          this.character.hitCoin();
-          this.coinbar.setPercentage(
-            this.character.coins,
-            ImageHub.IMAGES_STATUS_COIN
-          ); // coin bar status
-          /*           console.log("COIN BERÜHRT");
-           */
-        }
-      });
-    }, 100);
-  }
+checkCollectibleCoinCollision() {
+  setInterval(() => {
+    for (let i = 0; i < this.level.coins.length; i++) {
+      if (this.character.isColliding(this.level.coins[i])) {
+        this.level.coins.splice(i, 1); // removest the coin from array level
+        this.character.hitCoin(); 
+        this.coinbar.setPercentage(this.character.coins, ImageHub.IMAGES_STATUS_COIN);
+        break; // is a better option to return for multiple execution than return
+      }
+    }
+  }, 100);
+}
 
   run() {
     setInterval(() => {
@@ -94,14 +88,13 @@ class World {
     if (Keyboard.F && this.character.bottles <= 100) {
       let bottle = new ThrowableObject(this.character.x, this.character.y);
       this.throwableBottle.push(bottle);
-      console.log(this.character.bottles);
-      
       this.character.bottles += 20
       this.bottlebar.setPercentage(
         this.character.bottles,
         ImageHub.IMAGES_STATUS_BOTTLE
       );
     }
+    Keyboard.F = false; //no fullauto
   }
 
   draw() {
