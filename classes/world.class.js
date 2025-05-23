@@ -91,10 +91,16 @@ class World {
   }
 
   checkThrowObjects() {
-    if (Keyboard.F && this.character.bottles < 100) {
+    if (Keyboard.F && this.character.bottles <= 100) {
       let bottle = new ThrowableObject(this.character.x, this.character.y);
       this.throwableBottle.push(bottle);
-      this.character.bottles += 20;
+      console.log(this.character.bottles);
+      
+      this.character.bottles += 20
+      this.bottlebar.setPercentage(
+        this.character.bottles,
+        ImageHub.IMAGES_STATUS_BOTTLE
+      );
     }
   }
 
@@ -129,11 +135,6 @@ class World {
   setWorld() {
     this.character.world = this; //why? this is die instanz aus world?
   }
-
-  /*   run(){ // method with setinterval to store methods that need setinterval 
-    setInterval(() => {
-    }, 200);
-  } */
 
   addObjectsToMap(mo) {
     mo.forEach((o) => {

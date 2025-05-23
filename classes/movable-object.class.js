@@ -4,7 +4,7 @@ class MovableObject extends DrawableObject {
   otherDirection = false; // to flip an image
 
   energy = 100; //healthbar property
-  bottles = 100; //bottlebar
+  bottles = 120; //bottlebar
   coins = 100; //coinsbar
   acceleration = 2;
 
@@ -65,12 +65,18 @@ class MovableObject extends DrawableObject {
     }
   }
 
-  hitBottle() {
+hitBottle() {
+  if (this.bottles >= 20) {
+
     this.bottles -= 20;
-    if (this.bottles <= 0) {
-      this.bottles = 0;
-    }
+        console.log(this.bottles + "abfrage 1");
+
+  } else {
+    this.bottles = 0;
+        console.log(this.bottles + "abfrage 2");
+
   }
+}
 
   hitCoin() {
     if (this.coin == 100) {
