@@ -28,6 +28,7 @@ class Character extends MovableObject {
     this.loadImages(ImageHub.CHARACTER_IMAGES_WALKING); // walking animation
     this.loadImages(ImageHub.CHARACTER_IMAGES_HURT); // hurt animation
     this.loadImages(ImageHub.CHARACTER_IMAGES_DEAD); // dead animation
+    this.loadImages(ImageHub.CHARACTER_IMAGES_IDLE);
     this.applyGravity();
     this.animate();
   }
@@ -49,10 +50,9 @@ class Character extends MovableObject {
         this.jump();
       }
 
-          //movement camera
+      //movement camera
       this.world.camera_x = -this.x + 100;
     }, 1000 / 60);
-
 
     //animation for movement right & left
     setInterval(() => {
@@ -82,7 +82,21 @@ class Character extends MovableObject {
         this.playAnimation(ImageHub.CHARACTER_IMAGES_HURT);
       }
     }, 100);
+
+    setInterval(() => {
+      if (
+        !Keyboard.RIGHT &&
+        !Keyboard.LEFT &&
+        !Keyboard.UP &&
+        !Keyboard.DOWN &&
+        !Keyboard.SPACE &&
+        !Keyboard.F
+      ) {
+        this.playAnimation(ImageHub.CHARACTER_IMAGES_IDLE);
+      }
+    }, 200);
   }
+
   moveRight() {
     this.x += this.speed;
   }

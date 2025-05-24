@@ -55,7 +55,7 @@ checkCollisionsEnemyBottle() {
       if (bottle.isColliding(this.level.enemies[j])) {
         this.level.enemies.splice(j, 1);
         console.log("Gegner wurde getroffen und entfernt");
-        this.throwableBottle.splice(i, 1);  // Flasche ebenfalls entfernen
+        this.throwableBottle.splice(i, 1);  // delete bottle @ collision 
         break;
       }
     }
