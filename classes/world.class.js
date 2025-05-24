@@ -46,10 +46,25 @@ class World {
       }
     });
   }
+  
+  
+checkCollisionsEnemyBottle() {
+  for (let i = 0; i < this.throwableBottle.length; i++) {
+    const bottle = this.throwableBottle[i];
+    for (let j = 0; j < this.level.enemies.length; j++) {
+      if (bottle.isColliding(this.level.enemies[j])) {
+        this.level.enemies.splice(j, 1);
+        console.log("Gegner wurde getroffen und entfernt");
+        this.throwableBottle.splice(i, 1);  // Flasche ebenfalls entfernen
+        break;
+      }
+    }
+  }
+}
 
   checkCollisionsBottle() {
     for (let i = 0; i < this.throwableBottle.length; i++) {
-      const bottle = this.throwableBottle[i]; // the for loop is nesseccary, .isColliding() method only exist for individual ThrowableObject instances not for the array itself 
+      const bottle = this.throwableBottle[i];// the for loop is nesseccary, .isColliding() method only exist for individual ThrowableObject instances not for the array itself 
       this.level.enemies.forEach((enemy) => { //for every instanze of enemies
         if (bottle.isColliding(enemy)) { // check if the bottle instance is colliding with enemy instanc
           console.log(enemy + " wurde getroffen!");
@@ -57,6 +72,7 @@ class World {
       });
     }
   }
+  
 
   checkCollectibleBottleCollision() {
     for (let i = 0; i < this.level.bottles.length; i++) {
@@ -94,6 +110,7 @@ class World {
       this.checkCollectibleBottleCollision();
       this.checkCollectibleCoinCollision();
       this.checkCollisionsBottle();
+      this.checkCollisionsEnemyBottle();
     }, 100);
   }
 

@@ -1,5 +1,8 @@
 class Chicken extends MovableObject {
 //#region attributes
+
+chickenEnergy = 100;
+
   height = 80;
   y = 350;
   width = 70;
@@ -15,7 +18,7 @@ class Chicken extends MovableObject {
 //#region constructor
   constructor() {
     super().loadImage(ImageHub.CHICKEN_IMAGES_WALKING[0]);
-    this.x = 200 + Math.random() * 500;
+    this.x = 600 + Math.random() * 500;
     this.loadImages(ImageHub.CHICKEN_IMAGES_WALKING);
     this.animate();
   }
