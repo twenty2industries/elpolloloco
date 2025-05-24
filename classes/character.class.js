@@ -17,6 +17,8 @@ class Character extends MovableObject {
   speedY = 0;
   acceleration = 0.5;
 
+  idleTimer = 0; // track idleTimer for long idle animation
+
   drawableObjektInstance = new DrawableObject();
   throwableObjectBottle = new ThrowableObject();
   //#endregion
@@ -28,7 +30,8 @@ class Character extends MovableObject {
     this.loadImages(ImageHub.CHARACTER_IMAGES_WALKING); // walking animation
     this.loadImages(ImageHub.CHARACTER_IMAGES_HURT); // hurt animation
     this.loadImages(ImageHub.CHARACTER_IMAGES_DEAD); // dead animation
-    this.loadImages(ImageHub.CHARACTER_IMAGES_IDLE);
+    this.loadImages(ImageHub.CHARACTER_IMAGES_IDLE); // short idle animation
+    this.loadImages(ImageHub.CHARACTER_IMAGES_LONG_IDLE); //long idle animation
     this.applyGravity();
     this.animate();
   }
@@ -84,17 +87,26 @@ class Character extends MovableObject {
     }, 100);
 
     setInterval(() => {
-      if (
+      const noKeyPressed =
         !Keyboard.RIGHT &&
         !Keyboard.LEFT &&
         !Keyboard.UP &&
         !Keyboard.DOWN &&
         !Keyboard.SPACE &&
-        !Keyboard.F
-      ) {
-        this.playAnimation(ImageHub.CHARACTER_IMAGES_IDLE);
+        !Keyboard.F;
+
+      if (noKeyPressed) {
+        this.idleTimer += 200; // add time in 100 = every 100 ms 
+        this.playAnimation(ImageHub.CHARACTER_IMAGES_IDLE); // plays idle animation if noKeyPressed
+
+        if (this.idleTimer >= 5000) { //interval ticks 50 times = 5000ms long idle animation starts 
+          // Nach 5 Sekunden
+          this.playAnimation(ImageHub.CHARACTER_IMAGES_LONG_IDLE);
+        }
+      } else {
+        this.idleTimer = 0; // sets back timer if noKeyPressed is negotiated 
       }
-    }, 200);
+    }, 200); 
   }
 
   moveRight() {
