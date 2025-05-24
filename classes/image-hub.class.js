@@ -131,5 +131,20 @@ class ImageHub {
     "img/4_enemie_boss_chicken/2_alert/G11.png",
     "img/4_enemie_boss_chicken/2_alert/G12.png",
   ];
+
+  static BOSS_IMAGES_HURT = [
+    "img/4_enemie_boss_chicken/4_hurt/G21.png",
+    "img/4_enemie_boss_chicken/4_hurt/G22.png",
+    "img/4_enemie_boss_chicken/4_hurt/G23.png",
+  ];
+  
+  static BOSS_IMAGES_STATUS_HEALTH = [
+    "img/7_statusbars/2_statusbar_endboss/blue/blue0.png",
+    "img/7_statusbars/2_statusbar_endboss/blue/blue20.png",
+    "img/7_statusbars/2_statusbar_endboss/blue/blue40.png",
+    "img/7_statusbars/2_statusbar_endboss/blue/blue60.png",
+    "img/7_statusbars/2_statusbar_endboss/blue/blue80.png",
+    "img/7_statusbars/2_statusbar_endboss/blue/blue100.png",
+  ];
   //#endregion
 }

@@ -20,6 +20,7 @@ class World {
   healtbar = new Healthbar();
   coinbar = new Coinbar();
   bottlebar = new Bottlebar();
+  endbossHealthbar = new EndbossHealthBar();
 
   //#endregion
   //#region constructor
@@ -34,7 +35,7 @@ class World {
   }
   //#endregion
   //#region methods
-//#region collision methods
+  //#region collision methods
   checkCollisions() {
     this.level.enemies.forEach((enemy) => {
       if (this.character.isColliding(enemy)) {
@@ -46,33 +47,33 @@ class World {
       }
     });
   }
-  
-  
-checkCollisionsEnemyBottle() {
-  for (let i = 0; i < this.throwableBottle.length; i++) {
-    const bottle = this.throwableBottle[i];
-    for (let j = 0; j < this.level.enemies.length; j++) {
-      if (bottle.isColliding(this.level.enemies[j])) {
-        this.level.enemies.splice(j, 1);
-        console.log("Gegner wurde getroffen und entfernt");
-        this.throwableBottle.splice(i, 1);  // delete bottle @ collision 
-        break;
+
+  checkCollisionsEnemyBottle() {
+    for (let i = 0; i < this.throwableBottle.length; i++) {
+      const bottle = this.throwableBottle[i];
+      for (let j = 0; j < this.level.enemies.length; j++) {
+        if (bottle.isColliding(this.level.enemies[j])) {
+          this.level.enemies.splice(j, 1);
+          console.log("Gegner wurde getroffen und entfernt");
+          this.throwableBottle.splice(i, 1); // delete bottle @ collision
+          break;
+        }
       }
     }
   }
-}
 
   checkCollisionsBottle() {
     for (let i = 0; i < this.throwableBottle.length; i++) {
-      const bottle = this.throwableBottle[i];// the for loop is nesseccary, .isColliding() method only exist for individual ThrowableObject instances not for the array itself 
-      this.level.enemies.forEach((enemy) => { //for every instanze of enemies
-        if (bottle.isColliding(enemy)) { // check if the bottle instance is colliding with enemy instanc
+      const bottle = this.throwableBottle[i]; // the for loop is nesseccary, .isColliding() method only exist for individual ThrowableObject instances not for the array itself
+      this.level.enemies.forEach((enemy) => {
+        //for every instanze of enemies
+        if (bottle.isColliding(enemy)) {
+          // check if the bottle instance is colliding with enemy instanc
           console.log(enemy + " wurde getroffen!");
         }
       });
     }
   }
-  
 
   checkCollectibleBottleCollision() {
     for (let i = 0; i < this.level.bottles.length; i++) {
@@ -102,7 +103,7 @@ checkCollisionsEnemyBottle() {
       }
     }
   }
-//#endregion
+  //#endregion
   run() {
     setInterval(() => {
       this.checkCollisions();
@@ -147,7 +148,9 @@ checkCollisionsEnemyBottle() {
     this.addToMap(this.healtbar);
     this.addToMap(this.coinbar);
     this.addToMap(this.bottlebar);
-
+    if (this.character.x > 2000) { // if close to enndboss then show endboss health
+      this.addToMap(this.endbossHealthbar);
+    }
     //draw() wird immer wieder aufgerufen
     let self = this;
     requestAnimationFrame(function () {

@@ -18,7 +18,7 @@ chickenEnergy = 100;
 //#region constructor
   constructor() {
     super().loadImage(ImageHub.CHICKEN_IMAGES_WALKING[0]);
-    this.x = 600 + Math.random() * 500;
+    this.x = 300 + Math.random() * 500;
     this.loadImages(ImageHub.CHICKEN_IMAGES_WALKING);
     this.animate();
   }

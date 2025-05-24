@@ -4,9 +4,11 @@ class MovableObject extends DrawableObject {
   otherDirection = false; // to flip an image
 
   energy = 100; //healthbar property
-  bottles = 120; //bottlebar
+  bottles = 100; //bottlebar
   coins = 100; //coinsbar
   acceleration = 2;
+
+  idleTimer = 0; // track idleTimer for long idle animation
 
   lastHit = 0;
   idle = false;
@@ -56,6 +58,7 @@ class MovableObject extends DrawableObject {
   hit() {
     if (this.isDeadFlag) return; //
     this.energy -= 5;
+    this.idleTimer = 0; // track idleTimer for long idle animation
     if (this.energy <= 0 && !this.isDeadFlag) {
       this.energy = 0;
       this.isDeadFlag = true;
@@ -67,10 +70,10 @@ class MovableObject extends DrawableObject {
   hitBottle() {
     if (this.bottles >= 20) {
       this.bottles -= 20;
-      console.log(this.bottles + "abfrage 1");
+      console.log(this.bottles + " abfrage 1");
     } else {
       this.bottles = 0;
-      console.log(this.bottles + "abfrage 2");
+      console.log(this.bottles + " abfrage 2");
     }
   }
 

@@ -1,14 +1,13 @@
 class Endboss extends MovableObject {
   //#region attributes
 
-  endbossEnergy = 100;
-
   offset = {
     top: 10,
     right: 70,
     bottom: 70,
     left: 10,
   };
+  
   //#endregion
   //#region constructor
   constructor() {

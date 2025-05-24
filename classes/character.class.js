@@ -3,6 +3,7 @@ class Character extends MovableObject {
   height = 200;
   y = 230;
   speed = 10;
+  static x = 100;
 
   rX;
 
@@ -16,8 +17,6 @@ class Character extends MovableObject {
   world;
   speedY = 0;
   acceleration = 0.5;
-
-  idleTimer = 0; // track idleTimer for long idle animation
 
   drawableObjektInstance = new DrawableObject();
   throwableObjectBottle = new ThrowableObject();
@@ -95,12 +94,11 @@ class Character extends MovableObject {
         !Keyboard.SPACE &&
         !Keyboard.F;
 
-      if (noKeyPressed) {
+      if (noKeyPressed && !this.isDead()) {
         this.idleTimer += 200; // add time in 100 = every 100 ms 
         this.playAnimation(ImageHub.CHARACTER_IMAGES_IDLE); // plays idle animation if noKeyPressed
 
         if (this.idleTimer >= 5000) { //interval ticks 50 times = 5000ms long idle animation starts 
-          // Nach 5 Sekunden
           this.playAnimation(ImageHub.CHARACTER_IMAGES_LONG_IDLE);
         }
       } else {
