@@ -57,11 +57,13 @@ class MovableObject extends DrawableObject {
 
   hit() {
     if (this.isDeadFlag) return; //
-    this.energy -= 50;
+    this.energy -= 5;
     this.idleTimer = 0; // track idleTimer for long idle animation
     if (this.energy <= 0 && !this.isDeadFlag) {
       this.energy = 0;
       this.isDeadFlag = true;
+      console.log(this.isDeadFlag);
+      
     } else if (this.energy > 0) {
       this.lastHit = new Date().getTime(); // last collision contact getting saved to calculate time passed
     }
@@ -70,10 +72,8 @@ class MovableObject extends DrawableObject {
   hitBottle() {
     if (this.bottles >= 20) {
       this.bottles -= 20;
-      console.log(this.bottles + " abfrage 1");
     } else {
       this.bottles = 0;
-      console.log(this.bottles + " abfrage 2");
     }
   }
 

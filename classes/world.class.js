@@ -38,7 +38,9 @@ class World {
   //#region collision methods
   checkCollisions() {
     this.level.enemies.forEach((enemy) => {
-      if (this.character.isColliding(enemy)) {
+      if (this.character.isColliding(enemy) && !enemy.isDeadFlag) {
+        console.log(enemy.isDeadFlag);
+        
         this.character.hit(); //energy is the healthbar
         this.healtbar.setPercentage(
           this.character.energy,
@@ -55,7 +57,6 @@ class World {
         if (bottle.isColliding(this.level.enemies[j])) {
           this.level.enemies[j].hit();
           console.log(this.level.enemies[j].energy);
-          console.log(this.level.enemies[j].lastHit)
           this.endbossHealthbar.setPercentage(this.level.enemies[j].energy, ImageHub.BOSS_IMAGES_STATUS_HEALTH)
           this.throwableBottle.splice(i, 1); // delete bottle @ collision
           break;
@@ -106,7 +107,7 @@ class World {
   }
 
   checkThrowObjects() {
-    if (Keyboard.F && this.character.bottles <= 100) {
+    if (Keyboard.F) {
       let bottle = new ThrowableObject(this.character.x, this.character.y);
       this.throwableBottle.push(bottle);
       this.character.bottles += 20;

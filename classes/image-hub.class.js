@@ -118,6 +118,10 @@ class ImageHub {
     "img/3_enemies_chicken/chicken_normal/1_walk/3_w.png",
   ];
 
+  static CHICKEN_IMAGES_DEAD = [
+    "img/3_enemies_chicken/chicken_normal/2_dead/dead.png",
+  ];
+
   //endboss
   static BOSS_IMAGES_ALERT = [
     "img/4_enemie_boss_chicken/2_alert/G5.png",
