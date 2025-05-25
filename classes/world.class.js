@@ -40,7 +40,7 @@ class World {
     this.level.enemies.forEach((enemy) => {
       if (this.character.isColliding(enemy) && !enemy.isDeadFlag) {
         console.log(enemy.isDeadFlag);
-        
+
         this.character.hit(); //energy is the healthbar
         this.healtbar.setPercentage(
           this.character.energy,
@@ -50,22 +50,24 @@ class World {
     });
   }
 
-  checkCollisionsEnemyBottle() { 
+  checkCollisionsEnemyBottle() {
     for (let i = 0; i < this.throwableBottle.length; i++) {
       const bottle = this.throwableBottle[i];
       for (let j = 0; j < this.level.enemies.length; j++) {
         if (bottle.isColliding(this.level.enemies[j])) {
           this.level.enemies[j].hit();
-          console.log(this.level.enemies[j].energy);
-          this.endbossHealthbar.setPercentage(this.level.enemies[j].energy, ImageHub.BOSS_IMAGES_STATUS_HEALTH)
+          if (this.level.enemies[j] instanceof Endboss) { //instanceof fixed the bug displaying boss hp 0 until the first attack 
+            this.endbossHealthbar.setPercentage(
+              this.level.enemies[j].energy,
+              ImageHub.BOSS_IMAGES_STATUS_HEALTH
+            );
+          }
           this.throwableBottle.splice(i, 1); // delete bottle @ collision
           break;
         }
       }
     }
   }
-
-
 
   checkCollectibleBottleCollision() {
     for (let i = 0; i < this.level.bottles.length; i++) {
@@ -96,7 +98,7 @@ class World {
     }
   }
   //#endregion
-  run() {
+  run() { // runs the methods in setInterval
     setInterval(() => {
       this.checkCollisions();
       this.checkThrowObjects();
@@ -139,7 +141,8 @@ class World {
     this.addToMap(this.healtbar);
     this.addToMap(this.coinbar);
     this.addToMap(this.bottlebar);
-    if (this.character.x > 2000) { // if close to enndboss then show endboss health
+    if (this.character.x > 2000) {
+      // if close to enndboss then show endboss health
       this.addToMap(this.endbossHealthbar);
     }
     //draw() wird immer wieder aufgerufen
