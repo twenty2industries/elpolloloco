@@ -1,14 +1,12 @@
 class ImageHub {
-//#region attributes
+  //#region attributes
   // grounditems
   static salsabottle = [
     "img/6_salsa_bottle/1_salsa_bottle_on_ground.png",
     "img/6_salsa_bottle/2_salsa_bottle_on_ground.png",
   ];
   // air
-  static coin = [
-    "img/8_coin/coin_1.png", "img/8_coin/coin_2.png"
-  ];
+  static coin = ["img/8_coin/coin_1.png", "img/8_coin/coin_2.png"];
 
   //character
   static CHARACTER_IMAGES_WALKING = [
@@ -121,7 +119,7 @@ class ImageHub {
   ];
 
   //endboss
-  static BOSS_IMAGES_WALKING = [
+  static BOSS_IMAGES_ALERT = [
     "img/4_enemie_boss_chicken/2_alert/G5.png",
     "img/4_enemie_boss_chicken/2_alert/G6.png",
     "img/4_enemie_boss_chicken/2_alert/G7.png",
@@ -137,7 +135,7 @@ class ImageHub {
     "img/4_enemie_boss_chicken/4_hurt/G22.png",
     "img/4_enemie_boss_chicken/4_hurt/G23.png",
   ];
-  
+
   static BOSS_IMAGES_STATUS_HEALTH = [
     "img/7_statusbars/2_statusbar_endboss/blue/blue100.png",
     "img/7_statusbars/2_statusbar_endboss/blue/blue80.png",
@@ -145,6 +143,12 @@ class ImageHub {
     "img/7_statusbars/2_statusbar_endboss/blue/blue40.png",
     "img/7_statusbars/2_statusbar_endboss/blue/blue20.png",
     "img/7_statusbars/2_statusbar_endboss/blue/blue0.png",
+  ];
+
+  static BOSS_IMAGES_DEAD = [
+    "img/4_enemie_boss_chicken/5_dead/G24.png",
+    "img/4_enemie_boss_chicken/5_dead/G25.png",
+    "img/4_enemie_boss_chicken/5_dead/G26.png",
   ];
   //#endregion
 }
