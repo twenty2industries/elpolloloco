@@ -8,7 +8,7 @@ class EndbossHealthBar extends DrawableObject {
 
 //#region methods
   constructor() {
-    super().loadImage(ImageHub.BOSS_IMAGES_STATUS_HEALTH[5]);
+    super().loadImage(ImageHub.BOSS_IMAGES_STATUS_HEALTH[0]);
   }
 //#endregion
 }
