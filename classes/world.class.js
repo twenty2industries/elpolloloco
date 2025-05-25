@@ -3,8 +3,6 @@ class World {
 
   character = new Character();
 
-  endboss = new Endboss();
-
   level = level1;
 
   backgroundObjects = [];
@@ -55,9 +53,10 @@ class World {
       const bottle = this.throwableBottle[i];
       for (let j = 0; j < this.level.enemies.length; j++) {
         if (bottle.isColliding(this.level.enemies[j])) {
-          this.endboss.hit();
-          console.log(this.endboss.energy);
-          this.endbossHealthbar.setPercentage(this.endboss.energy, ImageHub.BOSS_IMAGES_STATUS_HEALTH)
+          this.level.enemies[j].hit();
+          console.log(this.level.enemies[j].energy);
+          console.log(this.level.enemies[j].lastHit)
+          this.endbossHealthbar.setPercentage(this.level.enemies[j].energy, ImageHub.BOSS_IMAGES_STATUS_HEALTH)
           this.throwableBottle.splice(i, 1); // delete bottle @ collision
           break;
         }
