@@ -10,6 +10,7 @@ class MovableObject extends DrawableObject {
 
   idleTimer = 0; // track idleTimer for long idle animation
 
+
   lastHit = 0;
   idle = false;
   isDeadFlag = false; // um die animation dead zu stopppen IF Abfrage
@@ -54,21 +55,25 @@ class MovableObject extends DrawableObject {
       this.y < mo.y + mo.height
     );
   }
+hit() {
+  if (this.hasDealtDamage) return; // prevent multiple damage hits
+  this.hasDealtDamage = true; // mark that damage has been dealt
 
-  hit() {
-    if (this instanceof Endboss && !this.isDeadFlag) { //if the hit instance is endboss bottle makes -20 hp dmg instead of 5 
-      this.energy -=20;
-    } else if (this.isDeadFlag) return; //
-    this.energy -= 5;
-    this.idleTimer = 0; // track idleTimer for long idle animation
-    if (this.energy <= 0 && !this.isDeadFlag) {
-      this.energy = 0;
-      this.isDeadFlag = true;
-      console.log(this.isDeadFlag);
-    } else if (this.energy > 0) {
-      this.lastHit = new Date().getTime(); // last collision contact getting saved to calculate time passed
-    }
+  if (this instanceof Endboss && !this.isDeadFlag) {
+    // if the hit instance is endboss, bottle makes -20 hp dmg instead of 5
+    this.energy -= 20;
+  } else if (this.isDeadFlag) return; //
+  
+  this.energy -= 5;
+  this.idleTimer = 0; // track idleTimer for long idle animation
+
+  if (this.energy <= 0 && !this.isDeadFlag) {
+    this.energy = 0;
+    this.isDeadFlag = true;
+  } else if (this.energy > 0) {
+    this.lastHit = new Date().getTime(); // last collision contact getting saved to calculate time passed
   }
+}
 
   hitBottle() {
     if (this.bottles >= 20) {
@@ -109,7 +114,11 @@ class MovableObject extends DrawableObject {
 
   applyGravity() {
     setInterval(() => {
-      if (this.isAboveGround() || this.speedY > 0) {
+      if (this.collided) {
+        this.speedY = 0;
+                this.acceleration = 0;
+        return; // Gravity stoppen
+      } else if (this.isAboveGround() || this.speedY > 0) {
         // this.y smaller than 230
         this.y -= this.speedY; // attribute this.y from character -= speed for gravity
         this.speedY -= this.acceleration; // speed for gravity -= acceleration, the character will fall faster every interval

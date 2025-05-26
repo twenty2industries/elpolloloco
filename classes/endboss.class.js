@@ -1,6 +1,8 @@
 class Endboss extends MovableObject {
   //#region attributes
 
+  energy = 120;
+
   offset = {
     top: 10,
     right: 70,

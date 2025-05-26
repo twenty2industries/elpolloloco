@@ -39,8 +39,6 @@ class World {
   checkCollisions() {
     this.level.enemies.forEach((enemy) => {
       if (this.character.isColliding(enemy) && !enemy.isDeadFlag) {
-        console.log(enemy.isDeadFlag);
-
         this.character.hit(); //energy is the healthbar
         this.healtbar.setPercentage(
           this.character.energy,
@@ -54,15 +52,20 @@ class World {
     for (let i = 0; i < this.throwableBottle.length; i++) {
       const bottle = this.throwableBottle[i];
       for (let j = 0; j < this.level.enemies.length; j++) {
-        if (bottle.isColliding(this.level.enemies[j])) {
+        if (bottle.isColliding(this.level.enemies[j]) && this.level.enemies[j].energy > 0) {
           this.level.enemies[j].hit();
-          if (this.level.enemies[j] instanceof Endboss) { //instanceof fixed the bug displaying boss hp 0 until the first attack 
+          bottle.collided = true; //flag for splash animation @throwableObject
+          bottle.isThrown = false; // stop throw motion
+          if (this.level.enemies[j] instanceof Endboss) {
+            console.log(this.level.enemies[j].energy);
+            
+            //instanceof fixed the bug displaying boss hp 0 until the first attack
             this.endbossHealthbar.setPercentage(
               this.level.enemies[j].energy,
               ImageHub.BOSS_IMAGES_STATUS_HEALTH
             );
           }
-          this.throwableBottle.splice(i, 1); // delete bottle @ collision
+          this.deleteSplashAnimation(bottle);
           break;
         }
       }
@@ -98,7 +101,8 @@ class World {
     }
   }
   //#endregion
-  run() { // runs the methods in setInterval
+  run() {
+    // runs the methods in setInterval
     setInterval(() => {
       this.checkCollisions();
       this.checkThrowObjects();
@@ -120,6 +124,16 @@ class World {
     }
     Keyboard.F = false; //no fullauto
   }
+
+deleteSplashAnimation(bottle) {
+  setTimeout(() => {
+    // find current index of the bottle to avoid wrong removal due to array changes
+    const index = this.throwableBottle.indexOf(bottle);
+    if (index > -1) {
+      this.throwableBottle.splice(index, 1); // delete bottle @ collision
+    }
+  }, 650);
+}
 
   draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
