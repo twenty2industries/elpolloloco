@@ -21,6 +21,7 @@ class World {
   coinbar = new Coinbar();
   bottlebar = new Bottlebar();
   endbossHealthbar = new EndbossHealthBar();
+  youWonScreen = new YouWonScreen();
 
   //#endregion
   //#region constructor
@@ -52,18 +53,17 @@ class World {
     for (let i = 0; i < this.throwableBottle.length; i++) {
       const bottle = this.throwableBottle[i];
       for (let j = 0; j < this.level.enemies.length; j++) {
-        if (bottle.isColliding(this.level.enemies[j]) && this.level.enemies[j].energy > 0) {
+        if (
+          bottle.isColliding(this.level.enemies[j]) &&
+          this.level.enemies[j].energy > 0
+        ) {
           this.level.enemies[j].hit();
           bottle.collided = true; //flag for splash animation @throwableObject
           bottle.isThrown = false; // stop throw motion
           if (this.level.enemies[j] instanceof Endboss) {
-            console.log(this.level.enemies[j].energy);
-            
+            console.log("The" + this.level.enemies[j] + " " + this.level.enemies[j].energy);
             //instanceof fixed the bug displaying boss hp 0 until the first attack
-            this.endbossHealthbar.setPercentage(
-              this.level.enemies[j].energy,
-              ImageHub.BOSS_IMAGES_STATUS_HEALTH
-            );
+            this.endbossHealthbar.setPercentage(this.level.enemies[j].energy, ImageHub.BOSS_IMAGES_STATUS_HEALTH);
           }
           this.deleteSplashAnimation(bottle);
           break;
@@ -125,15 +125,15 @@ class World {
     Keyboard.F = false; //no fullauto
   }
 
-deleteSplashAnimation(bottle) {
-  setTimeout(() => {
-    // find current index of the bottle to avoid wrong removal due to array changes
-    const index = this.throwableBottle.indexOf(bottle);
-    if (index > -1) {
-      this.throwableBottle.splice(index, 1); // delete bottle @ collision
-    }
-  }, 650);
-}
+  deleteSplashAnimation(bottle) {
+    setTimeout(() => {
+      // find current index of the bottle to avoid wrong removal due to array changes
+      const index = this.throwableBottle.indexOf(bottle);
+      if (index > -1) {
+        this.throwableBottle.splice(index, 1); // delete bottle @ collision
+      }
+    }, 450);
+  }
 
   draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -152,6 +152,12 @@ deleteSplashAnimation(bottle) {
     this.ctx.translate(-this.camera_x, 0);
 
     // fixed ui elements
+
+    // Check if any enemy is an instance of Endboss and has energy equal to 0
+    let endboss = this.level.enemies.find((enemy) => enemy instanceof Endboss);
+    if (endboss && endboss.energy === 0) {
+      this.addToMap(this.youWonScreen);
+    }
     this.addToMap(this.healtbar);
     this.addToMap(this.coinbar);
     this.addToMap(this.bottlebar);

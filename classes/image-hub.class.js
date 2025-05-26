@@ -171,5 +171,10 @@ class ImageHub {
     "img/6_salsa_bottle/bottle_rotation/bottle_splash/5_bottle_splash.png",
     "img/6_salsa_bottle/bottle_rotation/bottle_splash/6_bottle_splash.png",
   ];
+
+  //you-won-screen
+  static YOUWON_IMAGE = [
+    "img/You won, you lost/You won A.png",
+  ]
   //#endregion
 }
