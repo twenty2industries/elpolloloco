@@ -173,8 +173,9 @@ class ImageHub {
   ];
 
   //you-won-screen
-  static YOUWON_IMAGE = [
-    "img/You won, you lost/You won A.png",
-  ]
+  static YOUWON_IMAGE = ["img/You won, you lost/You won A.png"];
+
+  //you-lose-screen
+  static YOULOSE_IMAGE = ["img/You won, you lost/You lost.png"];
   //#endregion
 }

@@ -63,7 +63,7 @@ class MovableObject extends DrawableObject {
       this.energy -= 20;
     } else if (this.isDeadFlag) return; //
 
-    this.energy -= 5;
+    this.energy -= 20;
     this.idleTimer = 0; // track idleTimer for long idle animation
 
     if (this.energy <= 0 && !this.isDeadFlag) {

@@ -22,6 +22,7 @@ class World {
   bottlebar = new Bottlebar();
   endbossHealthbar = new EndbossHealthBar();
   youWonScreen = new YouWonScreen();
+  youLoseScreen = new YouLoseScreen();
 
   //#endregion
   //#region constructor
@@ -153,11 +154,15 @@ class World {
 
     // fixed ui elements
 
-    // Check if any enemy is an instance of Endboss and has energy equal to 0
-    let endboss = this.level.enemies.find((enemy) => enemy instanceof Endboss);
+    let endboss = this.level.enemies.find((enemy) => enemy instanceof Endboss);     // check if any enemy is an instance of Endboss and has energy equal to 0 with the method find()
     if (endboss && endboss.energy === 0) {
       this.addToMap(this.youWonScreen);
     }
+
+    if (this.character.energy <= 0) {
+      this.addToMap(this.youLoseScreen);
+    }
+
     this.addToMap(this.healtbar);
     this.addToMap(this.coinbar);
     this.addToMap(this.bottlebar);
