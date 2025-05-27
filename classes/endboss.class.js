@@ -22,31 +22,25 @@ class Endboss extends MovableObject {
     this.height = 400;
     this.width = 300;
     this.y = 50;
-    this.animate();
+    IntervalHub.startInterval(this.animate, 150);
   }
   //#endregion
   //#region methods
-  animate() {
+  animate = () => {
     //animation for alert
-    setInterval(() => {
       if (!this.isHurt() && !this.isDead()) {
         this.playAnimation(ImageHub.BOSS_IMAGES_ALERT);
       }
-    }, 150);
 
     //playAnimation for movement hurt
-    setInterval(() => {
-      if (this.isHurt()) {
+      else if (this.isHurt()) {
         this.playAnimation(ImageHub.BOSS_IMAGES_HURT);
       }
-    }, 150);
 
     //playAnimation for movement DEAD
-    setInterval(() => {
-      if (this.isDead()) {
+      else if (this.isDead()) {
         this.playAnimation(ImageHub.BOSS_IMAGES_DEAD);
       }
-    }, 200);
   }
   //#endregion
 }

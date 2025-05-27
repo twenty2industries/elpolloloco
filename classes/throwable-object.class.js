@@ -1,6 +1,6 @@
 class ThrowableObject extends MovableObject {
   //#region attributes
-  isThrown = false;
+  isThrown = false; //track down if throw() method has been executed
   collided = false;
 
   hasDealtDamage = true; // stop dmg for @throwableobject as soon its collides
@@ -17,17 +17,20 @@ class ThrowableObject extends MovableObject {
     this.height = 110;
     this.width = 100;
     this.throw();
-    this.animate();
+    IntervalHub.startInterval(this.animateBottleRotation, 1000 / 30);
+    IntervalHub.startInterval(this.animateBottleSplash, 1000 / 10);
   }
   //#endregion
   //#region methods
   throw() {
-    this.isThrown = true;
+    this.isThrown = true; // flag to track down roation motion
     this.hasDealtDamage = false; // stop dmg for @throwableobject as soon its collides
-
+    this.bottles -= 20;
     this.speedY = 20;
-    this.applyGravity();
+    IntervalHub.startInterval(this.applyGravity, 1000 / 60);
+
     this.throwInterval = setInterval(() => {
+      //no x speed so the bottle stops at collision point
       if (this.isThrown) {
         this.x += 20;
       } else {
@@ -35,20 +38,17 @@ class ThrowableObject extends MovableObject {
       }
     }, 1000 / 60);
   }
-  animate() {
+  animateBottleRotation = () => {
     //playAnimation for bottle rotation
-    setInterval(() => {
-      if (this.isThrown) {
-        this.playAnimation(ImageHub.BOTTLE_IMAGE_ROTATION);
-      }
-    }, 1000 / 30);
+    if (this.isThrown) {
+      this.playAnimation(ImageHub.BOTTLE_IMAGE_ROTATION);
+    }
+  }
 
-/*     this.splashInterval =  */setInterval(() => {
-      if (this.collided) {
-        this.playAnimation(ImageHub.BOTTLE_IMAGE_SPLASH);
-/*         clearInterval(this.splashInterval); // Intervall beenden
- */      }
-    }, 1000 / 10);
+  animateBottleSplash = () => {
+    if (this.collided) {
+      this.playAnimation(ImageHub.BOTTLE_IMAGE_SPLASH);
+    }
   }
   //#endregion
 }

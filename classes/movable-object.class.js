@@ -116,8 +116,7 @@ class MovableObject extends DrawableObject {
     }
   }
 
-  applyGravity() {
-    setInterval(() => {
+  applyGravity = () => {
       if (this.collided) {
         this.speedY = 0;
         this.acceleration = 0;
@@ -127,7 +126,6 @@ class MovableObject extends DrawableObject {
         this.y -= this.speedY; // attribute this.y from character -= speed for gravity
         this.speedY -= this.acceleration; // speed for gravity -= acceleration, the character will fall faster every interval
       }
-    }, 1000 / 60);
   }
 
   //#endregion

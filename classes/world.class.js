@@ -33,7 +33,7 @@ class World {
     this.draw();
     this.repeatMap();
     this.setWorld(); //why?
-    this.run();
+    IntervalHub.startInterval(this.run, 150);
   }
   //#endregion
   //#region methods
@@ -60,11 +60,16 @@ class World {
         ) {
           this.level.enemies[j].hit();
           bottle.collided = true; //flag for splash animation @throwableObject
-          bottle.isThrown = false; // stop throw motion
+          bottle.isThrown = false; // stop throw motion flag for throwable objects
           if (this.level.enemies[j] instanceof Endboss) {
-            console.log("The" + this.level.enemies[j] + " " + this.level.enemies[j].energy);
+            console.log(
+              "The" + this.level.enemies[j] + " " + this.level.enemies[j].energy
+            );
             //instanceof fixed the bug displaying boss hp 0 until the first attack
-            this.endbossHealthbar.setPercentage(this.level.enemies[j].energy, ImageHub.BOSS_IMAGES_STATUS_HEALTH);
+            this.endbossHealthbar.setPercentage(
+              this.level.enemies[j].energy,
+              ImageHub.BOSS_IMAGES_STATUS_HEALTH
+            );
           }
           this.deleteSplashAnimation(bottle);
           break;
@@ -102,21 +107,20 @@ class World {
     }
   }
   //#endregion
-  run() {
+  run = () => {
     // runs the methods in setInterval
-    setInterval(() => {
-      this.checkCollisions();
-      this.checkThrowObjects();
-      this.checkCollectibleBottleCollision();
-      this.checkCollectibleCoinCollision();
-      this.checkCollisionsEnemyBottle();
-    }, 100);
-  }
+    this.checkCollisions();
+    this.checkThrowObjects();
+    this.checkCollectibleBottleCollision();
+    this.checkCollectibleCoinCollision();
+    this.checkCollisionsEnemyBottle();
+  };
 
   checkThrowObjects() {
-    if (Keyboard.F) {
+    if (Keyboard.F && this.character.bottles < 100) {
       let bottle = new ThrowableObject(this.character.x, this.character.y);
       this.throwableBottle.push(bottle);
+      console.log(this.character.bottles);
       this.character.bottles += 20;
       this.bottlebar.setPercentage(
         this.character.bottles,
@@ -154,13 +158,18 @@ class World {
 
     // fixed ui elements
 
-    let endboss = this.level.enemies.find((enemy) => enemy instanceof Endboss);     // check if any enemy is an instance of Endboss and has energy equal to 0 with the method find()
+    let endboss = this.level.enemies.find((enemy) => enemy instanceof Endboss); // check if any enemy is an instance of Endboss and has energy equal to 0 with the method find()
     if (endboss && endboss.energy === 0) {
       this.addToMap(this.youWonScreen);
-    }
+      setTimeout(() => {
+      IntervalHub.stoppAllIntervals();        
+      }, 2000);    }
 
     if (this.character.energy <= 0) {
       this.addToMap(this.youLoseScreen);
+      setTimeout(() => {
+      IntervalHub.stoppAllIntervals();        
+      }, 2000);
     }
 
     this.addToMap(this.healtbar);

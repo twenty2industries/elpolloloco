@@ -1,5 +1,5 @@
 class ImageHub {
-  //#region attributes
+  //#region attributes IMAGES
   // grounditems
   static salsabottle = [
     "img/6_salsa_bottle/1_salsa_bottle_on_ground.png",
@@ -178,4 +178,17 @@ class ImageHub {
   //you-lose-screen
   static YOULOSE_IMAGE = ["img/You won, you lost/You lost.png"];
   //#endregion
+}
+
+class IntervalHub {
+  static allIntervals = [];
+
+  static startInterval(func,timer){
+    const newInterval = setInterval(func, timer);
+    IntervalHub.allIntervals.push(newInterval);
+  }
+
+  static stoppAllIntervals(){
+    IntervalHub.allIntervals.forEach(clearInterval);
+  }
 }
