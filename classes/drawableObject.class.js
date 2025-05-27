@@ -41,6 +41,7 @@ class DrawableObject {
       this instanceof Character ||
       this instanceof Chicken ||
       this instanceof Endboss ||
+      this instanceof SmallChicken ||
       this instanceof AirItems ||
       this instanceof GroundItems
     ) {

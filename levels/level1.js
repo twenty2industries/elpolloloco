@@ -1,6 +1,6 @@
 const level1 = new Level(
   //#region attributes
-  [new Chicken(), new Chicken(), new Chicken(), new Endboss()],
+  [new Chicken(), new Chicken(), new Chicken(), new SmallChicken(), new SmallChicken(), new Endboss()],
 
   [new Cloud()],
 

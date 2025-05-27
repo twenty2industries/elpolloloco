@@ -18,32 +18,31 @@ class Chicken extends MovableObject {
   //#region constructor
   constructor() {
     super().loadImage(ImageHub.CHICKEN_IMAGES_WALKING[0]);
-    this.x = 800 + Math.random() * 500;
+    this.x = 800 + Math.random() * 1600
     this.loadImages(ImageHub.CHICKEN_IMAGES_WALKING);
     this.loadImages(ImageHub.CHICKEN_IMAGES_DEAD);
     IntervalHub.startInterval(this.chickenMoveLeft, 1000 / 60);
     IntervalHub.startInterval(this.animateChickenWalking, 150);
-        IntervalHub.startInterval(this.animateChickenDead, 200);
-
+    IntervalHub.startInterval(this.animateChickenDead, 200);
   }
   //#endregion
   //#region methods
   chickenMoveLeft = () => {
-      if (!this.isDead()) {
-        this.moveLeft();
-      }
-  }
+    if (!this.isDead()) {
+      this.moveLeft();
+    }
+  };
 
   animateChickenWalking = () => {
-      if (!this.isDead()) {
-        this.playAnimation(ImageHub.CHICKEN_IMAGES_WALKING);
-      }
-  }
+    if (!this.isDead()) {
+      this.playAnimation(ImageHub.CHICKEN_IMAGES_WALKING);
+    }
+  };
 
   animateChickenDead = () => {
-      if (this.isDead() && this.isDeadFlag) {
-        this.playAnimation(ImageHub.CHICKEN_IMAGES_DEAD);
-      }
-  }
+    if (this.isDead() && this.isDeadFlag) {
+      this.playAnimation(ImageHub.CHICKEN_IMAGES_DEAD);
+    }
+  };
   //#endregion
 }

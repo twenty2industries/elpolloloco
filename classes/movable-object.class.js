@@ -50,10 +50,11 @@ class MovableObject extends DrawableObject {
     return (
       this.x + this.width > mo.x &&
       this.y + this.height > mo.y &&
-      this.x < mo.x &&
+      this.x < mo.x + mo.width &&
       this.y < mo.y + mo.height
     );
   }
+  
   hit() {
     if (this.hasDealtDamage) return; // prevent multiple damage hits
     this.hasDealtDamage = true; // mark that damage has been dealt
@@ -117,16 +118,16 @@ class MovableObject extends DrawableObject {
   }
 
   applyGravity = () => {
-      if (this.collided) {
-        this.speedY = 0;
-        this.acceleration = 0;
-        return; // Gravity stoppen
-      } else if (this.isAboveGround() || this.speedY > 0) {
-        // this.y smaller than 230
-        this.y -= this.speedY; // attribute this.y from character -= speed for gravity
-        this.speedY -= this.acceleration; // speed for gravity -= acceleration, the character will fall faster every interval
-      }
-  }
+    if (this.collided) {
+      this.speedY = 0;
+      this.acceleration = 0;
+      return; // Gravity stoppen
+    } else if (this.isAboveGround() || this.speedY > 0) {
+      // this.y smaller than 230
+      this.y -= this.speedY; // attribute this.y from character -= speed for gravity
+      this.speedY -= this.acceleration; // speed for gravity -= acceleration, the character will fall faster every interval
+    }
+  };
 
   //#endregion
 }

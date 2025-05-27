@@ -114,6 +114,7 @@ class World {
     this.checkCollectibleBottleCollision();
     this.checkCollectibleCoinCollision();
     this.checkCollisionsEnemyBottle();
+    this.addNewBottels();
   };
 
   checkThrowObjects() {
@@ -162,13 +163,14 @@ class World {
     if (endboss && endboss.energy === 0) {
       this.addToMap(this.youWonScreen);
       setTimeout(() => {
-      IntervalHub.stoppAllIntervals();        
-      }, 2000);    }
+        IntervalHub.stoppAllIntervals();
+      }, 2000);
+    }
 
     if (this.character.energy <= 0) {
       this.addToMap(this.youLoseScreen);
       setTimeout(() => {
-      IntervalHub.stoppAllIntervals();        
+        IntervalHub.stoppAllIntervals();
       }, 2000);
     }
 

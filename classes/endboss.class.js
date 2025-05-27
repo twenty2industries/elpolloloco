@@ -31,12 +31,10 @@ class Endboss extends MovableObject {
       if (!this.isHurt() && !this.isDead()) {
         this.playAnimation(ImageHub.BOSS_IMAGES_ALERT);
       }
-
     //playAnimation for movement hurt
       else if (this.isHurt()) {
         this.playAnimation(ImageHub.BOSS_IMAGES_HURT);
       }
-
     //playAnimation for movement DEAD
       else if (this.isDead()) {
         this.playAnimation(ImageHub.BOSS_IMAGES_DEAD);

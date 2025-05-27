@@ -38,7 +38,6 @@ class Character extends MovableObject {
     IntervalHub.startInterval(this.animateCharacterDead, 100);
     IntervalHub.startInterval(this.animateCharacterHurt, 100);
     IntervalHub.startInterval(this.animateIdleAnimations, 200);
-
   }
   //#endregion
   //#region methods
