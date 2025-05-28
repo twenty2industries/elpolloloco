@@ -11,8 +11,6 @@ class World {
 
   ctx;
 
-  keyboard;
-
   camera_x = 0;
 
   throwableBottle = [new ThrowableObject()];
@@ -26,14 +24,15 @@ class World {
 
   //#endregion
   //#region constructor
-  constructor(canvas, keyboard) {
+  constructor(canvas) {
     this.ctx = canvas.getContext("2d");
     this.canvas = canvas;
-    this.keyboard = keyboard;
     this.draw();
     this.repeatMap();
     this.setWorld(); //why?
+    this.level = createNewLevel()
     IntervalHub.startInterval(this.run, 150);
+    this.startBottleRespawnLoop();
   }
   //#endregion
   //#region methods
@@ -62,9 +61,6 @@ class World {
           bottle.collided = true; //flag for splash animation @throwableObject
           bottle.isThrown = false; // stop throw motion flag for throwable objects
           if (this.level.enemies[j] instanceof Endboss) {
-            console.log(
-              "The" + this.level.enemies[j] + " " + this.level.enemies[j].energy
-            );
             //instanceof fixed the bug displaying boss hp 0 until the first attack
             this.endbossHealthbar.setPercentage(
               this.level.enemies[j].energy,
@@ -121,7 +117,6 @@ class World {
     if (Keyboard.F && this.character.bottles < 100) {
       let bottle = new ThrowableObject(this.character.x, this.character.y);
       this.throwableBottle.push(bottle);
-      console.log(this.character.bottles);
       this.character.bottles += 20;
       this.bottlebar.setPercentage(
         this.character.bottles,
@@ -143,22 +138,17 @@ class World {
 
   draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
     // background camera offset
     this.ctx.translate(this.camera_x, 0);
     this.addObjectsToMap(this.backgroundObjects);
     this.addObjectsToMap(this.level.clouds);
     this.addToMap(this.character);
-
     this.addObjectsToMap(this.level.enemies);
     this.addObjectsToMap(this.throwableBottle);
-
     this.addObjectsToMap(this.level.bottles);
     this.addObjectsToMap(this.level.coins);
     this.ctx.translate(-this.camera_x, 0);
-
     // fixed ui elements
-
     let endboss = this.level.enemies.find((enemy) => enemy instanceof Endboss); // check if any enemy is an instance of Endboss and has energy equal to 0 with the method find()
     if (endboss && endboss.energy === 0) {
       this.addToMap(this.youWonScreen);
@@ -167,7 +157,6 @@ class World {
       }, 1000);
       displayRestartButton();
     }
-
     if (this.character.energy <= 0) {
       this.addToMap(this.youLoseScreen);
       setTimeout(() => {
@@ -175,7 +164,6 @@ class World {
       }, 1000);
       displayRestartButton();
     }
-
     this.addToMap(this.healtbar);
     this.addToMap(this.coinbar);
     this.addToMap(this.bottlebar);
@@ -255,5 +243,15 @@ class World {
     mo.x = mo.x * -1; // flip the x-coordinate here
     this.ctx.restore();
   }
+
+    startBottleRespawnLoop() {
+    setInterval(() => {
+      if (this.level.bottles.length === 0) {
+      this.level.bottles = [
+        new GroundItems(ImageHub.salsabottle[1]),
+      ];      }
+    }, 3000); // alle 3 Sekunden prüfen
+  }
+
   //#endregion
 }

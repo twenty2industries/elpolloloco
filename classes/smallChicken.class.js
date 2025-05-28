@@ -3,9 +3,9 @@ class SmallChicken extends MovableObject {
 
   energy = 5;
 
-  height = 80;
-  y = 350;
-  width = 70;
+  height = 60;
+  y = 370;
+  width = 55;
   speed = 0.3 + Math.random() * 1; // zufällige zahl zwischen 0.15 und 0.25
 
   offset = {

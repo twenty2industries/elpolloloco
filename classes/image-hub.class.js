@@ -201,5 +201,6 @@ class IntervalHub {
 
   static stoppAllIntervals(){
     IntervalHub.allIntervals.forEach(clearInterval);
+    IntervalHub.allIntervals = [];
   }
 }

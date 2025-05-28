@@ -71,6 +71,5 @@ function createNewLevel() {
 }
 
 function restartGame() {
-  IntervalHub.stoppAllIntervals();
   init();
 }
