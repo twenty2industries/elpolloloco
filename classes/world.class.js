@@ -106,7 +106,7 @@ class World {
       }
     }
   }
-  
+
   //#endregion
   run = () => {
     // runs the methods in setInterval
@@ -164,14 +164,16 @@ class World {
       this.addToMap(this.youWonScreen);
       setTimeout(() => {
         IntervalHub.stoppAllIntervals();
-      }, 2000);
+      }, 1000);
+      displayRestartButton();
     }
 
     if (this.character.energy <= 0) {
       this.addToMap(this.youLoseScreen);
       setTimeout(() => {
         IntervalHub.stoppAllIntervals();
-      }, 2000);
+      }, 1000);
+      displayRestartButton();
     }
 
     this.addToMap(this.healtbar);

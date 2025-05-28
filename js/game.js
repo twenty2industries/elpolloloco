@@ -24,11 +24,53 @@ document.addEventListener("keyup", (event) => {
   event.keyCode == 70 ? (Keyboard.F = false) : true;
 });
 
-function hideStartScreen() {
+function startGame() {
   const startScreenRef = document.getElementById("mainContent");
-    startScreenRef.classList.toggle('d_none');
+  startScreenRef.classList.toggle("d_none");
 
-  const canvasRef = document.getElementById('canvas');
-  canvasRef.classList.toggle('d_none');
+  const canvasRef = document.getElementById("canvas");
+  canvasRef.classList.toggle("d_none");
+
+  const startGameButtonRef = document.getElementById("startGameButton");
+  startGameButtonRef.classList.toggle("d_none");
+  init();
+}
+
+function displayRestartButton() {
+  const restartGameButtonRef = document.getElementById("restartGameButton");
+  restartGameButtonRef.classList.remove("d_none");
+}
+
+function createNewLevel() {
+  //why const level1 is not valueable here
+  return new Level(
+    [
+      new Chicken(),
+      new Chicken(),
+      new Chicken(),
+      new SmallChicken(),
+      new SmallChicken(),
+      new Endboss(),
+    ],
+    [new Cloud()],
+    [
+      new GroundItems(ImageHub.salsabottle[1]),
+      new GroundItems(ImageHub.salsabottle[0]),
+      new GroundItems(ImageHub.salsabottle[1]),
+      new GroundItems(ImageHub.salsabottle[1]),
+      new GroundItems(ImageHub.salsabottle[0]),
+    ],
+    [
+      new AirItems(ImageHub.coin[1]),
+      new AirItems(ImageHub.coin[0]),
+      new AirItems(ImageHub.coin[1]),
+      new AirItems(ImageHub.coin[0]),
+      new AirItems(ImageHub.coin[1]),
+    ]
+  );
+}
+
+function restartGame() {
+  IntervalHub.stoppAllIntervals();
   init();
 }

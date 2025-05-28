@@ -19,10 +19,6 @@ canvas {
   align-items: center;
   flex-direction: column;
 
-  .start_game_button {
-    position: absolute;
-    top: 120px;
-  }
 
   .controls {
     font-size: 18px;
@@ -62,6 +58,11 @@ canvas {
   }
 }
 
+
+  .start_game_button {
+    position: absolute;
+    top: 120px;
+  }
 .d_none {
   display: none;
 }
