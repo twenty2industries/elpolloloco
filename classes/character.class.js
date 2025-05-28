@@ -34,7 +34,7 @@ class Character extends MovableObject {
     IntervalHub.startInterval(this.applyGravity, 1000 / 60);
     IntervalHub.startInterval(this.characterMovement, 1000 / 60);
     IntervalHub.startInterval(this.animateCharacterWalking, 100);
-    IntervalHub.startInterval(this.animateCharacterJump, 300);
+    IntervalHub.startInterval(this.animateCharacterJump, 80);
     IntervalHub.startInterval(this.animateCharacterDead, 100);
     IntervalHub.startInterval(this.animateCharacterHurt, 100);
     IntervalHub.startInterval(this.animateIdleAnimations, 200);
@@ -59,7 +59,7 @@ class Character extends MovableObject {
 
   animateCharacterWalking = () => {
     //animation for movement right & left
-    if (Keyboard.RIGHT || Keyboard.LEFT) {
+    if ((Keyboard.RIGHT || Keyboard.LEFT) && !this.isAboveGround()) {
       this.playAnimation(ImageHub.CHARACTER_IMAGES_WALKING);
     }
   };
@@ -98,7 +98,7 @@ class Character extends MovableObject {
         this.idleTimer += 200; // add time in 100 = every 100 ms
         this.playAnimation(ImageHub.CHARACTER_IMAGES_IDLE); // plays idle animation if noKeyPressed
 
-        if (this.idleTimer >= 5000) {
+        if (this.idleTimer >= 5000 && !this.isAboveGround()) {
           //interval ticks 50 times = 5000ms long idle animation starts
           this.playAnimation(ImageHub.CHARACTER_IMAGES_LONG_IDLE);
         }
