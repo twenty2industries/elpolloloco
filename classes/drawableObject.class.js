@@ -64,9 +64,9 @@ class DrawableObject {
     this.rW = this.width - this.offset.left - this.offset.right;
     this.rH = this.height - this.offset.top - this.offset.bottom;
   }
-  
+
   setPercentage(percentage, imgPath) {
-    if (percentage > 100) {
+    if (percentage == 100) {
       this.loadImage(imgPath[0]);
       return;
     } else if (percentage > 80) {

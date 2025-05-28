@@ -106,6 +106,7 @@ class World {
       }
     }
   }
+  
   //#endregion
   run = () => {
     // runs the methods in setInterval
@@ -114,7 +115,6 @@ class World {
     this.checkCollectibleBottleCollision();
     this.checkCollectibleCoinCollision();
     this.checkCollisionsEnemyBottle();
-    this.addNewBottels();
   };
 
   checkThrowObjects() {

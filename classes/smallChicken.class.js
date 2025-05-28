@@ -18,7 +18,7 @@ class SmallChicken extends MovableObject {
   //#region constructor
   constructor() {
     super().loadImage(ImageHub.SMALL_CHICKEN_ENEMYS_WALK[0]);
-    this.x = 800 + Math.random() * 1600
+    this.x = 800 + Math.random() * 1600;
     this.loadImages(ImageHub.SMALL_CHICKEN_ENEMYS_WALK);
     this.loadImages(ImageHub.SMALL_CHICKEN_ENEMYS_DEAD);
     IntervalHub.startInterval(this.smallChickenMoveLeft, 1000 / 60);
