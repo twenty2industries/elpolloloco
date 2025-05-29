@@ -103,20 +103,20 @@ class World {
     }
   }
 
-checkBossProximity() {
-  let boss = this.level.enemies.find((enemy) => enemy instanceof Endboss);
-  if (boss) {
-    let character = this.character;
-    let distance = boss.x - character.x;
+  checkBossProximity() {
+    let boss = this.level.enemies.find((enemy) => enemy instanceof Endboss);
+    if (boss) {
+      let character = this.character;
+      let distance = boss.x - character.x;
 
-    if (distance < 200 && distance > 70) {
-      boss.bossProximity = true;
-      console.log("BOSS ZU NAHE ");
-    } else {
-      boss.bossProximity = false; 
+      if (distance < 200 && distance > 70) {
+        boss.bossProximity = true;
+        console.log("BOSS ZU NAHE ");
+      } else {
+        boss.bossProximity = false;
+      }
     }
   }
-}
 
   //#endregion
   run = () => {
@@ -129,19 +129,23 @@ checkBossProximity() {
     this.checkBossProximity();
   };
 
-checkThrowObjects() {
-  if (Keyboard.F && this.character.bottles < 100) {
-    // new ThrowableObject with character's otherDirection
-    let bottle = new ThrowableObject(this.character.x, this.character.y, this.character.otherDirection);
-    this.throwableBottle.push(bottle);
-    this.character.bottles += 20;
-    this.bottlebar.setPercentage(
-      this.character.bottles,
-      ImageHub.IMAGES_STATUS_BOTTLE
-    );
+  checkThrowObjects() {
+    if (Keyboard.F && this.character.bottles < 100) {
+      // new ThrowableObject with character's otherDirection
+      let bottle = new ThrowableObject(
+        this.character.x,
+        this.character.y,
+        this.character.otherDirection
+      );
+      this.throwableBottle.push(bottle);
+      this.character.bottles += 20;
+      this.bottlebar.setPercentage(
+        this.character.bottles,
+        ImageHub.IMAGES_STATUS_BOTTLE
+      );
+    }
+    Keyboard.F = false; // no fullauto
   }
-  Keyboard.F = false; // no fullauto
-}
 
   deleteSplashAnimation(bottle) {
     setTimeout(() => {

@@ -41,18 +41,19 @@ class Endboss extends MovableObject {
       this.playAnimation(ImageHub.BOSS_IMAGES_DEAD);
     }
     // animation for HURT
-    else if (this.isHurt()) {
+    /*     else if (this.isHurt()) {
       this.bossHurt = true;
       this.playAnimation(ImageHub.BOSS_IMAGES_HURT);
-    }
+    } */
     // play walk animation for dash mechanic oder wenn Boss zurückläuft
-    else if (this.bossWalkTrigger || this.isMovingBack()) {
+    else if (this.bossWalkTrigger) {
       this.playAnimation(ImageHub.BOSS_IMAGES_WALK);
     }
     // animation for alert (wenn Boss steht)
-    else {
+    else if (!this.isHurt()) {
       this.playAnimation(ImageHub.BOSS_IMAGES_ALERT);
       this.bossHurt = false;
+      this.bossWalkTrigger = false;
     }
   };
 
@@ -92,13 +93,13 @@ class Endboss extends MovableObject {
       this.x < 2000 &&
       !this.isHurt() &&
       !this.isDead() &&
-      !this.bossWalkTrigger
+      this.bossWalkTrigger
     ) {
-      this.speed = 3;
-      this.x += this.speed; 
+      this.speed = 6;
+      this.x += this.speed; // Nach rechts bewegen
       this.otherDirection = true;
+    } else if (this.x > 1900) {
+      this.otherDirection = false;   
     }
   };
-
-  //#endregion
 }
