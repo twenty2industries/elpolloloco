@@ -44,5 +44,7 @@ class Chicken extends MovableObject {
       this.playAnimation(ImageHub.CHICKEN_IMAGES_DEAD);
     }
   };
+
+
   //#endregion
 }

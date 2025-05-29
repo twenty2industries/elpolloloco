@@ -5,6 +5,7 @@ class Endboss extends MovableObject {
 
   bossWalkTrigger = false;
   bossHurt = false;
+  bossProximity = false; 
 
   offset = {
     top: 10,
@@ -28,6 +29,7 @@ class Endboss extends MovableObject {
     this.y = 50;
     IntervalHub.startInterval(this.animate, 150);
     IntervalHub.startInterval(this.bossDashMechanic, 1000 / 60);
+    IntervalHub.startInterval(this.bossDashMechanicProximity, 1000/60)
     IntervalHub.startInterval(this.setBossSpeed, 2000);
     IntervalHub.startInterval(this.setBossPositionBack, 1000 / 60);
   }
@@ -58,8 +60,16 @@ class Endboss extends MovableObject {
       this.speed = 10;
       this.moveLeft();
       this.bossWalkTrigger = true;
-                  this.otherDirection = false;
+      this.otherDirection = false;
+    }
+  };
 
+  bossDashMechanicProximity = () => {
+    if (this.bossProximity) {
+      this.speed = 10;
+      this.moveLeft();
+      this.bossWalkTrigger = true;
+      this.otherDirection = false;
     }
   };
 

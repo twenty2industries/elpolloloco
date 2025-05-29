@@ -108,11 +108,12 @@ checkBossProximity() {
   if (boss) {
     let character = this.character;
     let distance = boss.x - character.x;
-    if (distance < 300) {
+
+    if (distance < 200 && distance > 70) {
+      boss.bossProximity = true;
       console.log("BOSS ZU NAHE ");
-      console.log(boss);
-      
-      boss.bossDashMechanic();
+    } else {
+      boss.bossProximity = false; 
     }
   }
 }

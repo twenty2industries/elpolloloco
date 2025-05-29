@@ -58,7 +58,6 @@ class MovableObject extends DrawableObject {
   hit() {
     if (this.hasDealtDamage) return; // prevent multiple damage hits
     this.hasDealtDamage = true; // mark that damage has been dealt
-
     this.energy -= 5;
     this.idleTimer = 0; // track idleTimer for long idle animation
 
