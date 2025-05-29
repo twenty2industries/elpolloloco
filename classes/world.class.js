@@ -30,7 +30,7 @@ class World {
     this.draw();
     this.repeatMap();
     this.setWorld(); //why?
-    this.level = createNewLevel()
+    this.level = createNewLevel();
     IntervalHub.startInterval(this.run, 150);
     this.startBottleRespawnLoop();
   }
@@ -103,6 +103,20 @@ class World {
     }
   }
 
+checkBossProximity() {
+  let boss = this.level.enemies.find((enemy) => enemy instanceof Endboss);
+  if (boss) {
+    let character = this.character;
+    let distance = boss.x - character.x;
+    if (distance < 300) {
+      console.log("BOSS ZU NAHE ");
+      console.log(boss);
+      
+      boss.bossDashMechanic();
+    }
+  }
+}
+
   //#endregion
   run = () => {
     // runs the methods in setInterval
@@ -111,6 +125,7 @@ class World {
     this.checkCollectibleBottleCollision();
     this.checkCollectibleCoinCollision();
     this.checkCollisionsEnemyBottle();
+    this.checkBossProximity();
   };
 
   checkThrowObjects() {
@@ -168,7 +183,8 @@ class World {
     this.addToMap(this.healtbar);
     this.addToMap(this.coinbar);
     this.addToMap(this.bottlebar);
-    if (this.character.x > 2000 || endboss.energy < 120) {
+    if (this.character.x > 2000 || endboss.energy < 100) {
+      //
       // if close to enndboss then show endboss health
       this.addToMap(this.endbossHealthbar);
     }
@@ -245,12 +261,11 @@ class World {
     this.ctx.restore();
   }
 
-    startBottleRespawnLoop() {
+  startBottleRespawnLoop() {
     setInterval(() => {
       if (this.level.bottles.length === 0) {
-      this.level.bottles = [
-        new GroundItems(ImageHub.salsabottle[1]),
-      ];      }
+        this.level.bottles = [new GroundItems(ImageHub.salsabottle[1])];
+      }
     }, 3000); // alle 3 Sekunden prüfen
   }
 

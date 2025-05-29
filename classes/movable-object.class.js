@@ -59,12 +59,7 @@ class MovableObject extends DrawableObject {
     if (this.hasDealtDamage) return; // prevent multiple damage hits
     this.hasDealtDamage = true; // mark that damage has been dealt
 
-    if (this instanceof Endboss && !this.isDeadFlag) {
-      // if the hit instance is endboss, bottle makes -20 hp dmg instead of 5
-      this.energy -= 20;
-    } else if (this.isDeadFlag) return; //
-
-    this.energy -= 20;
+    this.energy -= 5;
     this.idleTimer = 0; // track idleTimer for long idle animation
 
     if (this.energy <= 0 && !this.isDeadFlag) {

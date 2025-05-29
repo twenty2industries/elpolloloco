@@ -10,7 +10,7 @@ class GroundItems extends MovableObject {
 
   constructor(groundItems) {
     super().loadImage(groundItems);
-    this.x = 300 + Math.random() * 2400;
+    this.x = 150 + Math.random() * 1600;
     this.x += MovableObject.minimumDistance;
     this.height = 120;
     this.width = 100;
