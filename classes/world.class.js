@@ -149,6 +149,7 @@ class World {
     this.addObjectsToMap(this.level.coins);
     this.ctx.translate(-this.camera_x, 0);
     // fixed ui elements
+
     let endboss = this.level.enemies.find((enemy) => enemy instanceof Endboss); // check if any enemy is an instance of Endboss and has energy equal to 0 with the method find()
     if (endboss && endboss.energy === 0) {
       this.addToMap(this.youWonScreen);
@@ -167,7 +168,7 @@ class World {
     this.addToMap(this.healtbar);
     this.addToMap(this.coinbar);
     this.addToMap(this.bottlebar);
-    if (this.character.x > 2000) {
+    if (this.character.x > 2000 || endboss.energy < 120) {
       // if close to enndboss then show endboss health
       this.addToMap(this.endbossHealthbar);
     }

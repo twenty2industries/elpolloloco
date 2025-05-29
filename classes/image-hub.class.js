@@ -122,7 +122,7 @@ class ImageHub {
     "img/3_enemies_chicken/chicken_normal/2_dead/dead.png",
   ];
 
-  //small chicken enemy 
+  //small chicken enemy
   static SMALL_CHICKEN_ENEMYS_WALK = [
     "img/3_enemies_chicken/chicken_small/1_walk/1_w.png",
     "img/3_enemies_chicken/chicken_small/1_walk/2_w.png",
@@ -160,6 +160,13 @@ class ImageHub {
     "img/7_statusbars/2_statusbar_endboss/blue/blue0.png",
   ];
 
+  static BOSS_IMAGES_WALK = [
+    "img/4_enemie_boss_chicken/1_walk/G1.png",
+    "img/4_enemie_boss_chicken/1_walk/G2.png",
+    "img/4_enemie_boss_chicken/1_walk/G3.png",
+    "img/4_enemie_boss_chicken/1_walk/G4.png",
+  ];
+
   static BOSS_IMAGES_DEAD = [
     "img/4_enemie_boss_chicken/5_dead/G24.png",
     "img/4_enemie_boss_chicken/5_dead/G25.png",
@@ -194,12 +201,12 @@ class ImageHub {
 class IntervalHub {
   static allIntervals = [];
 
-  static startInterval(func,timer){
+  static startInterval(func, timer) {
     const newInterval = setInterval(func, timer);
     IntervalHub.allIntervals.push(newInterval);
   }
 
-  static stoppAllIntervals(){
+  static stoppAllIntervals() {
     IntervalHub.allIntervals.forEach(clearInterval);
     IntervalHub.allIntervals = [];
   }
