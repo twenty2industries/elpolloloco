@@ -8,12 +8,13 @@ class ThrowableObject extends MovableObject {
   //#endregion
 
   //#region constructor
-  constructor(x, y) {
+  constructor(x, y, otherDirection = false) {
     super().loadImage(ImageHub.BOTTLE_IMAGE_ROTATION[0]);
     this.loadImages(ImageHub.BOTTLE_IMAGE_ROTATION);
     this.loadImages(ImageHub.BOTTLE_IMAGE_SPLASH);
     this.x = x;
     this.y = y;
+    this.otherDirection = otherDirection;
     this.height = 110;
     this.width = 100;
     this.throw();
@@ -22,22 +23,26 @@ class ThrowableObject extends MovableObject {
   }
   //#endregion
   //#region methods
-  throw() {
-    this.isThrown = true; // flag to track down roation motion
-    this.hasDealtDamage = false; // stop dmg for @throwableobject as soon its collides
-    this.bottles -= 20;
-    this.speedY = 20;
-    IntervalHub.startInterval(this.applyGravity, 1000 / 60);
+throw() {
+  this.isThrown = true; // flag to track down rotation motion
+  this.hasDealtDamage = false; // stop dmg for @throwableobject as soon it collides
+  this.bottles -= 20;
+  this.speedY = 20;
+  IntervalHub.startInterval(this.applyGravity, 1000 / 60);
 
-    this.throwInterval = setInterval(() => {
-      //no x speed so the bottle stops at collision point
-      if (this.isThrown) {
-        this.x += 20;
+  this.throwInterval = setInterval(() => {
+    // no x speed so the bottle stops at collision point
+    if (this.isThrown) {
+      if (this.otherDirection) {
+        this.x -= 20;  // nach links werfen, wenn otherDirection true ist
       } else {
-        clearInterval(this.throwInterval);
+        this.x += 20;  // sonst nach rechts werfen
       }
-    }, 1000 / 60);
-  }
+    } else {
+      clearInterval(this.throwInterval);
+    }
+  }, 1000 / 60);
+}
   animateBottleRotation = () => {
     //playAnimation for bottle rotation
     if (this.isThrown) {

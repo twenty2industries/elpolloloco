@@ -129,18 +129,19 @@ checkBossProximity() {
     this.checkBossProximity();
   };
 
-  checkThrowObjects() {
-    if (Keyboard.F && this.character.bottles < 100) {
-      let bottle = new ThrowableObject(this.character.x, this.character.y);
-      this.throwableBottle.push(bottle);
-      this.character.bottles += 20;
-      this.bottlebar.setPercentage(
-        this.character.bottles,
-        ImageHub.IMAGES_STATUS_BOTTLE
-      );
-    }
-    Keyboard.F = false; //no fullauto
+checkThrowObjects() {
+  if (Keyboard.F && this.character.bottles < 100) {
+    // new ThrowableObject with character's otherDirection
+    let bottle = new ThrowableObject(this.character.x, this.character.y, this.character.otherDirection);
+    this.throwableBottle.push(bottle);
+    this.character.bottles += 20;
+    this.bottlebar.setPercentage(
+      this.character.bottles,
+      ImageHub.IMAGES_STATUS_BOTTLE
+    );
   }
+  Keyboard.F = false; // no fullauto
+}
 
   deleteSplashAnimation(bottle) {
     setTimeout(() => {
