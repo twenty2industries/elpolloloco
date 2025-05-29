@@ -5,7 +5,7 @@ class Endboss extends MovableObject {
 
   bossWalkTrigger = false;
   bossHurt = false;
-  bossProximity = false; 
+  bossProximity = false;
 
   offset = {
     top: 10,
@@ -27,33 +27,39 @@ class Endboss extends MovableObject {
     this.height = 400;
     this.width = 300;
     this.y = 50;
-    IntervalHub.startInterval(this.animate, 150);
+    IntervalHub.startInterval(this.animate, 200);
     IntervalHub.startInterval(this.bossDashMechanic, 1000 / 60);
-    IntervalHub.startInterval(this.bossDashMechanicProximity, 1000/60)
+    IntervalHub.startInterval(this.bossDashMechanicProximity, 1000 / 60);
     IntervalHub.startInterval(this.setBossSpeed, 2000);
     IntervalHub.startInterval(this.setBossPositionBack, 1000 / 60);
   }
   //#endregion
   //#region methods
   animate = () => {
-    //animation for alert
-    if (!this.isHurt() && !this.isDead()) {
-      this.playAnimation(ImageHub.BOSS_IMAGES_ALERT);
-      this.bossHurt = false;
+    // animation for DEAD
+    if (this.isDead()) {
+      this.playAnimation(ImageHub.BOSS_IMAGES_DEAD);
     }
-    //playAnimation for movement hurt
+    // animation for HURT
     else if (this.isHurt()) {
       this.bossHurt = true;
       this.playAnimation(ImageHub.BOSS_IMAGES_HURT);
     }
-    //playAnimation for movement DEAD
-    else if (this.isDead()) {
-      this.playAnimation(ImageHub.BOSS_IMAGES_DEAD);
-    } else if (this.moveLeft()) {
+    // play walk animation for dash mechanic oder wenn Boss zurückläuft
+    else if (this.bossWalkTrigger || this.isMovingBack()) {
       this.playAnimation(ImageHub.BOSS_IMAGES_WALK);
-      console.log("boss Walk animation wird ausgefühhrt");
+    }
+    // animation for alert (wenn Boss steht)
+    else {
+      this.playAnimation(ImageHub.BOSS_IMAGES_ALERT);
+      this.bossHurt = false;
     }
   };
+
+  // helper method for calling setBossPositionBack to avoid side effects
+  isMovingBack() {
+    return this.x < 2000 && !this.isHurt() && !this.isDead();
+  }
 
   bossDashMechanic = () => {
     if (this.isHurt()) {
@@ -82,9 +88,14 @@ class Endboss extends MovableObject {
   };
 
   setBossPositionBack = () => {
-    if (this.x < 2000 && !this.isHurt() && !this.isDead()) {
+    if (
+      this.x < 2000 &&
+      !this.isHurt() &&
+      !this.isDead() &&
+      !this.bossWalkTrigger
+    ) {
       this.speed = 3;
-      this.x += this.speed; // Nach rechts bewegen
+      this.x += this.speed; 
       this.otherDirection = true;
     }
   };
