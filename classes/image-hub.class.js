@@ -222,6 +222,7 @@ class AudioHub {
   //character
   static characterJump = new Audio('sounds/character/characterJump.wav');
   static characterDead = new Audio('sounds/character/characterDead.wav');
+  static characterRunning = new Audio ('sounds/character/characterRun.mp3');
 
   //endboss
   static bossApproach = new Audio ('sounds/endboss/endbossApproach.wav');
@@ -244,7 +245,7 @@ class AudioHub {
   }
 
     static playMusic(sound) {
-    sound.volume = 0.05; // Setzt die Lautstärke auf 0.2 = 20% / 1 = 100%
+    sound.volume = 0.015; // Setzt die Lautstärke auf 0.2 = 20% / 1 = 100%
     sound.currentTime = 0; // Startet ab einer bestimmten stelle (0=Anfang/ 5 = 5 sec.)
     sound.play(); // Spielt das übergebene Sound-Objekt ab
   }

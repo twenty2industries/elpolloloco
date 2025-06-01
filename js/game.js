@@ -41,8 +41,8 @@ function startGame() {
   startGameButtonRef.classList.toggle("d_none");
   init();
   AudioHub.stopOne(AudioHub.gameStartscreen);
-  AudioHub.playOne(AudioHub.gameStart);
-  AudioHub.playMusic(AudioHub.ingameSound);
+/*   AudioHub.playOne(AudioHub.gameStart);
+ */  AudioHub.playMusic(AudioHub.ingameSound);
 
 }
 

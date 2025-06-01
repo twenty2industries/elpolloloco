@@ -116,7 +116,6 @@ checkCollisions() {
     if (boss) {
       let character = this.character;
       let distance = boss.x - character.x;
-
       if (distance < 350 && distance > 70) {
         boss.bossProximity = true;
         console.log("BOSS ZU NAHE ");

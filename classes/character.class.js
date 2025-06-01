@@ -5,6 +5,9 @@ class Character extends MovableObject {
   speed = 10;
   static x = 100;
 
+  runningSoundIsPlaying = false; // neue Eigenschaft in Character
+
+
   rX;
 
   offset = {
@@ -41,21 +44,32 @@ class Character extends MovableObject {
   }
   //#endregion
   //#region methods
-  characterMovement = () => {
-    //movement right & left || movement SPACE / jump ||movement camera
-    if (Keyboard.RIGHT && this.x < Level.level_end_x) {
-      this.moveRight();
-      this.otherDirection = false;
-    }
-    if (Keyboard.LEFT && this.x > 100) {
-      this.moveLeft();
-      this.otherDirection = true;
-    }
-    if (Keyboard.SPACE) {
-      this.jump();
-    }
-    this.world.camera_x = -this.x + 100;
-  };
+
+characterMovement = () => {
+  const isMoving = (Keyboard.RIGHT || Keyboard.LEFT) && !this.isAboveGround();
+
+  if (isMoving && !this.runningSoundIsPlaying) {
+    AudioHub.playOne(AudioHub.characterRunning);
+    this.runningSoundIsPlaying = true;
+  } else if ((!Keyboard.RIGHT && !Keyboard.LEFT) || this.isAboveGround()) {
+    AudioHub.stopOne(AudioHub.characterRunning);
+    this.runningSoundIsPlaying = false;
+  }
+
+  if (Keyboard.RIGHT && this.x < Level.level_end_x) {
+    this.moveRight();
+    this.otherDirection = false;
+  }
+  if (Keyboard.LEFT && this.x > 100) {
+    this.moveLeft();
+    this.otherDirection = true;
+  }
+  if (Keyboard.SPACE) {
+    this.jump();
+  }
+
+  this.world.camera_x = -this.x + 100;
+};
 
   animateCharacterWalking = () => {
     //animation for movement right & left
@@ -75,7 +89,7 @@ class Character extends MovableObject {
     if (this.isDead() && this.isDeadFlag) {
       this.playAnimation(ImageHub.CHARACTER_IMAGES_DEAD);
       AudioHub.playOne(AudioHub.characterDead);
-      AudioHub.stopOne(AudioHub.gameMusic)
+      AudioHub.stopOne(AudioHub.ingameSound);
       this.isDeadFlag = false; // turn off dead animation; issue with method hit(), need to be solved
     }
   };
@@ -99,6 +113,7 @@ class Character extends MovableObject {
       if (noKeyPressed && !this.isDead()) {
         this.idleTimer += 200; // add time in 100 = every 100 ms
         this.playAnimation(ImageHub.CHARACTER_IMAGES_IDLE); // plays idle animation if noKeyPressed
+              AudioHub.stopOne(AudioHub.characterRunning);
 
         if (this.idleTimer >= 5000 && !this.isAboveGround()) {
           //interval ticks 50 times = 5000ms long idle animation starts
@@ -109,8 +124,5 @@ class Character extends MovableObject {
       }
   }
 
-  moveRight() {
-    this.x += this.speed;
-  }
   //#endregion
 }
