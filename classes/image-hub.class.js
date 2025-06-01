@@ -216,29 +216,45 @@ class AudioHub {
   //#region attributes
   //collectibles
   static coinCollect = new Audio("sounds/collectibles/collectSound.wav");
-  static collectBottle = new Audio("sounds/collectibles/bottleCollectSound.wav");
+  static collectBottle = new Audio(
+    "sounds/collectibles/bottleCollectSound.wav"
+  );
   static bottleBreak = new Audio("sounds/throwable/bottleBreak.mp3");
 
   //character
-  static characterJump = new Audio('sounds/character/characterJump.wav');
-  static characterDead = new Audio('sounds/character/characterDead.wav');
-  static characterRunning = new Audio ('sounds/character/characterRun.mp3');
+  static characterJump = new Audio("sounds/character/characterJump.wav");
+  static characterDead = new Audio("sounds/character/characterDead.wav");
+  static characterRunning = new Audio("sounds/character/characterRun.mp3");
+  static characterDamage = new Audio("sounds/character/characterDamage.mp3");
 
   //endboss
-  static bossApproach = new Audio ('sounds/endboss/endbossApproach.wav');
+  static bossApproach = new Audio("sounds/endboss/endbossApproach.wav");
 
   //chicken
-  static chickenDead = new Audio('sounds/chicken/chickenDead.mp3');
-  static chickenDead2 = new Audio('sounds/chicken/chickenDead2.mp3');
-
+  static chickenDead = new Audio("sounds/chicken/chickenDead.mp3");
+  static chickenDead2 = new Audio("sounds/chicken/chickenDead2.mp3");
 
   //game UI
-  static gameStart = new Audio ('sounds/game/gameStart.mp3');
-  static gameStartscreen = new Audio('sounds/game/gameHomeScreen.mp3');
-  static ingameSound = new Audio ('sounds/game/ingameMusic.mp3');
+  static gameStart = new Audio("sounds/game/gameStart.mp3");
+  static gameStartscreen = new Audio("sounds/game/gameHomeScreen.mp3");
+  static ingameSound = new Audio("sounds/game/ingameMusic.mp3");
 
   // Array, das alle definierten Audio-Dateien enthält
-  static allSounds = [AudioHub.coinCollect, AudioHub.collectBottle, AudioHub.bottleBreak,];
+  static allSounds = [
+    AudioHub.coinCollect,
+    AudioHub.collectBottle,
+    AudioHub.bottleBreak,
+    AudioHub.characterJump,
+    AudioHub.characterDead,
+    AudioHub.characterRunning,
+    AudioHub.characterDamage,
+    AudioHub.bossApproach,
+    AudioHub.chickenDead,
+    AudioHub.chickenDead2,
+    AudioHub.gameStart,
+    AudioHub.gameStartscreen,
+    AudioHub.ingameSound,
+  ];
 
   //#endregion
   //#region methods
@@ -249,7 +265,7 @@ class AudioHub {
     sound.play(); // Spielt das übergebene Sound-Objekt ab
   }
 
-    static playMusic(sound) {
+  static playMusic(sound) {
     sound.volume = 0.015; // Setzt die Lautstärke auf 0.2 = 20% / 1 = 100%
     sound.currentTime = 0; // Startet ab einer bestimmten stelle (0=Anfang/ 5 = 5 sec.)
     sound.play(); // Spielt das übergebene Sound-Objekt ab
@@ -257,6 +273,30 @@ class AudioHub {
 
   static stopOne(sound) {
     sound.pause(); // Pausiert das übergebene Audio
+  }
+
+  static objSetVolume(volumeSlider) {
+    let volumeValue = document.getElementById("volume").value; // Holt den aktuellen Lautstärkewert aus dem Inputfeld
+    volumeSlider.forEach((sound) => {
+      sound.volume = volumeValue; // Setzt die Lautstärke für jedes Audio wie im Slider angegeben
+    });
+  }
+
+  // Stoppt das Abspielen aller Audiodateien
+  static stopAll() {
+    AudioHub.allSounds.forEach((sound) => {
+      sound.pause(); // Pausiert jedes Audio in der Liste
+    });
+    document.getElementById("volume").value = 0.015; // Setzt den Sound-Slider wieder auf 0.2
+  }
+
+  static playAll() {
+    AudioHub.allSounds.forEach((sound) => {
+      sound.pause(); // Pausiert jedes Audio in der Liste
+    });
+    document.getElementById("volume").value = 0.015; // Setzt den Sound-Slider wieder auf 0.2
+    const instrumentImages = document.querySelectorAll(".sound_img"); // nur wichtig für die Visualisierung
+    instrumentImages.forEach((img) => img.classList.remove("active")); // nur wichtig für die Visualisierung
   }
 }
 

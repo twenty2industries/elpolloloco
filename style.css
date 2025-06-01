@@ -1,3 +1,12 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  position: relative;
+  font-family: "Raleway", sans-serif;
+  scroll-behavior: smooth;
+}
+
 body {
   display: flex;
   flex-direction: column;
@@ -21,12 +30,14 @@ canvas {
 
 .main_content {
   display: flex;
-  justify-content: center;
+  justify-content: unset;
+  flex-direction: column;
+  align-items: center;
+}
 
   .controls {
+    color: black;
     font-size: 18px;
-    position: absolute;
-    top: 880px;
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -35,12 +46,12 @@ canvas {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      width: 680px;
+      width: 820px;
     }
 
     span {
+      color: black;
       text-align: center;
-      color: white;
       font-size: 24px;
       display: flex;
       flex-direction: column;
@@ -59,12 +70,12 @@ canvas {
       }
     }
   }
-}
 
 
   .start_game_button {
+    margin-top: 2rem;
+    z-index: 20;
     position: absolute;
-    top: 500px;
   }
 .d_none {
   display: none;

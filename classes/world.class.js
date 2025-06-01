@@ -41,6 +41,8 @@ class World {
 checkCollisions() {
   this.level.enemies.forEach((enemy) => {
     if (this.character.isColliding(enemy) && !enemy.isDeadFlag) {
+              AudioHub.playOne(AudioHub.characterDamage)
+
       if (this.character.stomp(enemy)) {
         AudioHub.playOne(AudioHub.chickenDead2)
         enemy.hit();
