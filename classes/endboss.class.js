@@ -73,7 +73,7 @@ class Endboss extends MovableObject {
 
   bossDashMechanicProximity = () => {
     if (this.bossProximity) {
-      this.speed = 10;
+      this.speed = 6;
       this.moveLeft();
       this.bossWalkTrigger = true;
       this.otherDirection = false;
@@ -88,17 +88,14 @@ class Endboss extends MovableObject {
     }
   };
 
-  setBossPositionBack = () => {
-    if (
-      this.x < 2000 &&
-      !this.isHurt() &&
-      !this.isDead()
-    ) {
-      this.speed = 6;
-      this.x += this.speed; // Nach rechts bewegen
-      this.otherDirection = true;
-    } else if (this.x > -1) {
-      this.otherDirection = false;   
-    }
-  };
+setBossPositionBack = () => {
+  if (this.x < 2000 && !this.isHurt() && !this.isDead() && !this.bossProximity) {
+    this.speed = 6;
+    this.x += this.speed;
+    this.otherDirection = true; 
+  }
+  else if (this.x >= 2000 || this.bossProximity) {
+    this.otherDirection = false; 
+  }
+};
 }
