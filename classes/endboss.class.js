@@ -92,14 +92,13 @@ class Endboss extends MovableObject {
     if (
       this.x < 2000 &&
       !this.isHurt() &&
-      !this.isDead() &&
-      this.bossWalkTrigger
+      !this.isDead()
     ) {
       this.speed = 6;
       this.x += this.speed; // Nach rechts bewegen
       this.otherDirection = true;
-    } else if (this.x > 1900) {
-      this.otherDirection = false;
+    } else if (this.x > -1) {
+      this.otherDirection = false;   
     }
   };
 }

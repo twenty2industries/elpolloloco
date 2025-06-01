@@ -69,16 +69,16 @@ class DrawableObject {
     if (percentage == 100) {
       this.loadImage(imgPath[0]);
       return;
-    } else if (percentage > 80) {
+    } else if (percentage >= 80) {
       this.loadImage(imgPath[1]);
       return;
-    } else if (percentage > 60) {
+    } else if (percentage >= 60) {
       this.loadImage(imgPath[2]);
       return;
-    } else if (percentage > 40) {
+    } else if (percentage >= 40) {
       this.loadImage(imgPath[3]);
       return;
-    } else if (percentage > 20) {
+    } else if (percentage >= 20) {
       this.loadImage(imgPath[4]);
       return;
     } else if (percentage == 0) {

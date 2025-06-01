@@ -75,9 +75,11 @@ class MovableObject extends DrawableObject {
   }
 
   hitBottle() {
-    if (this.bottles >= 20) {
-      this.bottles -= 20;
-    } else {
+    if (this.bottle == 100) {
+      return;
+    }
+    this.bottles -= 20;
+    if (this.bottles <= 0) {
       this.bottles = 0;
     }
   }
