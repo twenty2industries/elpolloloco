@@ -46,7 +46,7 @@ class Endboss extends MovableObject {
       this.playAnimation(ImageHub.BOSS_IMAGES_HURT);
     } */
     // play walk animation for dash mechanic oder wenn Boss zurückläuft
-    else if (this.bossWalkTrigger) {
+    else if (this.bossWalkTrigger || this.bossDashMechanicProximity()) {
       this.playAnimation(ImageHub.BOSS_IMAGES_WALK);
     }
     // animation for alert (wenn Boss steht)
@@ -84,7 +84,7 @@ class Endboss extends MovableObject {
     if (this.bossWalkTrigger) {
       this.speed = 3;
       this.x += this.speed;
-      this.bossWalkTrigger = false;
+      this.bossWalkTrigger = false; // if bosswalk is false - bossPositionBack shouldnt be facing the wrong direction
     }
   };
 
@@ -99,7 +99,7 @@ class Endboss extends MovableObject {
       this.x += this.speed; // Nach rechts bewegen
       this.otherDirection = true;
     } else if (this.x > 1900) {
-      this.otherDirection = false;   
+      this.otherDirection = false;
     }
   };
 }

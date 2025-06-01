@@ -37,17 +37,23 @@ class World {
   //#endregion
   //#region methods
   //#region collision methods
-  checkCollisions() {
-    this.level.enemies.forEach((enemy) => {
-      if (this.character.isColliding(enemy) && !enemy.isDeadFlag) {
-        this.character.hit(); //energy is the healthbar
+checkCollisions() {
+  this.level.enemies.forEach((enemy) => {
+    if (this.character.isColliding(enemy) && !enemy.isDeadFlag) {
+      // Wenn der Character höher ist als der Enemy (Character springt drauf)
+      if (this.character.y + this.character.height - 20 < enemy.y) {
+        enemy.hit(); // Enemy takes damage
+        this.character.speedY = 15; // Character bounces up after the jump
+      } else {
+        this.character.hit(); // energy is the healthbar
         this.healtbar.setPercentage(
           this.character.energy,
           ImageHub.IMAGES_STATUS_HEALTH
         ); // energy
       }
-    });
-  }
+    }
+  });
+}
 
   checkCollisionsEnemyBottle() {
     for (let i = 0; i < this.throwableBottle.length; i++) {
