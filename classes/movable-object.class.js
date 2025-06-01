@@ -94,6 +94,16 @@ class MovableObject extends DrawableObject {
     }
   }
 
+stomp(enemy) {
+    return (
+        this.speedY < 0 &&
+        this.y + this.height <= enemy.y + 50 && // füße berühren oben
+        this.y + this.height >= enemy.y && // nicht zu weit drüner
+        this.x + this.width > enemy.x &&
+        this.x < enemy.x + enemy.width
+    );
+}
+
   isDead() {
     return this.energy == 0;
   }

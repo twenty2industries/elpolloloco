@@ -211,3 +211,31 @@ class IntervalHub {
     IntervalHub.allIntervals = [];
   }
 }
+//#region AudioHub
+class AudioHub {
+  //#region attributes
+  //collectibles
+  static coinCollect = new Audio("sounds/collectibles/collectSound.wav");
+  static collectBottle = new Audio("sounds/collectibles/bottleCollectSound.wav");
+  static bottleBreak = new Audio("sounds/throwable/bottleBreak.mp3");
+
+  //character
+
+  // Array, das alle definierten Audio-Dateien enthält
+  static allSounds = [AudioHub.coinCollect, AudioHub.collectBottle, AudioHub.bottleBreak,];
+
+  //#endregion
+  //#region methods
+  // Spielt eine einzelne Audiodatei ab
+  static playOne(sound) {
+    sound.volume = 0.2; // Setzt die Lautstärke auf 0.2 = 20% / 1 = 100%
+    sound.currentTime = 0; // Startet ab einer bestimmten stelle (0=Anfang/ 5 = 5 sec.)
+    sound.play(); // Spielt das übergebene Sound-Objekt ab
+  }
+
+  static stopOne(sound) {
+    sound.pause(); // Pausiert das übergebene Audio
+  }
+}
+
+//#endregion

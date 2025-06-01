@@ -2,6 +2,7 @@ class World {
   //#region attributes
 
   character = new Character();
+  isRunning = true;
 
   level = level1;
 
@@ -37,28 +38,22 @@ class World {
   //#endregion
   //#region methods
   //#region collision methods
-  checkCollisions() {
-    this.level.enemies.forEach((enemy) => {
-      if (this.character.isColliding(enemy) && !enemy.isDeadFlag) {
-        // Wenn der Character höher ist als der Enemy (Character springt drauf)
-        if (
-          this.character.y +
-            this.character.height -
-            this.character.offset.bottom <
-          enemy.y + enemy.offset.top
-        ) {
-          enemy.hit();
-          this.character.speedY = 15;
-        } else {
-          this.character.hit(); // energy is the healthbar
-          this.healtbar.setPercentage(
-            this.character.energy,
-            ImageHub.IMAGES_STATUS_HEALTH
-          ); // energy
-        }
+checkCollisions() {
+  this.level.enemies.forEach((enemy) => {
+    if (this.character.isColliding(enemy) && !enemy.isDeadFlag) {
+      if (this.character.stomp(enemy)) {
+        enemy.hit();
+        this.character.speedY = 15;
+      } else {
+        this.character.hit();
+        this.healtbar.setPercentage(
+          this.character.energy,
+          ImageHub.IMAGES_STATUS_HEALTH
+        );
       }
-    });
-  }
+    }
+  });
+}
 
   checkCollisionsEnemyBottle() {
     for (let i = 0; i < this.throwableBottle.length; i++) {
@@ -89,6 +84,7 @@ class World {
     for (let i = 0; i < this.level.bottles.length; i++) {
       if (this.character.isColliding(this.level.bottles[i])) {
         // checks the exact collided object
+        AudioHub.playOne(AudioHub.collectBottle)
         this.level.bottles.splice(i, 1); // removest the bottle from array level
         this.character.hitBottle();
         this.bottlebar.setPercentage(
@@ -103,6 +99,7 @@ class World {
   checkCollectibleCoinCollision() {
     for (let i = 0; i < this.level.coins.length; i++) {
       if (this.character.isColliding(this.level.coins[i])) {
+        AudioHub.playOne(AudioHub.coinCollect);
         this.level.coins.splice(i, 1); // removest the coin from array level
         this.character.hitCoin();
         this.coinbar.setPercentage(
@@ -163,12 +160,15 @@ class World {
       // find current index of the bottle to avoid wrong removal due to array changes
       const index = this.throwableBottle.indexOf(bottle);
       if (index > -1) {
+                  AudioHub.playOne(AudioHub.bottleBreak);
+
         this.throwableBottle.splice(index, 1); // delete bottle @ collision
       }
-    }, 450);
+    }, 150);
   }
 
   draw() {
+    if (!this.isRunning) return;
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     // background camera offset
     this.ctx.translate(this.camera_x, 0);
@@ -206,6 +206,10 @@ class World {
       this.addToMap(this.endbossHealthbar);
     }
     //draw() wird immer wieder aufgerufen
+    this.requestAnimation( () => this.draw());
+  }
+
+  requestAnimation() {
     let self = this;
     requestAnimationFrame(function () {
       self.draw();
