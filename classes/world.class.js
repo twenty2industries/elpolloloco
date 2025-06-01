@@ -201,9 +201,9 @@ checkCollisions() {
     this.addToMap(this.coinbar);
     this.addToMap(this.bottlebar);
     if (this.character.x > 2000 || endboss.energy < 100) {
-      //
       // if close to enndboss then show endboss health
       this.addToMap(this.endbossHealthbar);
+      AudioHub.playOne(AudioHub.bossApproach);
     }
     //draw() wird immer wieder aufgerufen
     this.requestAnimation( () => this.draw());

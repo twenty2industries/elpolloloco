@@ -220,6 +220,16 @@ class AudioHub {
   static bottleBreak = new Audio("sounds/throwable/bottleBreak.mp3");
 
   //character
+  static characterJump = new Audio('sounds/character/characterJump.wav');
+  static characterDead = new Audio('sounds/character/characterDead.wav');
+
+  //endboss
+  static bossApproach = new Audio ('sounds/endboss/endbossApproach.wav');
+
+  //game UI
+  static gameStart = new Audio ('sounds/game/gameStart.mp3');
+  static gameStartscreen = new Audio('sounds/game/gameHomeScreen.mp3');
+  static ingameSound = new Audio ('sounds/game/ingameMusic.mp3');
 
   // Array, das alle definierten Audio-Dateien enthält
   static allSounds = [AudioHub.coinCollect, AudioHub.collectBottle, AudioHub.bottleBreak,];
@@ -229,6 +239,12 @@ class AudioHub {
   // Spielt eine einzelne Audiodatei ab
   static playOne(sound) {
     sound.volume = 0.2; // Setzt die Lautstärke auf 0.2 = 20% / 1 = 100%
+    sound.currentTime = 0; // Startet ab einer bestimmten stelle (0=Anfang/ 5 = 5 sec.)
+    sound.play(); // Spielt das übergebene Sound-Objekt ab
+  }
+
+    static playMusic(sound) {
+    sound.volume = 0.05; // Setzt die Lautstärke auf 0.2 = 20% / 1 = 100%
     sound.currentTime = 0; // Startet ab einer bestimmten stelle (0=Anfang/ 5 = 5 sec.)
     sound.play(); // Spielt das übergebene Sound-Objekt ab
   }

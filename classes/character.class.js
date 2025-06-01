@@ -74,6 +74,8 @@ class Character extends MovableObject {
     //playAnimation for movement DEAD
     if (this.isDead() && this.isDeadFlag) {
       this.playAnimation(ImageHub.CHARACTER_IMAGES_DEAD);
+      AudioHub.playOne(AudioHub.characterDead);
+      AudioHub.stopOne(AudioHub.gameMusic)
       this.isDeadFlag = false; // turn off dead animation; issue with method hit(), need to be solved
     }
   };

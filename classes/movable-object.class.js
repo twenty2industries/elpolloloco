@@ -42,6 +42,7 @@ class MovableObject extends DrawableObject {
     if (!this.isAboveGround()) {
       this.speedY = 11;
       this.y -= this.speedY;
+      AudioHub.playOne(AudioHub.characterJump);
     }
   }
 

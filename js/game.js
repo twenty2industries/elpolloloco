@@ -6,6 +6,12 @@ function init() {
   world = new World(canvas);
 }
 
+function startScreenMusic() {
+  setTimeout(() => {
+        AudioHub.playMusic(AudioHub.gameStartscreen);
+  }, 1000);
+}
+
 document.addEventListener("keydown", (event) => {
   event.keyCode == 39 ? (Keyboard.RIGHT = true) : false;
   event.keyCode == 37 ? (Keyboard.LEFT = true) : false;
@@ -34,6 +40,10 @@ function startGame() {
   const startGameButtonRef = document.getElementById("startGameButton");
   startGameButtonRef.classList.toggle("d_none");
   init();
+  AudioHub.stopOne(AudioHub.gameStartscreen);
+  AudioHub.playOne(AudioHub.gameStart);
+  AudioHub.playMusic(AudioHub.ingameSound);
+
 }
 
 function displayRestartButton() {
