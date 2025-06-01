@@ -42,6 +42,7 @@ checkCollisions() {
   this.level.enemies.forEach((enemy) => {
     if (this.character.isColliding(enemy) && !enemy.isDeadFlag) {
       if (this.character.stomp(enemy)) {
+        AudioHub.playOne(AudioHub.chickenDead2)
         enemy.hit();
         this.character.speedY = 15;
       } else {
@@ -64,6 +65,7 @@ checkCollisions() {
           this.level.enemies[j].energy > 0
         ) {
           this.level.enemies[j].hit();
+                AudioHub.playOne(AudioHub.chickenDead)
           bottle.collided = true; //flag for splash animation @throwableObject
           bottle.isThrown = false; // stop throw motion flag for throwable objects
           if (this.level.enemies[j] instanceof Endboss) {

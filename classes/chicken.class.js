@@ -42,6 +42,7 @@ class Chicken extends MovableObject {
   animateChickenDead = () => {
     if (this.isDead() && this.isDeadFlag) {
       this.playAnimation(ImageHub.CHICKEN_IMAGES_DEAD);
+      AudioHub.playOne(AudioHub.chicken)
     }
   };
 

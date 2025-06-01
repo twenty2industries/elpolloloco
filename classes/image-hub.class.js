@@ -227,6 +227,11 @@ class AudioHub {
   //endboss
   static bossApproach = new Audio ('sounds/endboss/endbossApproach.wav');
 
+  //chicken
+  static chickenDead = new Audio('sounds/chicken/chickenDead.mp3');
+  static chickenDead2 = new Audio('sounds/chicken/chickenDead2.mp3');
+
+
   //game UI
   static gameStart = new Audio ('sounds/game/gameStart.mp3');
   static gameStartscreen = new Audio('sounds/game/gameHomeScreen.mp3');

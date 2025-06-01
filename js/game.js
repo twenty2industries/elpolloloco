@@ -6,6 +6,10 @@ function init() {
   world = new World(canvas);
 }
 
+window.onload = function() {
+  startScreenMusic();
+};
+
 function startScreenMusic() {
   setTimeout(() => {
         AudioHub.playMusic(AudioHub.gameStartscreen);
@@ -33,17 +37,13 @@ document.addEventListener("keyup", (event) => {
 function startGame() {
   const startScreenRef = document.getElementById("mainContent");
   startScreenRef.classList.toggle("d_none");
-
   const canvasRef = document.getElementById("canvas");
   canvasRef.classList.toggle("d_none");
-
   const startGameButtonRef = document.getElementById("startGameButton");
   startGameButtonRef.classList.toggle("d_none");
   init();
   AudioHub.stopOne(AudioHub.gameStartscreen);
-/*   AudioHub.playOne(AudioHub.gameStart);
- */  AudioHub.playMusic(AudioHub.ingameSound);
-
+  AudioHub.playMusic(AudioHub.ingameSound);
 }
 
 function displayRestartButton() {
