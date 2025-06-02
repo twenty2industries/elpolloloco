@@ -24,13 +24,13 @@
         id="startScreen"
       />
     </div>
-      <button
-        onclick="restartGame()"
-        class="restart_game_button d_none"
-        id="restartGameButton"
-      >
-        RESTART GAME
-      </button>
+    <button
+      onclick="restartGame()"
+      class="restart_game_button d_none"
+      id="restartGameButton"
+    >
+      RESTART GAME
+    </button>
     <canvas width="720" height="480" id="canvas" class="d_none"> </canvas>
 
     <div class="controls">
@@ -39,10 +39,50 @@
         <span>Move Right <span class="key">→</span> </span>
         <span>Jump <span class="key">SPACE</span> </span>
         <span>Throw <span class="key">F</span> </span>
-        <span>Volume <span class="key"><input type="range" oninput="AudioHub.objSetVolume(AudioHub.allSounds)" id="volume" min="0" max="0.2" step="0.01" value="0.015"/></span> </span>
-        <button onclick="switchPlayButton()" class="stop_all" id="pause"> | | </button>
-        <button onclick="switchPauseButton()" class="stop_all d_none" id="continue">▶︎</button>
-
+        <span
+          >Music Volume
+          <span class="key"
+            ><input
+              type="range"
+              oninput="AudioHub.objSetVolume(AudioHub.allSounds)"
+              id="volume"
+              min="0"
+              max="0.2"
+              step="0.01"
+              value="0.015"
+          /></span>
+        </span>
+        <span
+          >Music on/off
+          <button
+            onclick="switchPlayButton(AudioHub.startscreenMusic)"
+            class="stop_all"
+            id="pause"
+          >
+            | |
+          </button>
+          <button
+            onclick="switchPauseButton(AudioHub.startscreenMusic)"
+            class="stop_all d_none"
+            id="continue"
+          >
+            ▶︎
+          </button>
+          <button
+            onclick="turnOffIngameMusic()"
+            class="stop_all d_none"
+            id="pauseIngame"
+          >
+            | |
+          </button>
+          <button
+            onclick="turnOnIngameMusic()"
+            class="stop_all d_none"
+            id="continueIngame"
+          >
+            ▶︎
+          </button></span
+        >
       </div>
       <div class="keys"></div>
     </div>
@@ -69,5 +109,4 @@
   <script src="classes/you-won-screen.class.js"></script>
   <script src="classes/you-lose-screen.class.js"></script>
   <script src="js/game.js"></script>
-
 </html>

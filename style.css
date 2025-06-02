@@ -35,54 +35,54 @@ canvas {
   align-items: center;
 }
 
-  .controls {
-    color: black;
-    font-size: 18px;
+.controls {
+  color: black;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  .key_assignments {
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    width: 820px;
+  }
+
+  span {
+    color: black;
+    text-align: center;
+    font-size: 24px;
+    display: flex;
     flex-direction: column;
 
-    .key_assignments {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      width: 820px;
-    }
-
-    span {
-      color: black;
+    .key {
       text-align: center;
-      font-size: 24px;
-      display: flex;
-      flex-direction: column;
-
-      .key {
-        text-align: center;
-        background-color: #fbeee0;
-        border: 2px solid #422800;
-        border-radius: 30px;
-        color: #422800;
-        display: inline-block;
-        font-weight: 600;
-        font-size: 18px;
-        padding: 0 18px;
-        line-height: 50px;
-      }
+      background-color: #fbeee0;
+      border: 2px solid #422800;
+      border-radius: 30px;
+      color: #422800;
+      display: inline-block;
+      font-weight: 600;
+      font-size: 18px;
+      padding: 0 18px;
+      line-height: 50px;
     }
   }
+}
 
 
-  .start_game_button {
-    margin-top: 2rem;
-    z-index: 20;
-    position: absolute;
-  }
+.start_game_button {
+  margin-top: 2rem;
+  z-index: 20;
+  position: absolute;
+}
 
-    .restart_game_button {
-    margin-top: 5rem;
-    z-index: 20;
-    position: absolute;
-  }
+.restart_game_button {
+  margin-top: 5rem;
+  z-index: 20;
+  position: absolute;
+}
 
 .d_none {
   display: none;

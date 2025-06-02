@@ -256,6 +256,10 @@ class AudioHub {
     AudioHub.ingameSound,
   ];
 
+  static startscreenMusic = [
+    AudioHub.gameStartscreen,
+  ];
+
   //#endregion
   //#region methods
   // Spielt eine einzelne Audiodatei ab

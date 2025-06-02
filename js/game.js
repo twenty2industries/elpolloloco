@@ -6,13 +6,13 @@ function init() {
   world = new World(canvas);
 }
 
-window.onload = function() {
+window.onload = function () {
   startScreenMusic();
 };
 
 function startScreenMusic() {
   setTimeout(() => {
-        AudioHub.playMusic(AudioHub.gameStartscreen);
+    AudioHub.playMusic(AudioHub.gameStartscreen);
   }, 1000);
 }
 
@@ -41,6 +41,7 @@ function startGame() {
   canvasRef.classList.toggle("d_none");
   const startGameButtonRef = document.getElementById("startGameButton");
   startGameButtonRef.classList.toggle("d_none");
+  switchOnOffButtonIngame();
   init();
   AudioHub.stopOne(AudioHub.gameStartscreen);
   AudioHub.playMusic(AudioHub.ingameSound);
@@ -49,23 +50,57 @@ function startGame() {
 function displayRestartButton() {
   const restartGameButtonRef = document.getElementById("restartGameButton");
   restartGameButtonRef.classList.toggle("d_none");
-  console.log("Button anzeigen") 
+  console.log("Button anzeigen");
 }
 
 function switchPlayButton() {
-  AudioHub.stopAll();
-  const pauseButtonRef = document.getElementById('pause');
-  pauseButtonRef.classList.toggle('d_none');
-  const resumeButtonRef = document.getElementById('continue');
-  resumeButtonRef.classList.toggle('d_none');
+  AudioHub.stopAll(AudioHub.allSounds);
+  const pauseButtonRef = document.getElementById("pause");
+  pauseButtonRef.classList.toggle("d_none");
+  const resumeButtonRef = document.getElementById("continue");
+  resumeButtonRef.classList.toggle("d_none");
 }
 
 function switchPauseButton() {
+  AudioHub.playMusic(AudioHub.gameStartscreen);
+  toggleMusicButton();
+}
+
+function turnOffIngameMusic() {
+toggleIngameMusicButton();
+  AudioHub.stopAll(AudioHub.ingameSound);
+}
+
+function turnOnIngameMusic() {
+  toggleMusicButton()
   AudioHub.playMusic(AudioHub.ingameSound);
-  const pauseButtonRef = document.getElementById('pause');
-  pauseButtonRef.classList.toggle('d_none');
-  const resumeButtonRef = document.getElementById('continue');
-  resumeButtonRef.classList.toggle('d_none');
+}
+
+function toggleMusicButton() {
+  const pauseButtonRef = document.getElementById("pauseIngame");
+  pauseButtonRef.classList.toggle("d_none");
+  const resumeButtonRef = document.getElementById("continueIngame");
+  resumeButtonRef.classList.toggle("d_none");
+}
+
+function toggleIngameMusicButton() {
+  const pauseButtonIngameRef = document.getElementById("pauseIngame");
+  pauseButtonIngameRef.classList.toggle("d_none");
+  const continueButtonIngameRef = document.getElementById("continueIngame");
+  continueButtonIngameRef.classList.toggle("d_none");
+}
+
+function removeMusicButton() {
+  const pauseButtonRef = document.getElementById("pause");
+  pauseButtonRef.classList.add("d_none");
+  const resumeButtonRef = document.getElementById("continue");
+  resumeButtonRef.classList.add("d_none");
+}
+
+function switchOnOffButtonIngame() {
+  removeMusicButton();
+  const resumeButtonIngameRef = document.getElementById("pauseIngame");
+  resumeButtonIngameRef.classList.remove("d_none");
 }
 
 function restartGame() {
