@@ -69,8 +69,6 @@ function bindBtsPressEvents(){
   });
 };
 
-
-
 function startGame() {
   const startScreenRef = document.getElementById("startScreenContent");
   startScreenRef.classList.toggle("d_none");
