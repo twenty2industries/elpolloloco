@@ -34,6 +34,43 @@ document.addEventListener("keyup", (event) => {
   event.keyCode == 70 ? (Keyboard.F = false) : true;
 });
 
+function bindBtsPressEvents(){
+  document.getElementById('btnLeft'). addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    Keyboard.LEFT = true;
+  });
+    document.getElementById('btnLeft'). addEventListener('touchend', (e) => {
+    e.preventDefault();
+    Keyboard.LEFT = false;
+  });
+    document.getElementById('btnRight'). addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    Keyboard.RIGHT = true;
+  });
+    document.getElementById('btnRight'). addEventListener('touchend', (e) => {
+    e.preventDefault();
+    Keyboard.RIGHT = false;
+  });
+    document.getElementById('btnJump'). addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    Keyboard.SPACE = true;
+  });
+    document.getElementById('btnJump'). addEventListener('touchend', (e) => {
+    e.preventDefault();
+    Keyboard.SPACE = false;
+  });
+    document.getElementById('btnThrow'). addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    Keyboard.F = true;
+  });
+    document.getElementById('btnThrow'). addEventListener('touchend', (e) => {
+    e.preventDefault();
+    Keyboard.F = false;
+  });
+};
+
+
+
 function startGame() {
   const startScreenRef = document.getElementById("startScreenContent");
   startScreenRef.classList.toggle("d_none");
@@ -43,15 +80,16 @@ function startGame() {
   startGameButtonRef.classList.toggle("d_none");
   switchOnOffButtonIngame();
   init();
+  bindBtsPressEvents();
   AudioHub.stopOne(AudioHub.gameStartscreen);
   AudioHub.playMusic(AudioHub.ingameSound);
-}
+};
 
 function displayRestartButton() {
   const restartGameButtonRef = document.getElementById("restartGameButton");
   restartGameButtonRef.classList.toggle("d_none");
   console.log("Button anzeigen");
-}
+};
 
 function switchPlayButton() {
   AudioHub.stopAll(AudioHub.allSounds);
@@ -59,51 +97,51 @@ function switchPlayButton() {
   pauseButtonRef.classList.toggle("d_none");
   const resumeButtonRef = document.getElementById("continue");
   resumeButtonRef.classList.toggle("d_none");
-}
+};
 
 function switchPauseButton() {
+    toggleMusicButton();
   AudioHub.playMusic(AudioHub.gameStartscreen);
-  toggleMusicButton();
-}
+};
 
 function turnOffIngameMusic() {
 toggleIngameMusicButton();
   AudioHub.stopAll(AudioHub.ingameSound);
-}
+};
 
 function turnOnIngameMusic() {
-  toggleMusicButton()
+  toggleIngameMusicButton();
   AudioHub.playMusic(AudioHub.ingameSound);
-}
+};
 
 function toggleMusicButton() {
-  const pauseButtonRef = document.getElementById("pauseIngame");
+  const pauseButtonRef = document.getElementById("pause");
   pauseButtonRef.classList.toggle("d_none");
-  const resumeButtonRef = document.getElementById("continueIngame");
+  const resumeButtonRef = document.getElementById("continue");
   resumeButtonRef.classList.toggle("d_none");
-}
+};
 
 function toggleIngameMusicButton() {
   const pauseButtonIngameRef = document.getElementById("pauseIngame");
   pauseButtonIngameRef.classList.toggle("d_none");
   const continueButtonIngameRef = document.getElementById("continueIngame");
   continueButtonIngameRef.classList.toggle("d_none");
-}
+};
 
 function removeMusicButton() {
   const pauseButtonRef = document.getElementById("pause");
   pauseButtonRef.classList.add("d_none");
   const resumeButtonRef = document.getElementById("continue");
   resumeButtonRef.classList.add("d_none");
-}
+};
 
 function switchOnOffButtonIngame() {
   removeMusicButton();
   const resumeButtonIngameRef = document.getElementById("pauseIngame");
   resumeButtonIngameRef.classList.remove("d_none");
-}
+};
 
 function restartGame() {
   displayRestartButton();
   init();
-}
+};

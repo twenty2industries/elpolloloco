@@ -24,15 +24,19 @@
         id="startScreen"
       />
     </div>
-    <button
-      onclick="restartGame()"
-      class="restart_game_button d_none"
-      id="restartGameButton"
-    >
-      RESTART GAME
-    </button>
-    <canvas width="720" height="480" id="canvas" class="d_none"> </canvas>
+    <button onclick="restartGame()" class="restart_game_button d_none" id="restartGameButton">RESTART GAME </button>
+    <canvas width="720" height="480" id="canvas" class="d_none"></canvas>
+      <div id="hud">
+        <div class="movementHud">
+          <button class="controlHud" id="btnLeft">←</button>
+          <button class="controlHud" id="btnRight">→</button>
+        </div>
 
+                <div class="movementHud">
+          <button class="controlHud" id="btnThrow">THROW</button>
+          <button class="controlHud" id="btnJump">JUMP</button>
+        </div>
+      </div>
     <div class="controls">
       <div class="key_assignments">
         <span>Move Left <span class="key">←</span> </span>
@@ -81,8 +85,7 @@
             id="continueIngame"
           >
             ▶︎
-          </button></span
-        >
+          </button></span>
       </div>
       <div class="keys"></div>
     </div>

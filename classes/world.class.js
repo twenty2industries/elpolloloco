@@ -160,8 +160,7 @@ checkCollisions() {
       // find current index of the bottle to avoid wrong removal due to array changes
       const index = this.throwableBottle.indexOf(bottle);
       if (index > -1) {
-                  AudioHub.playOne(AudioHub.bottleBreak);
-
+        AudioHub.playOne(AudioHub.bottleBreak);
         this.throwableBottle.splice(index, 1); // delete bottle @ collision
       }
     }, 150);
@@ -185,13 +184,16 @@ checkCollisions() {
     let endboss = this.level.enemies.find((enemy) => enemy instanceof Endboss); // check if any enemy is an instance of Endboss and has energy equal to 0 with the method find()
     if (endboss && endboss.energy === 0) {
       this.addToMap(this.youWonScreen);
-        IntervalHub.stoppAllIntervals();
+      IntervalHub.stoppAllIntervals();
+      AudioHub.stopAll(AudioHub.ingameSound)
       this.isRunning = false;
       displayRestartButton();
     }
     if (this.character.energy <= 0) {
       this.addToMap(this.youLoseScreen);
-        IntervalHub.stoppAllIntervals();
+      IntervalHub.stoppAllIntervals();
+      AudioHub.stopOne(AudioHub.ingameSound)
+      AudioHub.playOne(AudioHub.characterDead);
       this.isRunning = false;
       displayRestartButton();
     }
