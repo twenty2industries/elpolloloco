@@ -93,7 +93,29 @@
       <div class="keys"></div>
     </div>
     <div id="display" class="display">
-                Turn Phone!
+<svg width="450" height="450" viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
+  <!-- Handy mit Animation -->
+  <g id="phoneGroup">
+    <rect x="40" y="40" width="40" height="60" rx="5" ry="5" fill="#555" stroke="#000" stroke-width="2"/>
+    <circle cx="60" cy="95" r="2" fill="#ccc"/>
+    <animateTransform
+      attributeName="transform"
+      type="rotate"
+      values="0 60 70; 90 60 70; 0 60 70"
+      dur="2s"
+      repeatCount="indefinite" />
+  </g>
+
+  <!-- Pfeil -->
+  <path d="M100 30 A30 30 0 0 1 130 70" fill="none" stroke="#000" stroke-width="3" marker-end="url(#arrowhead)"/>
+  
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#000"/>
+    </marker>
+  </defs>
+</svg>
+
             </div>
   </body>
   <script src="classes/hub.class.js"></script>
