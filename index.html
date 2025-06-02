@@ -9,7 +9,9 @@
 
   <body>
     <h1>El pollo Loco</h1>
-    <div class="main_content" id="startScreenContent">
+
+    <canvas width="720" height="480" id="canvas" class="d_none"></canvas>
+        <div class="main_content" id="startScreenContent">
       <button
         onclick="startGame()"
         class="start_game_button"
@@ -25,8 +27,8 @@
       />
     </div>
     <button onclick="restartGame()" class="restart_game_button d_none" id="restartGameButton">RESTART GAME </button>
-    <canvas width="720" height="480" id="canvas" class="d_none"></canvas>
       <div id="hud">
+        <div class="touchControls">
         <div class="movementHud">
           <button class="controlHud" id="btnLeft">←</button>
           <button class="controlHud" id="btnRight">→</button>
@@ -35,6 +37,7 @@
                 <div class="movementHud">
           <button class="controlHud" id="btnThrow">THROW</button>
           <button class="controlHud" id="btnJump">JUMP</button>
+        </div>
         </div>
       </div>
     <div class="controls">

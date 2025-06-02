@@ -20,12 +20,41 @@ body {
 
 canvas {
   background: rgba(0, 0, 0, 0.397);
+  display: block;
+}
+
+/*Smartphones*/
+@media only screen and (max-width: 720px) {
+  h1{
+    display: none;
+  }
+  canvas {
+    width: 100%;
+  }
+
+  .main_content {
+    width: 100%;
+  }
+
+  .start_screen {
+    width: 100%;
+  }
+}
+
+
+
+/*Smartphones*/
+@media only screen and (max-width: 480px) {
+  canvas {
+    width: 100vh;
+  }
 }
 
 .start_screen {
-  display: flex;
-  width: 720px;
-  height: 480px;
+  width: 100%;
+  max-width: 720px;
+  height: auto;
+  aspect-ratio: 3 / 2;
 }
 
 .main_content {
@@ -42,6 +71,10 @@ canvas {
   display: flex;
   align-items: center;
   flex-direction: column;
+
+  @media (max-width: 720px) {
+    display: none;
+  }
 
   .key_assignments {
     display: flex;
@@ -85,10 +118,23 @@ canvas {
   position: absolute;
 }
 
-#hud{
-  width: 720px;
-  display: flex;
+#hud {
+  position: absolute;
+  top: 24rem;
+  z-index: 23;
+  display: none;
   justify-content: space-between;
+
+  @media (max-width: 720px) {
+      display: block;
+      width: 100%;
+  }
+
+  .touchControls {
+    display: flex;
+    justify-content: space-between;
+
+  }
 }
 
 .d_none {
@@ -104,7 +150,7 @@ canvas {
   cursor: pointer;
   display: inline-block;
   font-weight: bold;
-  padding: 0 55px;
+  padding: 0 25px;
   line-height: 62px;
   text-align: center;
   text-decoration: none;
@@ -112,6 +158,7 @@ canvas {
   -webkit-user-select: none;
   touch-action: manipulation;
 }
+
 button {
   background-color: #fbeee0;
   border: 2px solid #422800;
