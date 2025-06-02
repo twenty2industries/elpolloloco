@@ -35,7 +35,7 @@ document.addEventListener("keyup", (event) => {
 });
 
 function startGame() {
-  const startScreenRef = document.getElementById("mainContent");
+  const startScreenRef = document.getElementById("startScreenContent");
   startScreenRef.classList.toggle("d_none");
   const canvasRef = document.getElementById("canvas");
   canvasRef.classList.toggle("d_none");
@@ -48,38 +48,27 @@ function startGame() {
 
 function displayRestartButton() {
   const restartGameButtonRef = document.getElementById("restartGameButton");
-  restartGameButtonRef.classList.remove("d_none");
+  restartGameButtonRef.classList.toggle("d_none");
+  console.log("Button anzeigen") 
 }
 
-function createNewLevel() {
-  //why const level1 is not valueable here
-  return new Level(
-    [
-      new Chicken(),
-      new Chicken(),
-      new Chicken(),
-      new SmallChicken(),
-      new SmallChicken(),
-      new Endboss(),
-    ],
-    [new Cloud()],
-    [
-      new GroundItems(ImageHub.salsabottle[1]),
-      new GroundItems(ImageHub.salsabottle[0]),
-      new GroundItems(ImageHub.salsabottle[1]),
-      new GroundItems(ImageHub.salsabottle[1]),
-      new GroundItems(ImageHub.salsabottle[0]),
-    ],
-    [
-      new AirItems(ImageHub.coin[1]),
-      new AirItems(ImageHub.coin[0]),
-      new AirItems(ImageHub.coin[1]),
-      new AirItems(ImageHub.coin[0]),
-      new AirItems(ImageHub.coin[1]),
-    ]
-  );
+function switchPlayButton() {
+  AudioHub.stopAll();
+  const pauseButtonRef = document.getElementById('pause');
+  pauseButtonRef.classList.toggle('d_none');
+  const resumeButtonRef = document.getElementById('continue');
+  resumeButtonRef.classList.toggle('d_none');
+}
+
+function switchPauseButton() {
+  AudioHub.playMusic(AudioHub.ingameSound);
+  const pauseButtonRef = document.getElementById('pause');
+  pauseButtonRef.classList.toggle('d_none');
+  const resumeButtonRef = document.getElementById('continue');
+  resumeButtonRef.classList.toggle('d_none');
 }
 
 function restartGame() {
+  displayRestartButton();
   init();
 }

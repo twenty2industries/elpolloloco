@@ -4,7 +4,7 @@ class World {
   character = new Character();
   isRunning = true;
 
-  level = level1;
+  level = new Level();
 
   backgroundObjects = [];
 
@@ -31,7 +31,6 @@ class World {
     this.draw();
     this.repeatMap();
     this.setWorld(); //why?
-    this.level = createNewLevel();
     IntervalHub.startInterval(this.run, 150);
     this.startBottleRespawnLoop();
   }
@@ -41,8 +40,6 @@ class World {
 checkCollisions() {
   this.level.enemies.forEach((enemy) => {
     if (this.character.isColliding(enemy) && !enemy.isDeadFlag) {
-              AudioHub.playOne(AudioHub.characterDamage)
-
       if (this.character.stomp(enemy)) {
         AudioHub.playOne(AudioHub.chickenDead2)
         enemy.hit();
@@ -188,16 +185,14 @@ checkCollisions() {
     let endboss = this.level.enemies.find((enemy) => enemy instanceof Endboss); // check if any enemy is an instance of Endboss and has energy equal to 0 with the method find()
     if (endboss && endboss.energy === 0) {
       this.addToMap(this.youWonScreen);
-      setTimeout(() => {
         IntervalHub.stoppAllIntervals();
-      }, 1000);
+      this.isRunning = false;
       displayRestartButton();
     }
     if (this.character.energy <= 0) {
       this.addToMap(this.youLoseScreen);
-      setTimeout(() => {
         IntervalHub.stoppAllIntervals();
-      }, 1000);
+      this.isRunning = false;
       displayRestartButton();
     }
     this.addToMap(this.healtbar);
@@ -209,14 +204,7 @@ checkCollisions() {
       AudioHub.playOne(AudioHub.bossApproach);
     }
     //draw() wird immer wieder aufgerufen
-    this.requestAnimation( () => this.draw());
-  }
-
-  requestAnimation() {
-    let self = this;
-    requestAnimationFrame(function () {
-      self.draw();
-    });
+    requestAnimationFrame( () => this.draw());
   }
 
   setWorld() {

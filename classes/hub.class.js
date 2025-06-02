@@ -292,12 +292,12 @@ class AudioHub {
 
   static playAll() {
     AudioHub.allSounds.forEach((sound) => {
-      sound.pause(); // Pausiert jedes Audio in der Liste
+      sound.volume = 0.015;
+      sound.play(); // Pausiert jedes Audio in der Liste
     });
     document.getElementById("volume").value = 0.015; // Setzt den Sound-Slider wieder auf 0.2
-    const instrumentImages = document.querySelectorAll(".sound_img"); // nur wichtig für die Visualisierung
-    instrumentImages.forEach((img) => img.classList.remove("active")); // nur wichtig für die Visualisierung
   }
 }
+
 
 //#endregion

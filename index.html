@@ -5,25 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
     <title>El Pollo Loco</title>
-    <script src="js/game.js"></script>
   </head>
 
   <body>
     <h1>El pollo Loco</h1>
-    <div class="main_content" id="mainContent">
+    <div class="main_content" id="startScreenContent">
       <button
         onclick="startGame()"
         class="start_game_button"
         id="startGameButton"
       >
         START GAME
-      </button>
-      <button
-        onclick="restartGame()"
-        class="start_game_button d_none"
-        id="restartGameButton"
-      >
-        RESTART GAME
       </button>
 
       <img
@@ -32,7 +24,13 @@
         id="startScreen"
       />
     </div>
-
+      <button
+        onclick="restartGame()"
+        class="restart_game_button d_none"
+        id="restartGameButton"
+      >
+        RESTART GAME
+      </button>
     <canvas width="720" height="480" id="canvas" class="d_none"> </canvas>
 
     <div class="controls">
@@ -42,13 +40,14 @@
         <span>Jump <span class="key">SPACE</span> </span>
         <span>Throw <span class="key">F</span> </span>
         <span>Volume <span class="key"><input type="range" oninput="AudioHub.objSetVolume(AudioHub.allSounds)" id="volume" min="0" max="0.2" step="0.01" value="0.015"/></span> </span>
-        
-        <button onclick="AudioHub.stopAll()" class="stop_all">▶︎</button>
+        <button onclick="switchPlayButton()" class="stop_all" id="pause"> | | </button>
+        <button onclick="switchPauseButton()" class="stop_all d_none" id="continue">▶︎</button>
+
       </div>
       <div class="keys"></div>
     </div>
   </body>
-  <script src="classes/image-hub.class.js"></script>
+  <script src="classes/hub.class.js"></script>
   <script src="classes/drawableObject.class.js"></script>
   <script src="classes/movable-object.class.js"></script>
   <script src="classes/background.object.class.js"></script>
@@ -69,5 +68,6 @@
   <script src="classes/level.class.js"></script>
   <script src="classes/you-won-screen.class.js"></script>
   <script src="classes/you-lose-screen.class.js"></script>
-  <script src="levels/level1.js"></script>
+  <script src="js/game.js"></script>
+
 </html>
