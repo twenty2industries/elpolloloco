@@ -143,3 +143,8 @@ function restartGame() {
   displayRestartButton();
   init();
 };
+
+function toggleImpressum() {
+  const displayRef = document.getElementById('displayImpressum');
+  displayRef.classList.toggle('d_none');
+}

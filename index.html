@@ -13,9 +13,19 @@
 
       <canvas width="720" height="480" id="canvas" class="d_none"></canvas>
       <div class="main_content" id="startScreenContent">
-        <button onclick="startGame()" class="start_game_button" id="startGameButton"> START GAME </button>
+        <button
+          onclick="startGame()"
+          class="start_game_button"
+          id="startGameButton"
+        >
+          START GAME
+        </button>
 
-        <img src="img/9_intro_outro_screens/start/startscreen_2.png" class="start_screen" id="startScreen"/>
+        <img
+          src="img/9_intro_outro_screens/start/startscreen_2.png"
+          class="start_screen"
+          id="startScreen"
+        />
       </div>
       <button
         onclick="restartGame()"
@@ -25,18 +35,40 @@
         RESTART GAME
       </button>
       <div id="hud">
-
         <div class="touchControls">
           <div class="movementHud">
             <button class="controlHud" id="btnLeft">←</button>
             <button class="controlHud" id="btnRight">→</button>
           </div>
-                  <span>
-
-                    <button onclick="switchPlayButton(AudioHub.startscreenMusic)"class="stop_all"id="pause"> | | </button>
-            <button onclick="switchPauseButton(AudioHub.startscreenMusic)" class="stop_all d_none" id="continue" > ▶︎ </button>
-            <button onclick="turnOffIngameMusic()" class="stop_all d_none" id="pauseIngame"> | | </button>
-            <button onclick="turnOnIngameMusic()" class="stop_all d_none" id="continueIngame">▶︎</button>
+          <span>
+            <button
+              onclick="switchPlayButton(AudioHub.startscreenMusic)"
+              class="stop_all"
+              id="pauseMobile"
+            >
+              | |
+            </button>
+            <button
+              onclick="switchPauseButton(AudioHub.startscreenMusic)"
+              class="stop_all d_none"
+              id="continueMobile"
+            >
+              ▶︎
+            </button>
+            <button
+              onclick="turnOffIngameMusic()"
+              class="stop_all d_none"
+              id="pauseIngame"
+            >
+              | |
+            </button>
+            <button
+              onclick="turnOnIngameMusic()"
+              class="stop_all d_none"
+              id="continueIngame"
+            >
+              ▶︎
+            </button>
           </span>
           <div class="movementHud">
             <button class="controlHud" id="btnThrow">THROW</button>
@@ -65,12 +97,25 @@
           </span>
           <span
             >Music on/off
-            <button onclick="switchPlayButton(AudioHub.startscreenMusic)"class="stop_all"id="pause"> | | </button>
-            <button onclick="switchPauseButton(AudioHub.startscreenMusic)" class="stop_all d_none" id="continue" > ▶︎ </button>
+            <button
+              onclick="switchPlayButton(AudioHub.startscreenMusic)"
+              class="stop_all"
+              id="pause"
+            >
+              | |
+            </button>
+            <button
+              onclick="switchPauseButton(AudioHub.startscreenMusic)"
+              class="stop_all d_none"
+              id="continue"
+            >
+              ▶︎
+            </button>
             <button
               onclick="turnOffIngameMusic()"
               class="stop_all d_none"
-              id="pauseIngame">
+              id="pauseIngame"
+            >
               | |
             </button>
             <button
@@ -82,8 +127,44 @@
             </button></span
           >
         </div>
-        <div class="keys"></div>
       </div>
+      <button class="impressumButton" onclick="toggleImpressum()">Impressum</button>
+      <div id="displayImpressum" class="display_impressum d_none">
+        <div class="impressumHeader">
+          <h1>Impressum</h1> <br> 
+          <button id="closeImpressum" onclick="toggleImpressum()">x</button>
+        </div>
+
+        <h2>Angaben gemäß § 5 TMG</h2>
+        <p>
+          Burak Bostanli <br>
+          coupstudios<br/>
+          Untere Marktstraße 12a<br/>
+          85080 Gaimersheim, Deutschland
+        </p>
+        <h2>Kontakt</h2>
+        <p>
+          E-Mail:
+          <a href="mailto:info@coup-studios.com">info@coup-studios.com</a>
+        </p>
+        <h2>Umsatzsteuer-ID</h2>
+        <p>
+          Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz:
+          DE357705274
+        </p>
+        <h2>Online-Streitbeilegung</h2>
+        <p>
+          Plattform der EU-Kommission zur Online-Streitbeilegung:
+          <a href="https://ec.europa.eu/consumers/odr" target="_blank"
+            >https://ec.europa.eu/consumers/odr</a
+          >
+        </p>
+        <p>
+          Wir sind zur Teilnahme an einem Streitbeilegungsverfahren vor einer
+          Verbraucherschlichtungsstelle weder verpflichtet noch bereit.
+        </p>
+</div>
+
       <div id="display" class="display">
         <svg
           width="450"

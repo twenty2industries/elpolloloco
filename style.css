@@ -13,7 +13,6 @@ body {
   align-items: center;
   justify-content: center;
   background-image: url('img/Background/background1.jpg');
-  background-size: cover;
   background-repeat: no-repeat;
 
   @media (max-width: 980px) {
@@ -26,26 +25,32 @@ canvas {
   background: rgba(0, 0, 0, 0.397);
   display: block;
 
-    @media (max-height: 500px) {
-        height: 100vh;
-}
+  @media (max-height: 500px) {
+    height: 100vh;
+  }
 }
 
-.allContent{
-    width: 100%;
-    max-width: 1920px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: 100dvh;
-    justify-content: center;
+.allContent {
+  width: 100%;
+  max-width: 1920px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100dvh;
+  justify-content: center;
+
+  .impressumButton {
+    margin-top: 1rem;
+  }
 }
+
 
 /*Smartphones*/
 @media only screen and (max-width: 980px) {
-  h1{
+  h1 {
     display: none;
   }
+
   canvas {
     width: 100%;
   }
@@ -53,7 +58,8 @@ canvas {
   .main_content {
     width: 100%;
   }
-  .allContent{
+
+  .allContent {
     justify-content: unset;
   }
 
@@ -61,6 +67,7 @@ canvas {
 
 .display {
   display: none;
+
   @media ((orientation: portrait) and (max-width: 980px)) {
     display: flex;
     position: absolute;
@@ -75,13 +82,38 @@ canvas {
   }
 }
 
+.display_impressum {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+    width: 90%;
+    height: 55%;
+  padding: 2rem;
+  background-color: rgb(85 85 85);
+  z-index: 50;
+  font-size: 18px;
+  display: flex;
+  flex-direction: column;
+
+  .impressumHeader {
+    display: flex;
+    justify-content: space-between;
+    #closeImpressum {
+      width: 2rem;
+      text-align: center;
+      padding: 0;
+    }
+  }
+}
+
 .start_screen {
   width: 100%;
   height: 480px;
 
-    @media (max-height: 500px) {
-        height: 100vh;
-}
+  @media (max-height: 500px) {
+    height: 100vh;
+  }
 }
 
 .main_content {
@@ -90,7 +122,7 @@ canvas {
   justify-content: unset;
   flex-direction: column;
   align-items: center;
-  
+
 }
 
 .controls {
@@ -154,8 +186,8 @@ canvas {
   justify-content: space-between;
 
   @media (max-width: 980px) {
-      display: block;
-      width: 100%;
+    display: block;
+    width: 100%;
   }
 
   .touchControls {
