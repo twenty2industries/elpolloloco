@@ -45,7 +45,5 @@ class Chicken extends MovableObject {
       AudioHub.playOne(AudioHub.chicken)
     }
   };
-
-
   //#endregion
 }

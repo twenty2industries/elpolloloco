@@ -55,7 +55,6 @@ characterMovement = () => {
     AudioHub.stopOne(AudioHub.characterRunning);
     this.runningSoundIsPlaying = false;
   }
-
   if (Keyboard.RIGHT && this.x < Level.level_end_x) {
     this.moveRight();
     this.otherDirection = false;
@@ -67,7 +66,6 @@ characterMovement = () => {
   if (Keyboard.SPACE) {
     this.jump();
   }
-
   this.world.camera_x = -this.x + 100;
 };
 

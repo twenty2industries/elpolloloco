@@ -8,115 +8,152 @@
   </head>
 
   <body>
-    <h1>El pollo Loco</h1>
+    <div class="allContent">
+      <h1>El pollo Loco</h1>
 
-    <canvas width="720" height="480" id="canvas" class="d_none"></canvas>
-        <div class="main_content" id="startScreenContent">
+      <canvas width="720" height="480" id="canvas" class="d_none"></canvas>
+      <div class="main_content" id="startScreenContent">
+        <button
+          onclick="startGame()"
+          class="start_game_button"
+          id="startGameButton"
+        >
+          START GAME
+        </button>
+
+        <img
+          src="img/9_intro_outro_screens/start/startscreen_2.png"
+          class="start_screen"
+          id="startScreen"
+        />
+      </div>
       <button
-        onclick="startGame()"
-        class="start_game_button"
-        id="startGameButton"
+        onclick="restartGame()"
+        class="restart_game_button d_none"
+        id="restartGameButton"
       >
-        START GAME
+        RESTART GAME
       </button>
-
-      <img
-        src="img/9_intro_outro_screens/start/startscreen_2.png"
-        class="start_screen"
-        id="startScreen"
-      />
-    </div>
-    <button onclick="restartGame()" class="restart_game_button d_none" id="restartGameButton">RESTART GAME </button>
       <div id="hud">
         <div class="touchControls">
-        <div class="movementHud">
-          <button class="controlHud" id="btnLeft">←</button>
-          <button class="controlHud" id="btnRight">→</button>
-        </div>
+          <div class="movementHud">
+            <button class="controlHud" id="btnLeft">←</button>
+            <button class="controlHud" id="btnRight">→</button>
+          </div>
 
-                <div class="movementHud">
-          <button class="controlHud" id="btnThrow">THROW</button>
-          <button class="controlHud" id="btnJump">JUMP</button>
-        </div>
+          <div class="movementHud">
+            <button class="controlHud" id="btnThrow">THROW</button>
+            <button class="controlHud" id="btnJump">JUMP</button>
+          </div>
         </div>
       </div>
-    <div class="controls">
-      <div class="key_assignments">
-        <span>Move Left <span class="key">←</span> </span>
-        <span>Move Right <span class="key">→</span> </span>
-        <span>Jump <span class="key">SPACE</span> </span>
-        <span>Throw <span class="key">F</span> </span>
-        <span
-          >Music Volume
-          <span class="key"
-            ><input
-              type="range"
-              oninput="AudioHub.objSetVolume(AudioHub.allSounds)"
-              id="volume"
-              min="0"
-              max="0.2"
-              step="0.01"
-              value="0.015"
-          /></span>
-        </span>
-        <span
-          >Music on/off
-          <button
-            onclick="switchPlayButton(AudioHub.startscreenMusic)"
-            class="stop_all"
-            id="pause"
+      <div class="controls">
+        <div class="key_assignments">
+          <span>Move Left <span class="key">←</span> </span>
+          <span>Move Right <span class="key">→</span> </span>
+          <span>Jump <span class="key">SPACE</span> </span>
+          <span>Throw <span class="key">F</span> </span>
+          <span
+            >Music Volume
+            <span class="key"
+              ><input
+                type="range"
+                oninput="AudioHub.objSetVolume(AudioHub.allSounds)"
+                id="volume"
+                min="0"
+                max="0.2"
+                step="0.01"
+                value="0.015"
+            /></span>
+          </span>
+          <span
+            >Music on/off
+            <button
+              onclick="switchPlayButton(AudioHub.startscreenMusic)"
+              class="stop_all"
+              id="pause"
+            >
+              | |
+            </button>
+            <button
+              onclick="switchPauseButton(AudioHub.startscreenMusic)"
+              class="stop_all d_none"
+              id="continue"
+            >
+              ▶︎
+            </button>
+            <button
+              onclick="turnOffIngameMusic()"
+              class="stop_all d_none"
+              id="pauseIngame"
+            >
+              | |
+            </button>
+            <button
+              onclick="turnOnIngameMusic()"
+              class="stop_all d_none"
+              id="continueIngame"
+            >
+              ▶︎
+            </button></span
           >
-            | |
-          </button>
-          <button
-            onclick="switchPauseButton(AudioHub.startscreenMusic)"
-            class="stop_all d_none"
-            id="continue"
-          >
-            ▶︎
-          </button>
-          <button
-            onclick="turnOffIngameMusic()"
-            class="stop_all d_none"
-            id="pauseIngame"
-          >
-            | |
-          </button>
-          <button
-            onclick="turnOnIngameMusic()"
-            class="stop_all d_none"
-            id="continueIngame"
-          >
-            ▶︎
-          </button></span>
+        </div>
+        <div class="keys"></div>
       </div>
-      <div class="keys"></div>
+      <div id="display" class="display">
+        <svg
+          width="450"
+          height="450"
+          viewBox="0 0 140 140"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <!-- Handy mit Animation -->
+          <g id="phoneGroup">
+            <rect
+              x="40"
+              y="40"
+              width="40"
+              height="60"
+              rx="5"
+              ry="5"
+              fill="#555"
+              stroke="#000"
+              stroke-width="2"
+            />
+            <circle cx="60" cy="95" r="2" fill="#ccc" />
+            <animateTransform
+              attributeName="transform"
+              type="rotate"
+              values="0 60 70; 90 60 70; 0 60 70"
+              dur="1.5s"
+              repeatCount="indefinite"
+            />
+          </g>
+
+          <!-- Pfeil -->
+          <path
+            d="M100 30 A30 30 0 0 1 130 70"
+            fill="none"
+            stroke="#000"
+            stroke-width="3"
+            marker-end="url(#arrowhead)"
+          />
+
+          <defs>
+            <marker
+              id="arrowhead"
+              markerWidth="10"
+              markerHeight="7"
+              refX="0"
+              refY="3.5"
+              orient="auto"
+            >
+              <polygon points="0 0, 10 3.5, 0 7" fill="#000" />
+            </marker>
+          </defs>
+        </svg>
+      </div>
     </div>
-    <div id="display" class="display">
-<svg width="450" height="450" viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
-  <!-- Handy mit Animation -->
-  <g id="phoneGroup">
-    <rect x="40" y="40" width="40" height="60" rx="5" ry="5" fill="#555" stroke="#000" stroke-width="2"/>
-    <circle cx="60" cy="95" r="2" fill="#ccc"/>
-    <animateTransform
-      attributeName="transform"
-      type="rotate"
-      values="0 60 70; 90 60 70; 0 60 70"
-      dur="2s"
-      repeatCount="indefinite" />
-  </g>
-
-  <!-- Pfeil -->
-  <path d="M100 30 A30 30 0 0 1 130 70" fill="none" stroke="#000" stroke-width="3" marker-end="url(#arrowhead)"/>
-  
-  <defs>
-    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
-      <polygon points="0 0, 10 3.5, 0 7" fill="#000"/>
-    </marker>
-  </defs>
-</svg>
-
-            </div>
   </body>
   <script src="classes/hub.class.js"></script>
   <script src="classes/drawableObject.class.js"></script>
