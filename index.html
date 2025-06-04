@@ -17,9 +17,7 @@
           onclick="startGame()"
           class="start_game_button"
           id="startGameButton"
-        >
-          START GAME
-        </button>
+        >START GAME</button>
 
         <img
           src="img/9_intro_outro_screens/start/startscreen_2.png"
@@ -41,34 +39,10 @@
             <button class="controlHud" id="btnRight">→</button>
           </div>
           <span>
-            <button
-              onclick="switchPlayButton(AudioHub.startscreenMusic)"
-              class="stop_all"
-              id="pauseMobile"
-            >
-              | |
-            </button>
-            <button
-              onclick="switchPauseButton(AudioHub.startscreenMusic)"
-              class="stop_all d_none"
-              id="continueMobile"
-            >
-              ▶︎
-            </button>
-            <button
-              onclick="turnOffIngameMusic()"
-              class="stop_all d_none"
-              id="pauseIngame"
-            >
-              | |
-            </button>
-            <button
-              onclick="turnOnIngameMusic()"
-              class="stop_all d_none"
-              id="continueIngame"
-            >
-              ▶︎
-            </button>
+            <button onclick="switchPlayButtonMobile()" class="stop_all" id="pauseMobile"> | | </button>
+            <button onclick="switchPauseButtonMobile()" class="stop_all d_none" id="continueMobile"> ♫ </button>
+                          <button onclick="AudioHub.toggleVolume();">Sound</button>
+
           </span>
           <div class="movementHud">
             <button class="controlHud" id="btnThrow">THROW</button>
@@ -78,57 +52,26 @@
       </div>
       <div class="controls">
         <div class="key_assignments">
-          <span>Move Left <span class="key">←</span> </span>
-          <span>Move Right <span class="key">→</span> </span>
+          <span>Left <span class="key">←</span> </span>
+          <span>Right <span class="key">→</span> </span>
           <span>Jump <span class="key">SPACE</span> </span>
           <span>Throw <span class="key">F</span> </span>
-          <span
-            >Music Volume
-            <span class="key"
-              ><input
-                type="range"
-                oninput="AudioHub.objSetVolume(AudioHub.allSounds)"
-                id="volume"
-                min="0"
-                max="0.2"
-                step="0.01"
-                value="0.015"
-            /></span>
+          <span><button class="impressumButton" onclick="toggleImpressum()">Impressum</button></span>
+
+          <span>
+              <span>
+                Music Volume
+                <span class="key">
+                <input type="range" oninput="AudioHub.objSetVolume(AudioHub.startscreenMusic)" id="volume" min="0" max="0.2" step="0.01" value="0.015"/></span>
+              </span>
+            <div>
+              <button onclick="switchPlayButton()" class="stop_all  d_none" id="pause"> | | </button>
+              <button onclick="switchPauseButton()" class="stop_all" id="continue"> ♫ </button>
+              <button onclick="AudioHub.toggleVolume();">Sound</button>
+            </div>
           </span>
-          <span
-            >Music on/off
-            <button
-              onclick="switchPlayButton(AudioHub.startscreenMusic)"
-              class="stop_all"
-              id="pause"
-            >
-              | |
-            </button>
-            <button
-              onclick="switchPauseButton(AudioHub.startscreenMusic)"
-              class="stop_all d_none"
-              id="continue"
-            >
-              ▶︎
-            </button>
-            <button
-              onclick="turnOffIngameMusic()"
-              class="stop_all d_none"
-              id="pauseIngame"
-            >
-              | |
-            </button>
-            <button
-              onclick="turnOnIngameMusic()"
-              class="stop_all d_none"
-              id="continueIngame"
-            >
-              ▶︎
-            </button></span
-          >
         </div>
       </div>
-      <button class="impressumButton" onclick="toggleImpressum()">Impressum</button>
       <div id="displayImpressum" class="display_impressum d_none">
         <div class="impressumHeader">
           <h1>Impressum</h1> <br> 

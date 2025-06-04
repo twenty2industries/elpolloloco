@@ -87,7 +87,7 @@ characterMovement = () => {
     if (this.isDead() && this.isDeadFlag) {
       this.playAnimation(ImageHub.CHARACTER_IMAGES_DEAD);
       AudioHub.playOne(AudioHub.characterDead);
-      AudioHub.stopOne(AudioHub.ingameSound);
+      AudioHub.stopOne(AudioHub.startscreenMusic);
       this.isDeadFlag = false; // turn off dead animation; issue with method hit(), need to be solved
     }
   };

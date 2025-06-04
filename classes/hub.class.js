@@ -237,7 +237,6 @@ class AudioHub {
   //game UI
   static gameStart = new Audio("sounds/game/gameStart.mp3");
   static gameStartscreen = new Audio("sounds/game/gameHomeScreen.mp3");
-  static ingameSound = new Audio("sounds/game/ingameMusic.mp3");
 
   // Array, das alle definierten Audio-Dateien enthält
   static allSounds = [
@@ -252,31 +251,33 @@ class AudioHub {
     AudioHub.chickenDead,
     AudioHub.chickenDead2,
     AudioHub.gameStart,
-    AudioHub.gameStartscreen,
-    AudioHub.ingameSound,
   ];
 
-  static startscreenMusic = [
-    AudioHub.gameStartscreen,
-  ];
+  static startscreenMusic = [AudioHub.gameStartscreen];
+
+  static sounds = true;
 
   //#endregion
   //#region methods
   // Spielt eine einzelne Audiodatei ab
   static playOne(sound) {
-    sound.volume = 0.2; // Setzt die Lautstärke auf 0.2 = 20% / 1 = 100%
-    sound.currentTime = 0; // Startet ab einer bestimmten stelle (0=Anfang/ 5 = 5 sec.)
-    sound.play(); // Spielt das übergebene Sound-Objekt ab
+    if (AudioHub.sounds) {
+      sound.volume = 0.2;
+    } else {
+      sound.volume = 0;
+    }
+    sound.currentTime = 0;
+    sound.play();
   }
 
   static playMusic(sound) {
     sound.volume = 0.015; // Setzt die Lautstärke auf 0.2 = 20% / 1 = 100%
-    sound.currentTime = 0; // Startet ab einer bestimmten stelle (0=Anfang/ 5 = 5 sec.)
     sound.play(); // Spielt das übergebene Sound-Objekt ab
   }
 
   static stopOne(sound) {
-    sound.pause(); // Pausiert das übergebene Audio
+    sound.volume = 0; // Pausiert das übergebene Audio
+    
   }
 
   static objSetVolume(volumeSlider) {
@@ -285,7 +286,15 @@ class AudioHub {
       sound.volume = volumeValue; // Setzt die Lautstärke für jedes Audio wie im Slider angegeben
     });
   }
+  //////
+  static toggleVolume() {
+    this.sounds = !this.sounds;
+    AudioHub.allSounds.forEach((sound) => {
+      sound.volume = this.sounds ? 0.2 : 0;
+    });
+  }
 
+  ///////
   // Stoppt das Abspielen aller Audiodateien
   static stopAll() {
     AudioHub.allSounds.forEach((sound) => {
@@ -302,6 +311,5 @@ class AudioHub {
     document.getElementById("volume").value = 0.015; // Setzt den Sound-Slider wieder auf 0.2
   }
 }
-
 
 //#endregion

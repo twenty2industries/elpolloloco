@@ -63,7 +63,7 @@ class MovableObject extends DrawableObject {
   hit() {
     if (this.hasDealtDamage) return; // prevent multiple damage hits
     this.hasDealtDamage = true; // mark that damage has been dealt
-    this.energy -= 5;
+    this.energy -= 20;
     this.idleTimer = 0; // track idleTimer for long idle animation
 
     if (this.energy <= 0 && !this.isDeadFlag) {
@@ -73,10 +73,10 @@ class MovableObject extends DrawableObject {
       this.lastHit = new Date().getTime(); // last collision contact getting saved to calculate time passed
     }
 
-    // Reset hasDealtDamage after 700 ms to allow new hits
+    // Reset hasDealtDamage after 200 ms to allow new hits
     setTimeout(() => {
       this.hasDealtDamage = false;
-    }, 700);
+    }, 200);
   }
 
   hitBottle() {
