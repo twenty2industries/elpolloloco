@@ -226,6 +226,7 @@ class AudioHub {
   static characterDead = new Audio("sounds/character/characterDead.wav");
   static characterRunning = new Audio("sounds/character/characterRun.mp3");
   static characterDamage = new Audio("sounds/character/characterDamage.mp3");
+  static characterSnoring = new Audio("sounds/character/characterSnoring.mp3");
 
   //endboss
   static bossApproach = new Audio("sounds/endboss/endbossApproach.wav");
@@ -251,6 +252,7 @@ class AudioHub {
     AudioHub.chickenDead,
     AudioHub.chickenDead2,
     AudioHub.gameStart,
+    AudioHub.characterSnoring
   ];
 
   static startscreenMusic = [AudioHub.gameStartscreen];

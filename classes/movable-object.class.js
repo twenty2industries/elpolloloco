@@ -65,7 +65,6 @@ class MovableObject extends DrawableObject {
     this.hasDealtDamage = true; // mark that damage has been dealt
     this.energy -= 20;
     this.idleTimer = 0; // track idleTimer for long idle animation
-
     if (this.energy <= 0 && !this.isDeadFlag) {
       this.energy = 0;
       this.isDeadFlag = true;

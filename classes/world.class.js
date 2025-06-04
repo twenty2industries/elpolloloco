@@ -185,14 +185,13 @@ checkCollisions() {
     if (endboss && endboss.energy === 0) {
       this.addToMap(this.youWonScreen);
       IntervalHub.stoppAllIntervals();
-      AudioHub.stopAll(AudioHub.allSounds)
+      AudioHub.stopAll(AudioHub.allSounds);
       this.isRunning = false;
       displayRestartButton();
     }
     if (this.character.energy <= 0) {
       this.addToMap(this.youLoseScreen);
       IntervalHub.stoppAllIntervals();
-      AudioHub.stopAll(AudioHub.startscreenMusic)
       AudioHub.playOne(AudioHub.characterDead);
       this.isRunning = false;
       displayRestartButton();
