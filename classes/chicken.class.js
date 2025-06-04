@@ -8,12 +8,7 @@ class Chicken extends MovableObject {
   width = 70;
   speed = 0.3 + Math.random() * 0.25; // zufällige zahl zwischen 0.15 und 0.25
 
-  offset = {
-    top: 1,
-    right: 1,
-    bottom: 1,
-    left: 1,
-  };
+  offset = { top: 3, bottom: 3, left: 3, right: 3};
   //#endregion
   //#region constructor
   constructor() {

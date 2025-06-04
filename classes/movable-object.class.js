@@ -31,7 +31,7 @@ class MovableObject extends DrawableObject {
     this.x -= this.speed;
   }
 
-    moveRight() {
+  moveRight() {
     this.x += this.speed;
   }
 
@@ -53,13 +53,13 @@ class MovableObject extends DrawableObject {
   //character.isColliding(chicken);
   isColliding(mo) {
     return (
-      this.x + this.width > mo.x &&
-      this.y + this.height > mo.y &&
-      this.x < mo.x + mo.width &&
-      this.y < mo.y + mo.height
+      this.x + this.offset.left < mo.x + mo.width - mo.offset.right &&
+      this.x + this.width - this.offset.right > mo.x + mo.offset.left &&
+      this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom &&
+      this.y + this.height - this.offset.bottom > mo.y + mo.offset.top
     );
   }
-  
+
   hit() {
     if (this.hasDealtDamage) return; // prevent multiple damage hits
     this.hasDealtDamage = true; // mark that damage has been dealt
@@ -98,7 +98,7 @@ class MovableObject extends DrawableObject {
     }
   }
 
-stomp(enemy) {
+  /* stomp(enemy) {
     return (
         this.speedY < 0 &&
         this.y + this.height <= enemy.y + 50 && // füße berühren oben
@@ -106,7 +106,17 @@ stomp(enemy) {
         this.x + this.width > enemy.x &&
         this.x < enemy.x + enemy.width
     );
-}
+} */
+
+  stomp(enemy) {
+    return (
+      this.speedY < 0 &&
+      this.y + this.height - this.offset.bottom >= enemy.y + enemy.offset.top &&
+      this.y + this.height - this.offset.bottom < enemy.y + enemy.height + 10 &&
+      this.x + this.offset.left < enemy.x + enemy.width - enemy.offset.right &&
+      this.x + this.width - this.offset.right > enemy.x + enemy.offset.left
+    );
+  }
 
   isDead() {
     return this.energy == 0;
@@ -131,11 +141,12 @@ stomp(enemy) {
     if (this.collided) {
       this.speedY = 0;
       this.acceleration = 0;
-      return; // Gravity stoppen
+      return; // stop gravity
     } else if (this.isAboveGround() || this.speedY > 0) {
-      // this.y smaller than 230
-      this.y -= this.speedY; // attribute this.y from character -= speed for gravity
-      this.speedY -= this.acceleration; // speed for gravity -= acceleration, the character will fall faster every interval
+      this.y -= this.speedY;
+      this.speedY -= this.acceleration;
+    } else {
+      this.speedY = 0;
     }
   };
 

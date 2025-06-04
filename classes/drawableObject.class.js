@@ -23,7 +23,6 @@ class DrawableObject {
   //#endregion
   //#region constructor
   constructor() {
-    this.getRealFrame();
   }
   //#endregion
   //#region methods
@@ -56,13 +55,6 @@ class DrawableObject {
       );
       ctx.stroke();
     }
-  }
-  //new
-  getRealFrame() {
-    this.rX = this.x + this.offset.left;
-    this.rY = this.y + this.offset.right;
-    this.rW = this.width - this.offset.left - this.offset.right;
-    this.rH = this.height - this.offset.top - this.offset.bottom;
   }
 
   setPercentage(percentage, imgPath) {

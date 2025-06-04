@@ -40,8 +40,11 @@ class World {
 checkCollisions() {
   this.level.enemies.forEach((enemy) => {
     if (this.character.isColliding(enemy) && !enemy.isDeadFlag) {
-      if (this.character.stomp(enemy)) {
-        AudioHub.playOne(AudioHub.chickenDead2)
+      if (
+        (enemy instanceof Chicken || enemy instanceof SmallChicken) &&
+        this.character.stomp(enemy)
+      ) {
+        AudioHub.playOne(AudioHub.chickenDead2);
         enemy.hit();
         this.character.speedY = 15;
       } else {

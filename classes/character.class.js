@@ -3,17 +3,15 @@ class Character extends MovableObject {
   height = 200;
   y = 230;
   speed = 10;
-  static x = 100;
 
   runningSoundIsPlaying = false; // neue Eigenschaft in Character
 
-  rX;
 
   offset = {
-    top: 1,
-    right: 80,
-    bottom: 92,
-    left: 80,
+    top: 20,
+    right: 20,
+    bottom: 10,
+    left: 20,
   };
 
   world;
