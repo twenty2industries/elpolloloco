@@ -7,6 +7,7 @@ class World {
   level = new Level();
 
   backgroundObjects = [];
+  youWonScreen = false;
 
   canvas;
 
@@ -22,6 +23,8 @@ class World {
   endbossHealthbar = new EndbossHealthBar();
   youWonScreen = new YouWonScreen();
   youLoseScreen = new YouLoseScreen();
+  youLost = false;
+  youWon = false; 
 
   //#endregion
   //#region constructor
@@ -32,20 +35,25 @@ class World {
     this.repeatMap();
     this.setWorld(); //why?
     IntervalHub.startInterval(this.run, 150);
+    IntervalHub.startInterval(this.characterGotHitted, 500);
     this.startBottleRespawnLoop();
-  }
+  };
   //#endregion
   //#region methods
   //#region collision methods
   checkCollisions() {
     this.level.enemies.forEach((enemy) => {
       if (this.character.isColliding(enemy) && !enemy.isDeadFlag) {
-        if ((enemy instanceof Chicken || enemy instanceof SmallChicken) && this.character.stomp(enemy)) {
+        if (
+          (enemy instanceof Chicken || enemy instanceof SmallChicken) &&
+          this.character.stomp(enemy)
+        ) {
           AudioHub.playOne(AudioHub.chickenDead2);
           enemy.hit();
           this.character.speedY = 11;
         } else {
           this.character.hit();
+          this.character.hasPlayedDamageSound = true;
           this.healtbar.setPercentage(
             this.character.energy,
             ImageHub.IMAGES_STATUS_HEALTH
@@ -53,27 +61,33 @@ class World {
         }
       }
     });
-  }
+  };
 
   checkCollisionsEnemyBottle() {
     for (let i = 0; i < this.throwableBottle.length; i++) {
       const bottle = this.throwableBottle[i];
       for (let j = 0; j < this.level.enemies.length; j++) {
-        if (bottle.isColliding(this.level.enemies[j]) && this.level.enemies[j].energy > 0) {
+        if (
+          bottle.isColliding(this.level.enemies[j]) &&
+          this.level.enemies[j].energy > 0
+        ) {
           this.level.enemies[j].hit();
           AudioHub.playOne(AudioHub.chickenDead);
           bottle.collided = true; //flag for splash animation @throwableObject
           bottle.isThrown = false; // stop throw motion flag for throwable objects
           if (this.level.enemies[j] instanceof Endboss) {
             //instanceof fixed the bug displaying boss hp 0 until the first attack
-            this.endbossHealthbar.setPercentage(this.level.enemies[j].energy, ImageHub.BOSS_IMAGES_STATUS_HEALTH);
+            this.endbossHealthbar.setPercentage(
+              this.level.enemies[j].energy,
+              ImageHub.BOSS_IMAGES_STATUS_HEALTH
+            );
           }
           this.deleteSplashAnimation(bottle);
           break;
         }
       }
     }
-  }
+  };
 
   checkCollectibleBottleCollision() {
     for (let i = 0; i < this.level.bottles.length; i++) {
@@ -82,11 +96,14 @@ class World {
         AudioHub.playOne(AudioHub.collectBottle);
         this.level.bottles.splice(i, 1); // removest the bottle from array level
         this.character.hitBottle();
-        this.bottlebar.setPercentage(this.character.bottles, ImageHub.IMAGES_STATUS_BOTTLE);
+        this.bottlebar.setPercentage(
+          this.character.bottles,
+          ImageHub.IMAGES_STATUS_BOTTLE
+        );
         break; // is a better option to return for multiple execution than return
       }
     }
-  }
+  };
 
   checkCollectibleCoinCollision() {
     for (let i = 0; i < this.level.coins.length; i++) {
@@ -101,7 +118,7 @@ class World {
         break; // is a better option to return for multiple execution than return
       }
     }
-  }
+  };
 
   checkBossProximity() {
     let boss = this.level.enemies.find((enemy) => enemy instanceof Endboss);
@@ -114,7 +131,7 @@ class World {
         boss.bossProximity = false;
       }
     }
-  }
+  };
 
   //#endregion
   run = () => {
@@ -130,10 +147,17 @@ class World {
   checkThrowObjects() {
     if (Keyboard.F /* && this.character.bottles < 100 */) {
       // new ThrowableObject with character's otherDirection
-      let bottle = new ThrowableObject(this.character.x, this.character.y, this.character.otherDirection);
+      let bottle = new ThrowableObject(
+        this.character.x,
+        this.character.y,
+        this.character.otherDirection
+      );
       this.throwableBottle.push(bottle);
       this.character.bottles += 20;
-      this.bottlebar.setPercentage(this.character.bottles, ImageHub.IMAGES_STATUS_BOTTLE);
+      this.bottlebar.setPercentage(
+        this.character.bottles,
+        ImageHub.IMAGES_STATUS_BOTTLE
+      );
     }
     Keyboard.F = false; // no fullauto
   }
@@ -147,7 +171,7 @@ class World {
         this.throwableBottle.splice(index, 1); // delete bottle @ collision
       }
     }, 150);
-  }
+  };
 
   draw() {
     if (!this.isRunning) return;
@@ -155,48 +179,56 @@ class World {
     let endboss = this.level.enemies.find((enemy) => enemy instanceof Endboss); // check if any enemy is an instance of Endboss and has energy equal to 0 with the method find()
     if (endboss && endboss.energy === 0) {
       this.youWonScreenWorld();
-    } if (this.character.energy <= 0) {
+    }
+    if (this.character.energy <= 0) {
       this.youLoseScreenWorld();
-    } this.addUiStatusBar();
-    if (this.character.x > 2000 || endboss.energy < 100) { // if close to enndboss then show endboss health
+    }
+    this.addUiStatusBar();
+    if (this.character.x > 2000 || endboss.energy < 100) {
+      // if close to enndboss then show endboss health
       this.addToMap(this.endbossHealthbar);
-      AudioHub.playOne(AudioHub.bossApproach);
+      AudioHub.playOne(AudioHub.bossApproach)
     }
     requestAnimationFrame(() => this.draw()); //draw() wird immer wieder aufgerufen
-  }
+  };
 
   ctxTranlase() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.ctx.translate(this.camera_x, 0);
     this.addWorldToMap();
     this.ctx.translate(-this.camera_x, 0);
-  }
+  };
 
   youWonScreenWorld() {
     this.addToMap(this.youWonScreen);
     IntervalHub.stoppAllIntervals();
     AudioHub.stopAll(AudioHub.allSounds);
     AudioHub.stopOne(AudioHub.gameStartscreen);
+    AudioHub.playOne(AudioHub.gameStart);
     this.isRunning = false;
+    this.youWon = true;
     displayRestartButton();
-  }
+  };
+
 
   youLoseScreenWorld() {
     this.addToMap(this.youLoseScreen);
     IntervalHub.stoppAllIntervals();
     AudioHub.stopAll(AudioHub.allSounds);
     AudioHub.stopOne(AudioHub.gameStartscreen);
+    AudioHub.stopOne(AudioHub.characterRunning); //bug with running sound, sometimes sound is not stopping
     AudioHub.playOne(AudioHub.characterDead);
     this.isRunning = false;
+    this.youLost = true;
     displayRestartButton();
-  }
+  };
 
   addUiStatusBar() {
     //ad User Interface statusbar
     this.addToMap(this.healtbar);
     this.addToMap(this.coinbar);
     this.addToMap(this.bottlebar);
-  }
+  };
 
   addWorldToMap() {
     this.addObjectsToMap(this.backgroundObjects);
@@ -206,17 +238,17 @@ class World {
     this.addObjectsToMap(this.throwableBottle);
     this.addObjectsToMap(this.level.bottles);
     this.addObjectsToMap(this.level.coins);
-  }
+  };
 
   setWorld() {
     this.character.world = this; //why? this is die instanz aus world?
-  }
+  };
 
   addObjectsToMap(mo) {
     mo.forEach((o) => {
       this.addToMap(o);
     });
-  }
+  };
 
   addToMap(mo) {
     if (mo.otherDirection) {
@@ -224,11 +256,11 @@ class World {
     }
 
     mo.draw(this.ctx);
-/*     mo.drawFrame(this.ctx);
- */    if (mo.otherDirection) {
+    /*     mo.drawFrame(this.ctx);
+     */ if (mo.otherDirection) {
       this.flipImageBack(mo);
     }
-  }
+  };
 
   repeatMap() {
     const startPoint = 719; // value for second half of the background elements
@@ -260,19 +292,19 @@ class World {
         new BackgroundObject(ImageHub.IMAGES_BACKGROUND[7], i2)
       );
     }
-  }
+  };
 
   flipImage(mo) {
     this.ctx.save();
     this.ctx.translate(mo.width, 0);
     this.ctx.scale(-1, 1);
     mo.x = mo.x * -1;
-  }
+  };
 
   flipImageBack(mo) {
     mo.x = mo.x * -1; // flip the x-coordinate here
     this.ctx.restore();
-  }
+  };
 
   startBottleRespawnLoop() {
     setInterval(() => {
@@ -280,7 +312,7 @@ class World {
         this.level.bottles = [new GroundItems(ImageHub.salsabottle[1])];
       }
     }, 3000); // alle 3 Sekunden prüfen
-  }
+  };
 
   //#endregion
 }

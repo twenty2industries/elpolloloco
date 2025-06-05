@@ -13,10 +13,10 @@ class SmallChicken extends MovableObject {
   dashTraveled = 0; // distance covered during dash
 
   offset = {
-    top: 4,
-    right: 4,
-    bottom: 4,
-    left: 4,
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
   };
 
   //#endregion

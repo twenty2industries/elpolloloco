@@ -6,6 +6,7 @@ class Endboss extends MovableObject {
   bossWalkTrigger = false;
   bossHurt = false;
   bossProximity = false;
+  hasPlayedBossApproach = false; 
 
   offset = {
     top: 55,
@@ -32,7 +33,7 @@ class Endboss extends MovableObject {
     IntervalHub.startInterval(this.bossDashMechanicProximity, 1000 / 60);
     IntervalHub.startInterval(this.setBossSpeed, 2000);
     IntervalHub.startInterval(this.setBossPositionBack, 1000 / 60);
-  }
+  };
   //#endregion
   //#region methods
   animate = () => {
@@ -60,7 +61,7 @@ class Endboss extends MovableObject {
   // helper method for calling setBossPositionBack to avoid side effects
   isMovingBack() {
     return this.x < 2000 && !this.isHurt() && !this.isDead();
-  }
+  };
 
   bossDashMechanic = () => {
     if (this.isHurt()) {

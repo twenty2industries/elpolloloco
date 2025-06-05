@@ -275,7 +275,7 @@ class AudioHub {
     if (volumeInput) {
       volumeInput.value = volume;
     }
-  }
+  };
 
   //#endregion
   //#region methods
@@ -292,11 +292,10 @@ class AudioHub {
         sound.play();
       }
     }, 200);
-  }
+  };
 
   static playMusic(sound) {
-    const volume = parseFloat(localStorage.getItem("volume") || 0.015);
-    sound.volume = volume;
+    sound.volume = 0.015;
     sound.play(); // Spielt das übergebene Sound-Objekt ab
   }
 

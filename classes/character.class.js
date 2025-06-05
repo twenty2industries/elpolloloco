@@ -5,7 +5,8 @@ class Character extends MovableObject {
   speed = 10;
 
   runningSoundIsPlaying = false; // neue Eigenschaft in Character
-
+  hasPlayedDamageSound = false;
+  hasPlayedSnoringSound = false;
 
   offset = {
     top: 90,
@@ -38,6 +39,7 @@ class Character extends MovableObject {
     IntervalHub.startInterval(this.animateCharacterDead, 100);
     IntervalHub.startInterval(this.animateCharacterHurt, 100);
     IntervalHub.startInterval(this.animateIdleAnimations, 200);
+    IntervalHub.startInterval(this.playDamageSoundOnce, 600);
   }
   //#endregion
   //#region methods
@@ -64,6 +66,13 @@ class Character extends MovableObject {
       this.jump();
     }
     this.world.camera_x = -this.x + 100;
+  };
+
+  playDamageSoundOnce = () => {
+    if (this.hasPlayedDamageSound) {
+      AudioHub.playOne(AudioHub.characterDamage);
+      this.hasPlayedDamageSound = false;
+    }
   };
 
   animateCharacterWalking = () => {
@@ -96,28 +105,30 @@ class Character extends MovableObject {
     }
   };
 
-  animateIdleAnimations = () => {
-    const noKeyPressed =
-      !Keyboard.RIGHT &&
-      !Keyboard.LEFT &&
-      !Keyboard.UP &&
-      !Keyboard.DOWN &&
-      !Keyboard.SPACE &&
-      !Keyboard.F;
+animateIdleAnimations = () => {
+  const noKeyPressed = 
+    !Keyboard.RIGHT && !Keyboard.LEFT && !Keyboard.UP && 
+    !Keyboard.DOWN && !Keyboard.SPACE && !Keyboard.F;
 
-    if (noKeyPressed && !this.isDead()) {
-      this.idleTimer += 200; // add time in 100 = every 100 ms
-      this.playAnimation(ImageHub.CHARACTER_IMAGES_IDLE); // plays idle animation if noKeyPressed
+  if (noKeyPressed && !this.isDead()) {
+    this.idleTimer += 200;
+
+    if (this.idleTimer < 5000) {
+      this.playAnimation(ImageHub.CHARACTER_IMAGES_IDLE);
       AudioHub.stopOne(AudioHub.characterRunning);
-
-      if (this.idleTimer >= 5000 && !this.isAboveGround()) {
-        //interval ticks 50 times = 5000ms long idle animation starts
-        this.playAnimation(ImageHub.CHARACTER_IMAGES_LONG_IDLE);
-      }
+      this.hasPlayedSnoringSound = false; // Reset hier, wenn noch keine lange Idle
     } else {
-      this.idleTimer = 0; // sets back timer if noKeyPressed is negotiated
+      this.playAnimation(ImageHub.CHARACTER_IMAGES_LONG_IDLE);
+      if (!this.hasPlayedSnoringSound) {
+        AudioHub.playOne(AudioHub.characterSnoring);
+        this.hasPlayedSnoringSound = true;
+      }
     }
-  };
+  } else {
+    this.idleTimer = 0;
+    this.hasPlayedSnoringSound = false; // Reset wenn Bewegung
+  }
+};
 
   //#endregion
 }
