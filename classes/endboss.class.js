@@ -8,9 +8,9 @@ class Endboss extends MovableObject {
   bossProximity = false;
 
   offset = {
-    top: 10,
+    top: 55,
     right: 70,
-    bottom: 70,
+    bottom: 30,
     left: 10,
   };
 

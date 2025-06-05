@@ -4,6 +4,7 @@ let world;
 function init() {
   canvas = document.getElementById("canvas");
   world = new World(canvas);
+  AudioHub.init();
 }
 
 document.addEventListener("keydown", (event) => {
@@ -73,7 +74,6 @@ function startGame() {
 function displayRestartButton() {
   const restartGameButtonRef = document.getElementById("restartGameButton");
   restartGameButtonRef.classList.toggle("d_none");
-  console.log("Button anzeigen");
 }
 
 function switchPlayButton() {
@@ -93,7 +93,6 @@ function switchPauseButtonMobile() {
   AudioHub.playMusic(AudioHub.gameStartscreen);
 }
 
-
 function switchPlayButtonMobile() {
   AudioHub.stopOne(AudioHub.gameStartscreen);
   const pauseButtonRef = document.getElementById("pauseMobile");
@@ -102,14 +101,17 @@ function switchPlayButtonMobile() {
   resumeButtonRef.classList.toggle("d_none");
 }
 
-
-
 function restartGame() {
   displayRestartButton();
   init();
+  const pauseButtonRef = document.getElementById("pause");
+  pauseButtonRef.classList.toggle("d_none");
+  const resumeButtonRef = document.getElementById("continue");
+  resumeButtonRef.classList.toggle("d_none");
 }
 
 function toggleImpressum() {
   const displayRef = document.getElementById("displayImpressum");
   displayRef.classList.toggle("d_none");
+  
 }

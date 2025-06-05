@@ -37,45 +37,36 @@ class World {
   //#endregion
   //#region methods
   //#region collision methods
-checkCollisions() {
-  this.level.enemies.forEach((enemy) => {
-    if (this.character.isColliding(enemy) && !enemy.isDeadFlag) {
-      if (
-        (enemy instanceof Chicken || enemy instanceof SmallChicken) &&
-        this.character.stomp(enemy)
-      ) {
-        AudioHub.playOne(AudioHub.chickenDead2);
-        enemy.hit();
-        this.character.speedY = 15;
-      } else {
-        this.character.hit();
-        this.healtbar.setPercentage(
-          this.character.energy,
-          ImageHub.IMAGES_STATUS_HEALTH
-        );
+  checkCollisions() {
+    this.level.enemies.forEach((enemy) => {
+      if (this.character.isColliding(enemy) && !enemy.isDeadFlag) {
+        if ((enemy instanceof Chicken || enemy instanceof SmallChicken) && this.character.stomp(enemy)) {
+          AudioHub.playOne(AudioHub.chickenDead2);
+          enemy.hit();
+          this.character.speedY = 11;
+        } else {
+          this.character.hit();
+          this.healtbar.setPercentage(
+            this.character.energy,
+            ImageHub.IMAGES_STATUS_HEALTH
+          );
+        }
       }
-    }
-  });
-}
+    });
+  }
 
   checkCollisionsEnemyBottle() {
     for (let i = 0; i < this.throwableBottle.length; i++) {
       const bottle = this.throwableBottle[i];
       for (let j = 0; j < this.level.enemies.length; j++) {
-        if (
-          bottle.isColliding(this.level.enemies[j]) &&
-          this.level.enemies[j].energy > 0
-        ) {
+        if (bottle.isColliding(this.level.enemies[j]) && this.level.enemies[j].energy > 0) {
           this.level.enemies[j].hit();
-                AudioHub.playOne(AudioHub.chickenDead)
+          AudioHub.playOne(AudioHub.chickenDead);
           bottle.collided = true; //flag for splash animation @throwableObject
           bottle.isThrown = false; // stop throw motion flag for throwable objects
           if (this.level.enemies[j] instanceof Endboss) {
             //instanceof fixed the bug displaying boss hp 0 until the first attack
-            this.endbossHealthbar.setPercentage(
-              this.level.enemies[j].energy,
-              ImageHub.BOSS_IMAGES_STATUS_HEALTH
-            );
+            this.endbossHealthbar.setPercentage(this.level.enemies[j].energy, ImageHub.BOSS_IMAGES_STATUS_HEALTH);
           }
           this.deleteSplashAnimation(bottle);
           break;
@@ -88,13 +79,10 @@ checkCollisions() {
     for (let i = 0; i < this.level.bottles.length; i++) {
       if (this.character.isColliding(this.level.bottles[i])) {
         // checks the exact collided object
-        AudioHub.playOne(AudioHub.collectBottle)
+        AudioHub.playOne(AudioHub.collectBottle);
         this.level.bottles.splice(i, 1); // removest the bottle from array level
         this.character.hitBottle();
-        this.bottlebar.setPercentage(
-          this.character.bottles,
-          ImageHub.IMAGES_STATUS_BOTTLE
-        );
+        this.bottlebar.setPercentage(this.character.bottles, ImageHub.IMAGES_STATUS_BOTTLE);
         break; // is a better option to return for multiple execution than return
       }
     }
@@ -122,7 +110,6 @@ checkCollisions() {
       let distance = boss.x - character.x;
       if (distance < 350 && distance > 70) {
         boss.bossProximity = true;
-        console.log("BOSS ZU NAHE ");
       } else {
         boss.bossProximity = false;
       }
@@ -141,19 +128,12 @@ checkCollisions() {
   };
 
   checkThrowObjects() {
-    if (Keyboard.F && this.character.bottles < 100) {
+    if (Keyboard.F /* && this.character.bottles < 100 */) {
       // new ThrowableObject with character's otherDirection
-      let bottle = new ThrowableObject(
-        this.character.x,
-        this.character.y,
-        this.character.otherDirection
-      );
+      let bottle = new ThrowableObject(this.character.x, this.character.y, this.character.otherDirection);
       this.throwableBottle.push(bottle);
       this.character.bottles += 20;
-      this.bottlebar.setPercentage(
-        this.character.bottles,
-        ImageHub.IMAGES_STATUS_BOTTLE
-      );
+      this.bottlebar.setPercentage(this.character.bottles, ImageHub.IMAGES_STATUS_BOTTLE);
     }
     Keyboard.F = false; // no fullauto
   }
@@ -171,9 +151,54 @@ checkCollisions() {
 
   draw() {
     if (!this.isRunning) return;
+    this.ctxTranlase();
+    let endboss = this.level.enemies.find((enemy) => enemy instanceof Endboss); // check if any enemy is an instance of Endboss and has energy equal to 0 with the method find()
+    if (endboss && endboss.energy === 0) {
+      this.youWonScreenWorld();
+    } if (this.character.energy <= 0) {
+      this.youLoseScreenWorld();
+    } this.addUiStatusBar();
+    if (this.character.x > 2000 || endboss.energy < 100) { // if close to enndboss then show endboss health
+      this.addToMap(this.endbossHealthbar);
+      AudioHub.playOne(AudioHub.bossApproach);
+    }
+    requestAnimationFrame(() => this.draw()); //draw() wird immer wieder aufgerufen
+  }
+
+  ctxTranlase() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    // background camera offset
     this.ctx.translate(this.camera_x, 0);
+    this.addWorldToMap();
+    this.ctx.translate(-this.camera_x, 0);
+  }
+
+  youWonScreenWorld() {
+    this.addToMap(this.youWonScreen);
+    IntervalHub.stoppAllIntervals();
+    AudioHub.stopAll(AudioHub.allSounds);
+    AudioHub.stopOne(AudioHub.gameStartscreen);
+    this.isRunning = false;
+    displayRestartButton();
+  }
+
+  youLoseScreenWorld() {
+    this.addToMap(this.youLoseScreen);
+    IntervalHub.stoppAllIntervals();
+    AudioHub.stopAll(AudioHub.allSounds);
+    AudioHub.stopOne(AudioHub.gameStartscreen);
+    AudioHub.playOne(AudioHub.characterDead);
+    this.isRunning = false;
+    displayRestartButton();
+  }
+
+  addUiStatusBar() {
+    //ad User Interface statusbar
+    this.addToMap(this.healtbar);
+    this.addToMap(this.coinbar);
+    this.addToMap(this.bottlebar);
+  }
+
+  addWorldToMap() {
     this.addObjectsToMap(this.backgroundObjects);
     this.addObjectsToMap(this.level.clouds);
     this.addToMap(this.character);
@@ -181,34 +206,6 @@ checkCollisions() {
     this.addObjectsToMap(this.throwableBottle);
     this.addObjectsToMap(this.level.bottles);
     this.addObjectsToMap(this.level.coins);
-    this.ctx.translate(-this.camera_x, 0);
-    // fixed ui elements
-
-    let endboss = this.level.enemies.find((enemy) => enemy instanceof Endboss); // check if any enemy is an instance of Endboss and has energy equal to 0 with the method find()
-    if (endboss && endboss.energy === 0) {
-      this.addToMap(this.youWonScreen);
-      IntervalHub.stoppAllIntervals();
-      AudioHub.stopAll(AudioHub.allSounds);
-      this.isRunning = false;
-      displayRestartButton();
-    }
-    if (this.character.energy <= 0) {
-      this.addToMap(this.youLoseScreen);
-      IntervalHub.stoppAllIntervals();
-      AudioHub.playOne(AudioHub.characterDead);
-      this.isRunning = false;
-      displayRestartButton();
-    }
-    this.addToMap(this.healtbar);
-    this.addToMap(this.coinbar);
-    this.addToMap(this.bottlebar);
-    if (this.character.x > 2000 || endboss.energy < 100) {
-      // if close to enndboss then show endboss health
-      this.addToMap(this.endbossHealthbar);
-      AudioHub.playOne(AudioHub.bossApproach);
-    }
-    //draw() wird immer wieder aufgerufen
-    requestAnimationFrame( () => this.draw());
   }
 
   setWorld() {
@@ -227,8 +224,8 @@ checkCollisions() {
     }
 
     mo.draw(this.ctx);
-    mo.drawFrame(this.ctx);
-    if (mo.otherDirection) {
+/*     mo.drawFrame(this.ctx);
+ */    if (mo.otherDirection) {
       this.flipImageBack(mo);
     }
   }

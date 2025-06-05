@@ -4,6 +4,7 @@ class ThrowableObject extends MovableObject {
   collided = false;
 
   hasDealtDamage = true; // stop dmg for @throwableobject as soon its collides
+  
 
   //#endregion
 

@@ -252,66 +252,93 @@ class AudioHub {
     AudioHub.chickenDead,
     AudioHub.chickenDead2,
     AudioHub.gameStart,
-    AudioHub.characterSnoring
+    AudioHub.characterSnoring,
   ];
 
   static startscreenMusic = [AudioHub.gameStartscreen];
 
   static sounds = true;
 
+  // Initialisiert gespeicherte Einstellungen (Volume & Soundstatus)
+  static init() {
+    const storedSounds = localStorage.getItem("sounds");
+    const storedVolume = localStorage.getItem("volume");
+
+    this.sounds = storedSounds === null ? true : storedSounds === "true";
+    const volume = storedVolume !== null ? parseFloat(storedVolume) : 0.015;
+
+    AudioHub.allSounds.forEach((sound) => {
+      sound.volume = this.sounds ? volume : 0;
+    });
+
+    const volumeInput = document.getElementById("volume");
+    if (volumeInput) {
+      volumeInput.value = volume;
+    }
+  }
+
   //#endregion
   //#region methods
   // Spielt eine einzelne Audiodatei ab
   static playOne(sound) {
-    if (AudioHub.sounds) {
-      sound.volume = 0.2;
-    } else {
-      sound.volume = 0;
-    }
-    sound.currentTime = 0;
-    sound.play();
+    if (!sound) return;
+    const interval = setInterval(() => {
+      if (sound.readyState === 4) {
+        clearInterval(interval);
+        sound.volume = AudioHub.sounds
+          ? parseFloat(localStorage.getItem("volume") || 0.2)
+          : 0;
+        sound.currentTime = 0;
+        sound.play();
+      }
+    }, 200);
   }
 
   static playMusic(sound) {
-    sound.volume = 0.015; // Setzt die Lautstärke auf 0.2 = 20% / 1 = 100%
+    const volume = parseFloat(localStorage.getItem("volume") || 0.015);
+    sound.volume = volume;
     sound.play(); // Spielt das übergebene Sound-Objekt ab
   }
 
   static stopOne(sound) {
-    sound.volume = 0; // Pausiert das übergebene Audio
-    
+    if (!sound) return;
+    sound.pause(); // Nur pausieren
+    // sound.volume nicht verändern
   }
 
   static objSetVolume(volumeSlider) {
     let volumeValue = document.getElementById("volume").value; // Holt den aktuellen Lautstärkewert aus dem Inputfeld
+    localStorage.setItem("volume", volumeValue); // Speichert die Lautstärke
     volumeSlider.forEach((sound) => {
-      sound.volume = volumeValue; // Setzt die Lautstärke für jedes Audio wie im Slider angegeben
-    });
-  }
-  //////
-  static toggleVolume() {
-    this.sounds = !this.sounds;
-    AudioHub.allSounds.forEach((sound) => {
-      sound.volume = this.sounds ? 0.2 : 0;
+      sound.volume = AudioHub.sounds ? volumeValue : 0; // Setzt die Lautstärke für jedes Audio wie im Slider angegeben
     });
   }
 
-  ///////
+  static toggleVolume() {
+    this.sounds = !this.sounds;
+    localStorage.setItem("sounds", this.sounds); // Speichert den Soundzustand
+    const volume = parseFloat(localStorage.getItem("volume") || 0.2);
+    AudioHub.allSounds.forEach((sound) => {
+      sound.volume = this.sounds ? volume : 0;
+    });
+  }
+
   // Stoppt das Abspielen aller Audiodateien
   static stopAll() {
     AudioHub.allSounds.forEach((sound) => {
-      sound.pause(); // Pausiert jedes Audio in der Liste
+      sound.pause(); // Nur pausieren, Lautstärke bleibt erhalten
     });
-    document.getElementById("volume").value = 0.015; // Setzt den Sound-Slider wieder auf 0.2
+    // Kein Lautstärke-Reset mehr hier!
   }
 
   static playAll() {
+    const volume = 0.015;
     AudioHub.allSounds.forEach((sound) => {
-      sound.volume = 0.015;
-      sound.play(); // Pausiert jedes Audio in der Liste
+      sound.volume = AudioHub.sounds ? volume : 0;
+      sound.play(); // Spielt jedes Audio in der Liste
     });
-    document.getElementById("volume").value = 0.015; // Setzt den Sound-Slider wieder auf 0.2
+    document.getElementById("volume").value = volume; // Setzt den Sound-Slider
+    localStorage.setItem("volume", volume); // Speichert neuen Wert
   }
 }
-
 //#endregion
