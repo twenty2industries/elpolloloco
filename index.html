@@ -38,16 +38,16 @@
             <button class="controlHud" id="btnLeft">←</button>
             <button class="controlHud" id="btnRight">→</button>
           </div>
-          <span>
-            <button onclick="switchPlayButtonMobile()" class="stop_all" id="pauseMobile"> | | </button>
-            <button onclick="switchPauseButtonMobile()" class="stop_all d_none" id="continueMobile"> ♫ </button>
-            <button onclick="AudioHub.toggleVolume();">Sound</button>
+          <span class="soundControlMobile">
+            <button class="controlHud" onclick="switchPlayButtonMobile()" class="stop_all d_none" id="pauseMobile"> | | </button>
+            <button class="controlHud" onclick="switchPauseButtonMobile()" class="stop_all " id="continueMobile"> ♫ </button>
+            <button class="controlHud" onclick="AudioHub.toggleVolume();">Sound</button>
           </span>
           <div class="movementHud">
             <button class="controlHud" id="btnThrow">THROW</button>
             <button class="controlHud" id="btnJump">JUMP</button>
           </div>
-        </div>
+        </div> 
       </div>
       <div class="controls">
         <div class="key_assignments">
@@ -59,9 +59,9 @@
 
           <span>
               <span>
-                Music Volume
+                Master Volume
                 <span class="key">
-                <input type="range" oninput="AudioHub.objSetVolume(AudioHub.startscreenMusic)" id="volume" min="0" max="0.2" step="0.01" value="0.015"/></span>
+                <input type="range" oninput="AudioHub.objSetVolume(AudioHub.allSounds)" id="volume" min="0" max="0.2" step="0.01" value="0.015"/></span>
               </span>
             <div class="volumeControl">
               <button onclick="switchPlayButton()" class="stop_all  d_none" id="pause"> | | </button>

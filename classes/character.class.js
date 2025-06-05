@@ -36,7 +36,6 @@ class Character extends MovableObject {
     IntervalHub.startInterval(this.characterMovement, 1000 / 60);
     IntervalHub.startInterval(this.animateCharacterWalking, 100);
     IntervalHub.startInterval(this.animateCharacterJump, 80);
-    IntervalHub.startInterval(this.animateCharacterDead, 100);
     IntervalHub.startInterval(this.animateCharacterHurt, 100);
     IntervalHub.startInterval(this.animateIdleAnimations, 200);
     IntervalHub.startInterval(this.playDamageSoundOnce, 600);
@@ -92,8 +91,6 @@ class Character extends MovableObject {
     //playAnimation for movement DEAD
     if (this.isDead() && this.isDeadFlag) {
       this.playAnimation(ImageHub.CHARACTER_IMAGES_DEAD);
-      AudioHub.playOne(AudioHub.characterDead);
-      AudioHub.stopOne(AudioHub.gameStartscreen);
       this.isDeadFlag = false; // turn off dead animation; issue with method hit(), need to be solved
     }
   };

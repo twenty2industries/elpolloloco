@@ -145,7 +145,7 @@ class World {
   };
 
   checkThrowObjects() {
-    if (Keyboard.F /* && this.character.bottles < 100 */) {
+    if (Keyboard.F && this.character.bottles < 100 ) {
       // new ThrowableObject with character's otherDirection
       let bottle = new ThrowableObject(
         this.character.x,

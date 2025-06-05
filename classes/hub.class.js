@@ -280,29 +280,40 @@ class AudioHub {
   //#endregion
   //#region methods
   // Spielt eine einzelne Audiodatei ab
-  static playOne(sound) {
-    if (!sound) return;
-    const interval = setInterval(() => {
-      if (sound.readyState === 4) {
-        clearInterval(interval);
-        sound.volume = AudioHub.sounds
-          ? parseFloat(localStorage.getItem("volume") || 0.2)
-          : 0;
-        sound.currentTime = 0;
-        sound.play();
-      }
-    }, 200);
-  };
+static playOne(sound) {
+  if (!sound) return;
+  
+  sound.currentTime = 0; // Zurückspulen
+  sound.volume = AudioHub.sounds 
+    ? parseFloat(localStorage.getItem("volume") || 0.2) 
+    : 0;
 
-  static playMusic(sound) {
-    sound.volume = 0.015;
-    sound.play(); // Spielt das übergebene Sound-Objekt ab
+  // Versuche abzuspielen und fange Fehler ab
+  const playPromise = sound.play();
+  
+  if (playPromise !== undefined) { // Falls play() ein Promise zurückgibt
+    playPromise.catch(err => {
+      if (err.name !== 'AbortError') {
+        console.warn("Audio konnte nicht abgespielt werden:", err);
+      }
+    });
   }
+}
+
+static playMusic(sound) {
+  sound.volume = 0.02;
+  sound.loop = true; // Falls es Hintergrundmusik ist
+  
+  sound.play().catch(err => {
+    if (err.name !== 'AbortError') {
+      console.warn("Musik konnte nicht gestartet werden:", err);
+    }
+  });
+}
 
   static stopOne(sound) {
     if (!sound) return;
-    sound.pause(); // Nur pausieren
-    // sound.volume nicht verändern
+    sound.pause(); // ur pausieren
   }
 
   static objSetVolume(volumeSlider) {
