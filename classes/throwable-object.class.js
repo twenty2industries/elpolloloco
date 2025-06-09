@@ -53,7 +53,6 @@ class ThrowableObject extends MovableObject {
 
   animateBottleSplash = () => {
     if (this.collided) {
-      
       this.playAnimation(ImageHub.BOTTLE_IMAGE_SPLASH);
     }
   };

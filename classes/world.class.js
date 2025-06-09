@@ -45,19 +45,14 @@ class World {
     this.level.enemies.forEach((enemy) => {
       if (this.character.isColliding(enemy) && !enemy.isDeadFlag) {
         if (
-          (enemy instanceof Chicken || enemy instanceof SmallChicken) &&
-          this.character.stomp(enemy)
-        ) {
+          (enemy instanceof Chicken || enemy instanceof SmallChicken) && this.character.stomp(enemy)) {
           AudioHub.playOne(AudioHub.chickenDead2);
           enemy.hit();
           this.character.speedY = 11;
         } else {
           this.character.hit();
           this.character.hasPlayedDamageSound = true;
-          this.healtbar.setPercentage(
-            this.character.energy,
-            ImageHub.IMAGES_STATUS_HEALTH
-          );
+          this.healtbar.setPercentage(this.character.energy, ImageHub.IMAGES_STATUS_HEALTH);
         }
       }
     });
@@ -77,10 +72,7 @@ class World {
           bottle.isThrown = false; // stop throw motion flag for throwable objects
           if (this.level.enemies[j] instanceof Endboss) {
             //instanceof fixed the bug displaying boss hp 0 until the first attack
-            this.endbossHealthbar.setPercentage(
-              this.level.enemies[j].energy,
-              ImageHub.BOSS_IMAGES_STATUS_HEALTH
-            );
+            this.endbossHealthbar.setPercentage(this.level.enemies[j].energy, ImageHub.BOSS_IMAGES_STATUS_HEALTH);
           }
           this.deleteSplashAnimation(bottle);
           break;
@@ -147,17 +139,10 @@ class World {
   checkThrowObjects() {
     if (Keyboard.F && this.character.bottles < 100 ) {
       // new ThrowableObject with character's otherDirection
-      let bottle = new ThrowableObject(
-        this.character.x,
-        this.character.y,
-        this.character.otherDirection
-      );
+      let bottle = new ThrowableObject(this.character.x, this.character.y, this.character.otherDirection);
       this.throwableBottle.push(bottle);
       this.character.bottles += 20;
-      this.bottlebar.setPercentage(
-        this.character.bottles,
-        ImageHub.IMAGES_STATUS_BOTTLE
-      );
+      this.bottlebar.setPercentage(this.character.bottles, ImageHub.IMAGES_STATUS_BOTTLE);
     }
     Keyboard.F = false; // no fullauto
   }
@@ -203,7 +188,6 @@ class World {
     this.addToMap(this.youWonScreen);
     IntervalHub.stoppAllIntervals();
     AudioHub.stopAll(AudioHub.allSounds);
-    AudioHub.stopOne(AudioHub.gameStartscreen);
     AudioHub.playOne(AudioHub.gameStart);
     this.isRunning = false;
     this.youWon = true;
@@ -215,8 +199,8 @@ class World {
     this.addToMap(this.youLoseScreen);
     IntervalHub.stoppAllIntervals();
     AudioHub.stopAll(AudioHub.allSounds);
-    AudioHub.stopOne(AudioHub.gameStartscreen);
-    AudioHub.stopOne(AudioHub.characterRunning); //bug with running sound, sometimes sound is not stopping
+/*     AudioHub.stopOne(AudioHub.gameStartscreen);
+ */    AudioHub.stopOne(AudioHub.characterRunning); //bug with running sound, sometimes sound is not stopping
     AudioHub.playOne(AudioHub.characterDead);
     this.isRunning = false;
     this.youLost = true;

@@ -61,6 +61,7 @@ function bindBtsPressEvents() {
 }
 
 function startGame() {
+  restoreMusicState();
   toggleHomeScreen();
   init();
   bindBtsPressEvents();
@@ -74,6 +75,7 @@ function displayRestartButton() {
 }
 
 function switchPlayButton() {
+    localStorage.setItem('musicPlaying', 'false');
   AudioHub.stopOne(AudioHub.gameStartscreen);
   const pauseButtonRef = document.getElementById("pause");
   pauseButtonRef.classList.toggle("d_none");
@@ -83,34 +85,42 @@ function switchPlayButton() {
 function switchPauseButton() {
   switchPlayButton();
   AudioHub.playMusic(AudioHub.gameStartscreen);
+  localStorage.setItem('musicPlaying', 'true');
 }
 
 function switchPauseButtonMobile() {
   switchPlayButtonMobile();
   AudioHub.playMusic(AudioHub.gameStartscreen);
+  localStorage.setItem('musicPlaying', 'true');
 }
+
 
 function switchPlayButtonMobile() {
   AudioHub.stopOne(AudioHub.gameStartscreen);
+  localStorage.setItem('musicPlaying', 'false');
   const pauseButtonRef = document.getElementById("pauseMobile");
   pauseButtonRef.classList.toggle("d_none");
   const resumeButtonRef = document.getElementById("continueMobile");
   resumeButtonRef.classList.toggle("d_none");
 }
 
+function restoreMusicState() {
+  if (localStorage.getItem('musicPlaying') === 'true') {
+    AudioHub.playMusic(AudioHub.gameStartscreen);
+    document.getElementById("pauseMobile").classList.add("d_none");
+  } else     document.getElementById("continueMobile").classList.toggle("d_none");
+
+}
+
 function restartGame() {
+  restoreMusicState();
   displayRestartButton();
   init();
-  const pauseButtonRef = document.getElementById("pause");
-  pauseButtonRef.classList.toggle("d_none");
-  const resumeButtonRef = document.getElementById("continue");
-  resumeButtonRef.classList.toggle("d_none");
 }
 
 function toggleImpressum() {
   const displayRef = document.getElementById("displayImpressum");
   displayRef.classList.toggle("d_none");
-  
 }
 
 function toggleHomeScreen(){

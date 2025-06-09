@@ -60,15 +60,6 @@ class MovableObject extends DrawableObject {
     );
   }
 
-  isCollidingWithMinContact(mo) {
-  return (
-    this.x + this.offset.left <= mo.x + mo.width - mo.offset.right &&
-    this.x + this.width - this.offset.right >= mo.x + mo.offset.left &&
-    this.y + this.offset.top <= mo.y + mo.height - mo.offset.bottom &&
-    this.y + this.height - this.offset.bottom >= mo.y + mo.offset.top
-  );
-}
-
   hit() {
     if (this.hasDealtDamage) return; // prevent multiple damage hits
     this.hasDealtDamage = true; // mark that damage has been dealt

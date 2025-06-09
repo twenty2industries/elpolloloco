@@ -211,6 +211,7 @@ class IntervalHub {
     IntervalHub.allIntervals = [];
   }
 }
+
 //#region AudioHub
 class AudioHub {
   //#region attributes
@@ -270,13 +271,13 @@ class AudioHub {
     if (volumeInput) {
       volumeInput.value = volume;
     }
+    
   };
 
   //#endregion
   //#region methods
 static playOne(sound) {
   if (!sound) return;
-  
   sound.currentTime = 0; 
   sound.volume = AudioHub.sounds ? parseFloat(localStorage.getItem("volume") || 0.2) : 0;
   const playPromise = sound.play();
@@ -292,7 +293,6 @@ static playOne(sound) {
 static playMusic(sound) {
   sound.volume = 0.02;
   sound.loop = true;
-  
   sound.play().catch(err => {
     if (err.name !== 'AbortError') {
       console.warn("Musik konnte nicht gestartet werden:", err);

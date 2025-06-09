@@ -15,11 +15,11 @@ class DrawableObject {
     left: 0,
   };
 
-  rX;
+/*   rX;
   rY;
   rW;
   rH;
-
+ */
   //#endregion
   //#region constructor
   constructor() {
@@ -37,23 +37,12 @@ class DrawableObject {
 
   drawFrame(ctx) {
     if (
-      this instanceof Character ||
-      this instanceof Chicken ||
-      this instanceof Endboss ||
-      this instanceof SmallChicken ||
-      this instanceof AirItems ||
-      this instanceof GroundItems ||
-      this instanceof ThrowableObject
-    ) {
+      this instanceof Character || this instanceof Chicken || this instanceof Endboss ||
+      this instanceof SmallChicken || this instanceof AirItems || this instanceof GroundItems || this instanceof ThrowableObject) {
       ctx.beginPath();
       ctx.lineWidth = "4";
       ctx.strokeStyle = "blue";
-            ctx.rect(
-                this.x + this.offset.left,
-                this.y + this.offset.top,
-                this.width - this.offset.left - this.offset.right,
-                this.height - this.offset.top - this.offset.bottom
-            );
+      ctx.rect(this.x + this.offset.left, this.y + this.offset.top, this.width - this.offset.left - this.offset.right, this.height - this.offset.top - this.offset.bottom);
       ctx.stroke();
     }
   }
@@ -81,3 +70,5 @@ class DrawableObject {
   }
   //#endregion
 }
+
+
