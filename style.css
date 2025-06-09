@@ -199,7 +199,7 @@ canvas {
   position: absolute;
 }
 
-.restart_game_button {
+.end_screen_buttons {
   margin-top: 5rem;
   z-index: 20;
   position: absolute;

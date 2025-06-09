@@ -61,12 +61,7 @@ function bindBtsPressEvents() {
 }
 
 function startGame() {
-  const startScreenRef = document.getElementById("startScreenContent");
-  startScreenRef.classList.toggle("d_none");
-  const canvasRef = document.getElementById("canvas");
-  canvasRef.classList.toggle("d_none");
-  const startGameButtonRef = document.getElementById("startGameButton");
-  startGameButtonRef.classList.toggle("d_none");
+  toggleHomeScreen();
   init();
   bindBtsPressEvents();
 }
@@ -74,6 +69,8 @@ function startGame() {
 function displayRestartButton() {
   const restartGameButtonRef = document.getElementById("restartGameButton");
   restartGameButtonRef.classList.toggle("d_none");
+  const homeScreenButtonRef = document.getElementById("homeScreenButton");
+  homeScreenButtonRef.classList.toggle("d_none");
 }
 
 function switchPlayButton() {
@@ -114,4 +111,18 @@ function toggleImpressum() {
   const displayRef = document.getElementById("displayImpressum");
   displayRef.classList.toggle("d_none");
   
+}
+
+function toggleHomeScreen(){
+  const startScreenRef = document.getElementById("startScreenContent");
+  startScreenRef.classList.toggle("d_none");
+  const canvasRef = document.getElementById("canvas");
+  canvasRef.classList.toggle("d_none");
+  const startGameButtonRef = document.getElementById("startGameButton");
+  startGameButtonRef.classList.toggle("d_none");
+}
+
+function homeScreen() {
+  toggleHomeScreen();
+  displayRestartButton();
 }
