@@ -40,27 +40,31 @@ class ThrowableObject extends MovableObject {
 
   //#region methods
 
-  /**
-   * Triggers the throw movement: applies gravity, sets direction, and controls movement.
-   */
-  throw() {
-    this.isThrown = true;
-    this.hasDealtDamage = false;
-    this.bottles -= 20;
-    this.speedY = 20;
-    IntervalHub.startInterval(this.applyGravity, 1000 / 60);
-    this.throwInterval = setInterval(() => {
-      if (this.isThrown) {
-        if (this.otherDirection) {
-          this.x -= 20;
-        } else {
-          this.x += 20;
-        }
-      } else {
-        clearInterval(this.throwInterval);
-      }
-    }, 1000 / 60);
-  }
+/**
+ * Initiates the throw action by setting flags, reducing inventory, and applying gravity.
+ */
+throw() {
+  this.isThrown = true;
+  this.hasDealtDamage = false;
+  this.bottles -= 20;
+  this.speedY = 20;
+  IntervalHub.startInterval(this.applyGravity, 1000 / 60);
+  this.startThrowMovement();
+}
+
+/**
+ * Controls horizontal throw movement based on direction.
+ */
+startThrowMovement() {
+  this.throwInterval = setInterval(() => {
+    if (this.isThrown) {
+      this.x += this.otherDirection ? -20 : 20;
+    } else {
+      clearInterval(this.throwInterval);
+    }
+  }, 1000 / 60);
+}
+
 
   /**
    * Plays the bottle rotation animation while in the air.

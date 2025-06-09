@@ -101,48 +101,70 @@ class World {
   //#region methods
   //#region collision methods
   /**
-   * Checks collisions between the player character and enemies.
-   * Handles damage, enemy hits, and jumping on enemies.
+   * Checks for collisions between the player character and all enemies.
+   * Handles either stomping or taking damage depending on the enemy and collision type.
    */
   checkCollisions() {
     this.level.enemies.forEach((enemy) => {
       if (this.character.isColliding(enemy) && !enemy.isDeadFlag) {
-        if ((enemy instanceof Chicken || enemy instanceof SmallChicken) && this.character.stomp(enemy)) {
-          AudioHub.playOne(AudioHub.chickenDead2);
-          enemy.hit();
-          this.character.speedY = 11;
-        } else {
-          this.character.hit();
-          this.character.hasPlayedDamageSound = true;
-          this.healtbar.setPercentage(this.character.energy, ImageHub.IMAGES_STATUS_HEALTH);
-        }
+        this.handleEnemyCollision(enemy);
       }
     });
   };
 
+  /**
+   * Handles the result of a collision between the player and a specific enemy.
+   * Plays sound effects, applies damage or stomp logic.
+   * @param {Object} enemy - The enemy that the player collided with.
+   */
+  handleEnemyCollision(enemy) {
+    const isStompable = enemy instanceof Chicken || enemy instanceof SmallChicken;
+    if (isStompable && this.character.stomp(enemy)) {
+      AudioHub.playOne(AudioHub.chickenDead2);
+      enemy.hit();
+      this.character.speedY = 11;
+    } else {
+      this.character.hit();
+      this.character.hasPlayedDamageSound = true;
+      this.healtbar.setPercentage(this.character.energy, ImageHub.IMAGES_STATUS_HEALTH);
+    }
+  };
+
   
   /**
-   * Checks collisions between throwable bottles and enemies.
-   * Applies damage, triggers splash animation, and updates boss health UI.
+   * Checks for collisions between throwable bottles and enemies.
    */
   checkCollisionsEnemyBottle() {
     for (let i = 0; i < this.throwableBottle.length; i++) {
       const bottle = this.throwableBottle[i];
       for (let j = 0; j < this.level.enemies.length; j++) {
-        if (bottle.isColliding(this.level.enemies[j]) && this.level.enemies[j].energy > 0) {
-          this.level.enemies[j].hit();
-          AudioHub.playOne(AudioHub.chickenDead);
-          bottle.collided = true; 
-          bottle.isThrown = false;
-          if (this.level.enemies[j] instanceof Endboss) {
-            this.endbossHealthbar.setPercentage(this.level.enemies[j].energy, ImageHub.BOSS_IMAGES_STATUS_HEALTH);
-          }
-          this.deleteSplashAnimation(bottle);
+        const enemy = this.level.enemies[j];
+        if (bottle.isColliding(enemy) && enemy.energy > 0) {
+          this.handleCollisionEffects(bottle, enemy);
           break;
         }
       }
     }
-  };
+  }
+
+  /**
+   * Handles the effects of a collision between a bottle and an enemy.
+   * @param {Object} bottle - The thrown bottle object.
+   * @param {Object} enemy - The enemy object that was hit.
+   */
+  handleCollisionEffects(bottle, enemy) {
+    enemy.hit();
+    AudioHub.playOne(AudioHub.chickenDead);
+    bottle.collided = true;
+    bottle.isThrown = false;
+    if (enemy instanceof Endboss) {
+      this.endbossHealthbar.setPercentage(
+        enemy.energy,
+        ImageHub.BOSS_IMAGES_STATUS_HEALTH
+      );
+    }
+    this.deleteSplashAnimation(bottle);
+  }
 
     /**
    * Checks if the character collects any bottles.
@@ -151,15 +173,14 @@ class World {
   checkCollectibleBottleCollision() {
     for (let i = 0; i < this.level.bottles.length; i++) {
       if (this.character.isColliding(this.level.bottles[i])) {
-        // checks the exact collided object
         AudioHub.playOne(AudioHub.collectBottle);
-        this.level.bottles.splice(i, 1); // removest the bottle from array level
+        this.level.bottles.splice(i, 1);
         this.character.hitBottle();
         this.bottlebar.setPercentage(
           this.character.bottles,
           ImageHub.IMAGES_STATUS_BOTTLE
         );
-        break; // is a better option to return for multiple execution than return
+        break;
       }
     }
   };
@@ -172,13 +193,13 @@ class World {
     for (let i = 0; i < this.level.coins.length; i++) {
       if (this.character.isColliding(this.level.coins[i])) {
         AudioHub.playOne(AudioHub.coinCollect);
-        this.level.coins.splice(i, 1); // removest the coin from array level
+        this.level.coins.splice(i, 1); 
         this.character.hitCoin();
         this.coinbar.setPercentage(
           this.character.coins,
           ImageHub.IMAGES_STATUS_COIN
         );
-        break; // is a better option to return for multiple execution than return
+        break;
       }
     }
   };
@@ -244,27 +265,34 @@ class World {
     }, 150);
   };
 
-    /**
-   * Handles drawing the entire game world each frame,
-   * including UI, background, characters, and enemies.
+  /**
+   * Draws the game world frame by frame.
+   * Handles screen translation, status bars, and win/lose condition checks.
    */
   draw() {
     if (!this.isRunning) return;
     this.ctxTranlase();
-    let endboss = this.level.enemies.find((enemy) => enemy instanceof Endboss); // check if any enemy is an instance of Endboss and has energy equal to 0 with the method find()
-    if (endboss && endboss.energy === 0) {
-      this.youWonScreenWorld();
-    } if (this.character.energy <= 0) {
-      this.youLoseScreenWorld();
+    this.checkEndConditions();
+    const endboss = this.level.enemies.find(enemy => enemy instanceof Endboss);
+    if (this.character.x > 2000 || (endboss && endboss.energy < 100)) {
+      this.addToMap(this.endbossHealthbar);
+      AudioHub.playOne(AudioHub.bossApproach);
     }
     this.addUiStatusBar();
-    if (this.character.x > 2000 || endboss.energy < 100) {
-      // if close to enndboss then show endboss health
-      this.addToMap(this.endbossHealthbar);
-      AudioHub.playOne(AudioHub.bossApproach)
+    requestAnimationFrame(() => this.draw());
+  }
+
+  /**
+   * Checks for win or lose conditions and triggers corresponding end screens.
+   */
+  checkEndConditions() {
+    const endboss = this.level.enemies.find(enemy => enemy instanceof Endboss);
+    if (endboss && endboss.energy === 0) {
+      this.youWonScreenWorld();
+    } else if (this.character.energy <= 0) {
+      this.youLoseScreenWorld();
     }
-    requestAnimationFrame(() => this.draw()); //draw() wird immer wieder aufgerufen
-  };
+  }
 
     /**
    * Clears and translates the canvas context for camera movement.

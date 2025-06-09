@@ -198,21 +198,38 @@ class ImageHub {
   //#endregion
 }
 
+/**
+ * @class IntervalHub
+ * @classdesc Utility class for managing multiple intervals across the application.
+ * Provides methods to start and stop all intervals in a centralized way.
+ */
 class IntervalHub {
+  /**
+   * Stores all active interval IDs.
+   * @type {number[]}
+   */
   static allIntervals = [];
 
+  /**
+   * Starts a new interval with the given function and timer.
+   * Saves the interval ID for later reference.
+   * @param {Function} func - The function to be executed at each interval.
+   * @param {number} timer - The time interval in milliseconds.
+   */
   static startInterval(func, timer) {
     const newInterval = setInterval(func, timer);
     IntervalHub.allIntervals.push(newInterval);
   }
 
+  /**
+   * Stops all currently active intervals and clears the internal list.
+   */
   static stoppAllIntervals() {
     IntervalHub.allIntervals.forEach(clearInterval);
     IntervalHub.allIntervals = [];
   }
 }
 
-//#region AudioHub
 /**
  * Manages all game audio: sounds, music, volume, and playback.
  */
@@ -371,4 +388,3 @@ class AudioHub {
     localStorage.setItem("volume", volume);
   };
 }
-//#endregion

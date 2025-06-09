@@ -6,7 +6,6 @@
  * @extends DrawableObject
  */
 class YouWonScreen extends DrawableObject {
-  //#region attributes
   /**
    * Horizontal position of the screen image.
    * @type {number}
@@ -30,7 +29,6 @@ class YouWonScreen extends DrawableObject {
    * @type {number}
    */
   width = 400;
-  //#endregion
 
   /**
    * Creates an instance of YouWonScreen and loads the win image.

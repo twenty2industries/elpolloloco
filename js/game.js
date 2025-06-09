@@ -13,13 +13,15 @@ function init() {
   canvas = document.getElementById("canvas");
   world = new World(canvas);
   AudioHub.init();
+  keyListener();
 }
 
 /**
  * Listens to keydown events and sets the corresponding Keyboard flags to true.
  * @param {KeyboardEvent} event - The keydown event.
  */
-document.addEventListener("keydown", (event) => {
+function keyListener() {
+  document.addEventListener("keydown", (event) => {
   event.keyCode == 39 ? (Keyboard.RIGHT = true) : false;
   event.keyCode == 37 ? (Keyboard.LEFT = true) : false;
   event.keyCode == 38 ? (Keyboard.UP = true) : false;
@@ -28,10 +30,6 @@ document.addEventListener("keydown", (event) => {
   event.keyCode == 70 ? (Keyboard.F = true) : false;
 });
 
-/**
- * Listens to keyup events and sets the corresponding Keyboard flags to false.
- * @param {KeyboardEvent} event - The keyup event.
- */
 document.addEventListener("keyup", (event) => {
   event.keyCode == 39 ? (Keyboard.RIGHT = false) : true;
   event.keyCode == 37 ? (Keyboard.LEFT = false) : true;
@@ -40,6 +38,8 @@ document.addEventListener("keyup", (event) => {
   event.keyCode == 32 ? (Keyboard.SPACE = false) : true;
   event.keyCode == 70 ? (Keyboard.F = false) : true;
 });
+}
+
 
 /**
  * Binds touch events to on-screen buttons for mobile controls.

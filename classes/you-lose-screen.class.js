@@ -6,7 +6,6 @@
  * @extends DrawableObject
  */
 class YouLoseScreen extends DrawableObject {
-  //#region attributes
   /**
    * Horizontal position of the screen image.
    * @type {number}
@@ -30,7 +29,6 @@ class YouLoseScreen extends DrawableObject {
    * @type {number}
    */
   width = 550;
-  //#endregion
 
   /**
    * Creates an instance of YouLoseScreen and loads the lose image.
