@@ -2,7 +2,7 @@
  * Represents the Coinbar UI element displaying collected coins.
  * Extends DrawableObject for rendering on screen.
  */
-class Coinbar extends DrawableObject {
+class Coinbar extends MovableObject {
   /**
    * Vertical position of the coin bar.
    * @type {number}
@@ -32,5 +32,6 @@ class Coinbar extends DrawableObject {
    */
   constructor() {
     super().loadImage(ImageHub.IMAGES_STATUS_COIN[0]);
+    this.loadImages(ImageHub.IMAGES_STATUS_COIN);
   }
 }

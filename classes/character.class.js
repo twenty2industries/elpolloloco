@@ -194,9 +194,8 @@ class Character extends MovableObject {
    * Plays the dead animation once when the character dies.
    */
   animateCharacterDead = () => {
-    if (this.isDead() && this.isDeadFlag) {
+    if (this.isDead()) {
       this.playAnimation(ImageHub.CHARACTER_IMAGES_DEAD);
-      this.isDeadFlag = false;
     }
   };
 

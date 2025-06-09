@@ -2,7 +2,7 @@
  * Represents the health bar of the Endboss.
  * Extends DrawableObject to display health status visually on the canvas.
  */
-class EndbossHealthBar extends DrawableObject {
+class EndbossHealthBar extends MovableObject {
   //#region attributes
 
   /**
@@ -38,6 +38,7 @@ class EndbossHealthBar extends DrawableObject {
    */
   constructor() {
     super().loadImage(ImageHub.BOSS_IMAGES_STATUS_HEALTH[0]);
+    this.loadImages(ImageHub.BOSS_IMAGES_STATUS_HEALTH);
   }
 
   //#endregion

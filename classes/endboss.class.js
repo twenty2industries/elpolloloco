@@ -10,7 +10,7 @@ class Endboss extends MovableObject {
    * @type {number}
    */
   energy = 100;
-
+hasStoppedMovement = false;
   /**
    * Flag to trigger walking animation and movement.
    * @type {boolean}
@@ -60,11 +60,11 @@ class Endboss extends MovableObject {
     this.height = 400;
     this.width = 300;
     this.y = 50;
-    IntervalHub.startInterval(this.animate, 200);
-    IntervalHub.startInterval(this.bossDashMechanic, 1000 / 60);
-    IntervalHub.startInterval(this.bossDashMechanicProximity, 1000 / 60);
-    IntervalHub.startInterval(this.setBossSpeed, 2000);
-    IntervalHub.startInterval(this.setBossPositionBack, 1000 / 60);
+    this.animationInterval = IntervalHub.startInterval(this.animate, 200);
+    this.bossDashInterval = IntervalHub.startInterval(this.bossDashMechanic, 1000 / 60);
+    this.bossDashProximityInterval = IntervalHub.startInterval(this.bossDashMechanicProximity, 1000 / 60);
+    this.speedInterval = IntervalHub.startInterval(this.setBossSpeed, 2000);
+    this.positionBackInterval = IntervalHub.startInterval(this.setBossPositionBack, 1000 / 60);
   }
 
   //#endregion
@@ -85,20 +85,34 @@ class Endboss extends MovableObject {
   /**
    * Controls which animation to play based on the Endboss's current state.
    */
-  animate = () => {
-    if (this.isDead()) {
-      this.playAnimation(ImageHub.BOSS_IMAGES_DEAD);
-    } else if (this.isHurt()) {
-      this.bossHurt = true;
-      this.playAnimation(ImageHub.BOSS_IMAGES_HURT);
-    } else if (this.bossWalkTrigger || this.bossDashMechanicProximity()) {
-      this.playAnimation(ImageHub.BOSS_IMAGES_WALK);
-    } else if (!this.isHurt()) {
-      this.playAnimation(ImageHub.BOSS_IMAGES_ALERT);
-      this.bossHurt = false;
-      this.bossWalkTrigger = false;
+animate = () => {
+  if (this.isDead()) {
+    this.playAnimation(ImageHub.BOSS_IMAGES_DEAD);
+
+    // Stoppe alle Bewegungsintervalle nur einmal
+    if (!this.hasStoppedMovement) {
+      clearInterval(this.bossDashInterval);
+      clearInterval(this.bossDashProximityInterval);
+      clearInterval(this.speedInterval);
+      clearInterval(this.positionBackInterval);
+      this.hasStoppedMovement = true; // Flag setzen, damit stop nicht wiederholt wird
     }
-  };
+
+    return; // Stoppe weitere Animationsprüfungen
+  }
+
+  // Rest deines Codes für andere Animationen
+  if (this.isHurt()) {
+    this.bossHurt = true;
+    this.playAnimation(ImageHub.BOSS_IMAGES_HURT);
+  } else if (this.bossWalkTrigger || this.bossDashMechanicProximity()) {
+    this.playAnimation(ImageHub.BOSS_IMAGES_WALK);
+  } else if (!this.isHurt()) {
+    this.playAnimation(ImageHub.BOSS_IMAGES_ALERT);
+    this.bossHurt = false;
+    this.bossWalkTrigger = false;
+  }
+};
 
   /**
    * Returns whether the Endboss is currently moving back to its start position.

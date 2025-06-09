@@ -2,7 +2,7 @@
  * Represents the bottle bar UI element that displays bottle status.
  * Extends DrawableObject.
  */
-class Bottlebar extends DrawableObject {
+class Bottlebar extends MovableObject {
   /**
    * Vertical position of the bottle bar on the canvas.
    * @type {number}
@@ -32,5 +32,6 @@ class Bottlebar extends DrawableObject {
    */
   constructor() {
     super().loadImage(ImageHub.IMAGES_STATUS_BOTTLE[0]);
+    this.loadImages(ImageHub.IMAGES_STATUS_BOTTLE);
   }
 }

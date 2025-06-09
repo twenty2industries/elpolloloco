@@ -2,7 +2,7 @@
  * Class representing the health bar UI element.
  * Extends DrawableObject to handle image rendering.
  */
-class Healthbar extends DrawableObject {
+class Healthbar extends MovableObject {
   /**
    * Vertical position of the health bar.
    * @type {number}
@@ -33,5 +33,6 @@ class Healthbar extends DrawableObject {
    */
   constructor() {
     super().loadImage(ImageHub.IMAGES_STATUS_HEALTH[0]);
+    this.loadImages(ImageHub.IMAGES_STATUS_HEALTH);
   }
 }

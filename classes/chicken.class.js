@@ -38,7 +38,7 @@ class Chicken extends MovableObject {
    * Collision or rendering offset boundaries.
    * @type {{top: number, bottom: number, left: number, right: number}}
    */
-  offset = { top: 3, bottom: 3, left: 3, right: 3};
+  offset = { top: 5, bottom: 5, left: 5, right: 5};
 
   /**
    * Creates a new Chicken instance, loads images and starts movement and animation intervals.
