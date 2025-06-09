@@ -34,7 +34,7 @@ class World {
     this.draw();
     this.repeatMap();
     this.setWorld(); //why?
-    IntervalHub.startInterval(this.run, 150);
+    IntervalHub.startInterval(this.run, 1000/60);
     IntervalHub.startInterval(this.characterGotHitted, 500);
     this.startBottleRespawnLoop();
   };
@@ -234,10 +234,10 @@ class World {
     this.addObjectsToMap(this.backgroundObjects);
     this.addObjectsToMap(this.level.clouds);
     this.addToMap(this.character);
-    this.addObjectsToMap(this.level.enemies);
     this.addObjectsToMap(this.throwableBottle);
     this.addObjectsToMap(this.level.bottles);
     this.addObjectsToMap(this.level.coins);
+    this.addObjectsToMap(this.level.enemies);
   };
 
   setWorld() {

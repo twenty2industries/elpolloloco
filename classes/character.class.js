@@ -4,7 +4,7 @@ class Character extends MovableObject {
   y = 230;
   speed = 10;
 
-  runningSoundIsPlaying = false; // neue Eigenschaft in Character
+  runningSoundIsPlaying = false;
   hasPlayedDamageSound = false;
   hasPlayedSnoringSound = false;
 
@@ -24,7 +24,6 @@ class Character extends MovableObject {
   //#endregion
   //#region constructor
   constructor() {
-    //wird immer als aller erstes ausgeführt sobald new Character erstellt wird
     super().loadImage(ImageHub.CHARACTER_IMAGES_WALKING[0]);
     this.loadImages(ImageHub.CHARACTER_IMAGES_JUMP); // jump animation
     this.loadImages(ImageHub.CHARACTER_IMAGES_WALKING); // walking animation
@@ -113,7 +112,7 @@ animateIdleAnimations = () => {
     if (this.idleTimer < 5000) {
       this.playAnimation(ImageHub.CHARACTER_IMAGES_IDLE);
       AudioHub.stopOne(AudioHub.characterRunning);
-      this.hasPlayedSnoringSound = false; // Reset hier, wenn noch keine lange Idle
+      this.hasPlayedSnoringSound = false; 
     } else {
       this.playAnimation(ImageHub.CHARACTER_IMAGES_LONG_IDLE);
       if (!this.hasPlayedSnoringSound) {
@@ -123,9 +122,8 @@ animateIdleAnimations = () => {
     }
   } else {
     this.idleTimer = 0;
-    this.hasPlayedSnoringSound = false; // Reset wenn Bewegung
+    this.hasPlayedSnoringSound = false; 
   }
 };
-
   //#endregion
 }

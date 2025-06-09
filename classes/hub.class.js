@@ -239,7 +239,6 @@ class AudioHub {
   static gameStart = new Audio("sounds/game/gameStart.mp3");
   static gameStartscreen = new Audio("sounds/game/gameHomeScreen.mp3");
 
-  // Array, das alle definierten Audio-Dateien enthält
   static allSounds = [
     AudioHub.coinCollect,
     AudioHub.collectBottle,
@@ -259,18 +258,14 @@ class AudioHub {
 
   static sounds = true;
 
-  // Initialisiert gespeicherte Einstellungen (Volume & Soundstatus)
   static init() {
     const storedSounds = localStorage.getItem("sounds");
     const storedVolume = localStorage.getItem("volume");
-
     this.sounds = storedSounds === null ? true : storedSounds === "true";
     const volume = storedVolume !== null ? parseFloat(storedVolume) : 0.015;
-
     AudioHub.allSounds.forEach((sound) => {
       sound.volume = this.sounds ? volume : 0;
     });
-
     const volumeInput = document.getElementById("volume");
     if (volumeInput) {
       volumeInput.value = volume;
@@ -279,19 +274,13 @@ class AudioHub {
 
   //#endregion
   //#region methods
-  // Spielt eine einzelne Audiodatei ab
 static playOne(sound) {
   if (!sound) return;
   
-  sound.currentTime = 0; // Zurückspulen
-  sound.volume = AudioHub.sounds 
-    ? parseFloat(localStorage.getItem("volume") || 0.2) 
-    : 0;
-
-  // Versuche abzuspielen und fange Fehler ab
+  sound.currentTime = 0; 
+  sound.volume = AudioHub.sounds ? parseFloat(localStorage.getItem("volume") || 0.2) : 0;
   const playPromise = sound.play();
-  
-  if (playPromise !== undefined) { // Falls play() ein Promise zurückgibt
+  if (playPromise !== undefined) { 
     playPromise.catch(err => {
       if (err.name !== 'AbortError') {
         console.warn("Audio konnte nicht abgespielt werden:", err);
@@ -302,7 +291,7 @@ static playOne(sound) {
 
 static playMusic(sound) {
   sound.volume = 0.02;
-  sound.loop = true; // Falls es Hintergrundmusik ist
+  sound.loop = true;
   
   sound.play().catch(err => {
     if (err.name !== 'AbortError') {
@@ -326,29 +315,27 @@ static playMusic(sound) {
 
   static toggleVolume() {
     this.sounds = !this.sounds;
-    localStorage.setItem("sounds", this.sounds); // Speichert den Soundzustand
+    localStorage.setItem("sounds", this.sounds); 
     const volume = parseFloat(localStorage.getItem("volume") || 0.2);
     AudioHub.allSounds.forEach((sound) => {
       sound.volume = this.sounds ? volume : 0;
     });
   }
 
-  // Stoppt das Abspielen aller Audiodateien
   static stopAll() {
     AudioHub.allSounds.forEach((sound) => {
-      sound.pause(); // Nur pausieren, Lautstärke bleibt erhalten
+      sound.pause(); 
     });
-    // Kein Lautstärke-Reset mehr hier!
   }
 
   static playAll() {
     const volume = 0.015;
     AudioHub.allSounds.forEach((sound) => {
       sound.volume = AudioHub.sounds ? volume : 0;
-      sound.play(); // Spielt jedes Audio in der Liste
+      sound.play(); 
     });
-    document.getElementById("volume").value = volume; // Setzt den Sound-Slider
-    localStorage.setItem("volume", volume); // Speichert neuen Wert
+    document.getElementById("volume").value = volume; 
+    localStorage.setItem("volume", volume); 
   }
 }
 //#endregion
