@@ -3,7 +3,6 @@
   margin: 0;
   box-sizing: border-box;
   position: relative;
-  font-family: 'Mayan';
   scroll-behavior: smooth;
 }
 
@@ -75,7 +74,6 @@ canvas {
 
 .display {
   display: none;
-
   @media ((orientation: portrait) and (max-width: 980px)) {
     display: flex;
     position: absolute;
@@ -97,6 +95,7 @@ canvas {
   left: 50%;
   transform: translate(-50%, -50%);
   width: 90%;
+  overflow: scroll;
   height: 55%;
   padding: 2rem;
   z-index: 50;
@@ -111,6 +110,7 @@ canvas {
   line-height: 35px;
 
   .impressumHeader {
+    margin-top: 1rem;
     display: flex;
     justify-content: space-between;
 
@@ -141,6 +141,7 @@ canvas {
 }
 
 .controls {
+  font-family: 'Mayan';
   width: 720px;
   margin-top: 2rem;
   color: black;
@@ -293,4 +294,9 @@ button:active {
     min-width: 120px;
     padding: 0 25px;
   }
+}
+
+h1{
+    font-family: 'Mayan';
+    font-size: 46px;
 }
