@@ -1,14 +1,28 @@
+/**
+ * Represents a throwable object (e.g., a bottle) that can be thrown and animated with rotation and splash effects.
+ * Inherits from MovableObject.
+ */
 class ThrowableObject extends MovableObject {
   //#region attributes
-  isThrown = false; //track down if throw() method has been executed
+
+  /** @type {boolean} Indicates whether the object has been thrown. */
+  isThrown = false;
+
+  /** @type {boolean} Indicates whether the object has collided. */
   collided = false;
 
-  hasDealtDamage = true; // stop dmg for @throwableobject as soon its collides
-  
+  /** @type {boolean} Prevents further damage once the object has collided. */
+  hasDealtDamage = true;
 
   //#endregion
 
   //#region constructor
+  /**
+   * Creates a new throwable object at the given position and direction.
+   * @param {number} x - The horizontal position.
+   * @param {number} y - The vertical position.
+   * @param {boolean} [otherDirection=false] - Direction of the throw (true = left, false = right).
+   */
   constructor(x, y, otherDirection = false) {
     super().loadImage(ImageHub.BOTTLE_IMAGE_ROTATION[0]);
     this.loadImages(ImageHub.BOTTLE_IMAGE_ROTATION);
@@ -23,38 +37,50 @@ class ThrowableObject extends MovableObject {
     IntervalHub.startInterval(this.animateBottleSplash, 1000 / 10);
   }
   //#endregion
+
   //#region methods
+
+  /**
+   * Triggers the throw movement: applies gravity, sets direction, and controls movement.
+   */
   throw() {
-    this.isThrown = true; // flag to track down rotation motion
-    this.hasDealtDamage = false; // stop dmg for @throwableobject as soon it collides
+    this.isThrown = true;
+    this.hasDealtDamage = false;
     this.bottles -= 20;
     this.speedY = 20;
     IntervalHub.startInterval(this.applyGravity, 1000 / 60);
-    
     this.throwInterval = setInterval(() => {
-      // no x speed so the bottle stops at collision point
       if (this.isThrown) {
         if (this.otherDirection) {
-          this.x -= 20; // left if other direction is true
+          this.x -= 20;
         } else {
-          this.x += 20; // else right direction
+          this.x += 20;
         }
       } else {
         clearInterval(this.throwInterval);
       }
     }, 1000 / 60);
   }
+
+  /**
+   * Plays the bottle rotation animation while in the air.
+   * @private
+   */
   animateBottleRotation = () => {
-    //playAnimation for bottle rotation
     if (this.isThrown) {
       this.playAnimation(ImageHub.BOTTLE_IMAGE_ROTATION);
     }
   };
 
+  /**
+   * Plays the splash animation when the object has collided.
+   * @private
+   */
   animateBottleSplash = () => {
     if (this.collided) {
       this.playAnimation(ImageHub.BOTTLE_IMAGE_SPLASH);
     }
   };
+
   //#endregion
 }

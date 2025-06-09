@@ -1,13 +1,43 @@
+/**
+ * Represents the Endboss character with health, animations, and boss-specific behaviors.
+ * Extends MovableObject to include movement and animation capabilities.
+ */
 class Endboss extends MovableObject {
   //#region attributes
 
+  /**
+   * The energy (health) level of the Endboss.
+   * @type {number}
+   */
   energy = 100;
 
+  /**
+   * Flag to trigger walking animation and movement.
+   * @type {boolean}
+   */
   bossWalkTrigger = false;
-  bossHurt = false;
-  bossProximity = false;
-  hasPlayedBossApproach = false; 
 
+  /**
+   * Flag indicating if the boss is hurt.
+   * @type {boolean}
+   */
+  bossHurt = false;
+
+  /**
+   * Flag indicating if the player is within proximity of the boss.
+   * @type {boolean}
+   */
+  bossProximity = false;
+
+  /**
+   * Flag to ensure boss approach sound is played only once.
+   * @type {boolean}
+   */
+  hasPlayedBossApproach = false;
+
+  /**
+   * Collision box offset values for fine-tuning hit detection.
+   */
   offset = {
     top: 55,
     right: 70,
@@ -16,53 +46,73 @@ class Endboss extends MovableObject {
   };
 
   //#endregion
-  //#region constructor
-  constructor() {
-    super().loadImage(ImageHub.BOSS_IMAGES_ALERT[0]);
-    this.loadImages(ImageHub.BOSS_IMAGES_ALERT);
-    this.loadImages(ImageHub.BOSS_IMAGES_HURT);
-    this.loadImages(ImageHub.BOSS_IMAGES_DEAD);
-    this.loadImages(ImageHub.BOSS_IMAGES_WALK);
 
+  //#region constructor
+
+  /**
+   * Initializes the Endboss by loading all images, setting position, size,
+   * and starting the necessary intervals for animation and movement.
+   */
+  constructor() {
+    super();
+    this.loadAllImagesEndboss();
     this.x = 3000;
     this.height = 400;
     this.width = 300;
     this.y = 50;
+
     IntervalHub.startInterval(this.animate, 200);
     IntervalHub.startInterval(this.bossDashMechanic, 1000 / 60);
     IntervalHub.startInterval(this.bossDashMechanicProximity, 1000 / 60);
     IntervalHub.startInterval(this.setBossSpeed, 2000);
     IntervalHub.startInterval(this.setBossPositionBack, 1000 / 60);
-  };
+  }
+
   //#endregion
+
   //#region methods
+
+  /**
+   * Loads all image sets for the Endboss animations.
+   */
+  loadAllImagesEndboss() {
+    this.loadImage(ImageHub.BOSS_IMAGES_ALERT[0]);
+    this.loadImages(ImageHub.BOSS_IMAGES_ALERT);
+    this.loadImages(ImageHub.BOSS_IMAGES_HURT);
+    this.loadImages(ImageHub.BOSS_IMAGES_DEAD);
+    this.loadImages(ImageHub.BOSS_IMAGES_WALK);
+  }
+
+  /**
+   * Controls which animation to play based on the Endboss's current state.
+   */
   animate = () => {
-    // animation for DEAD
     if (this.isDead()) {
       this.playAnimation(ImageHub.BOSS_IMAGES_DEAD);
-    }
-    // animation for HURT
-    else if (this.isHurt()) {
+    } else if (this.isHurt()) {
       this.bossHurt = true;
       this.playAnimation(ImageHub.BOSS_IMAGES_HURT);
-    }
-    // play walk animation for dash mechanic oder wenn Boss zurückläuft
-    else if (this.bossWalkTrigger || this.bossDashMechanicProximity()) {
+    } else if (this.bossWalkTrigger || this.bossDashMechanicProximity()) {
       this.playAnimation(ImageHub.BOSS_IMAGES_WALK);
-    }
-    // animation for alert (wenn Boss steht)
-    else if (!this.isHurt()) {
+    } else if (!this.isHurt()) {
       this.playAnimation(ImageHub.BOSS_IMAGES_ALERT);
       this.bossHurt = false;
       this.bossWalkTrigger = false;
     }
   };
 
-  // helper method for calling setBossPositionBack to avoid side effects
+  /**
+   * Returns whether the Endboss is currently moving back to its start position.
+   * @returns {boolean}
+   */
   isMovingBack() {
     return this.x < 2000 && !this.isHurt() && !this.isDead();
-  };
+  }
 
+  /**
+   * Dash mechanic activated when the Endboss is hurt.
+   * Increases speed and moves left.
+   */
   bossDashMechanic = () => {
     if (this.isHurt()) {
       this.speed = 10;
@@ -72,6 +122,10 @@ class Endboss extends MovableObject {
     }
   };
 
+  /**
+   * Dash mechanic activated when the player is close.
+   * Increases speed and moves left.
+   */
   bossDashMechanicProximity = () => {
     if (this.bossProximity) {
       this.speed = 6;
@@ -81,21 +135,22 @@ class Endboss extends MovableObject {
     }
   };
 
+  /**
+   * Sets the speed for walking and moves the Endboss forward.
+   */
   setBossSpeed = () => {
     if (this.bossWalkTrigger) {
       this.speed = 3;
       this.x += this.speed;
-      this.bossWalkTrigger = false; // if bosswalk is false - bossPositionBack shouldnt be facing the wrong direction
+      this.bossWalkTrigger = false; // Prevent direction errors
     }
   };
 
+  /**
+   * Moves the Endboss back to starting position and adjusts facing direction.
+   */
   setBossPositionBack = () => {
-    if (
-      this.x < 2000 &&
-      !this.isHurt() &&
-      !this.isDead() &&
-      !this.bossProximity
-    ) {
+    if (this.x < 2000 && !this.isHurt() && !this.isDead() && !this.bossProximity) {
       this.speed = 6;
       this.x += this.speed;
       this.otherDirection = true;
@@ -103,4 +158,6 @@ class Endboss extends MovableObject {
       this.otherDirection = false;
     }
   };
+
+  //#endregion
 }

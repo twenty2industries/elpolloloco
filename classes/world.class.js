@@ -1,33 +1,91 @@
+/**
+ * Represents the entire game world, handling characters, enemies, objects,
+ * collisions, UI elements, and game state management.
+ * 
+ * @class World
+ */
 class World {
   //#region attributes
-
+  /**
+   * The main character controlled by the player.
+   * @type {Character}
+   */
   character = new Character();
+
+  /**
+   * Flag to indicate if the game loop is running.
+   * @type {boolean}
+   */
   isRunning = true;
 
+  /**
+   * The current level data, including enemies, collectibles, and environment.
+   * @type {Level}
+   */
   level = new Level();
 
+  /**
+   * Background objects array for parallax or decoration.
+   * @type {Array<BackgroundObject>}
+   */
   backgroundObjects = [];
+
+  /**
+   * Flag if the player won the game.
+   * @type {boolean}
+   */
   youWonScreen = false;
 
+  /**
+   * The HTML canvas element where the game is rendered.
+   * @type {HTMLCanvasElement}
+   */
   canvas;
 
+  /**
+   * The 2D drawing context of the canvas.
+   * @type {CanvasRenderingContext2D}
+   */
   ctx;
 
+  /**
+   * The horizontal camera offset for side-scrolling.
+   * @type {number}
+   */
   camera_x = 0;
 
+  /**
+   * Array of throwable bottle objects in the game.
+   * @type {Array<ThrowableObject>}
+   */
   throwableBottle = [new ThrowableObject()];
 
+  /**
+   * UI status bars for health, coins, bottles, and boss health.
+   */
   healtbar = new Healthbar();
   coinbar = new Coinbar();
   bottlebar = new Bottlebar();
   endbossHealthbar = new EndbossHealthBar();
+
+  /**
+   * UI screens for game results.
+   */
   youWonScreen = new YouWonScreen();
   youLoseScreen = new YouLoseScreen();
-  youLost = false;
-  youWon = false; 
 
+  /**
+   * Flags for game outcome.
+   */
+  youLost = false;
+  youWon = false;
   //#endregion
+
   //#region constructor
+  /**
+   * Creates an instance of the World.
+   * @param {HTMLCanvasElement} canvas - The canvas element to render the game.
+   */
   constructor(canvas) {
     this.ctx = canvas.getContext("2d");
     this.canvas = canvas;
@@ -39,13 +97,17 @@ class World {
     this.startBottleRespawnLoop();
   };
   //#endregion
+
   //#region methods
   //#region collision methods
+  /**
+   * Checks collisions between the player character and enemies.
+   * Handles damage, enemy hits, and jumping on enemies.
+   */
   checkCollisions() {
     this.level.enemies.forEach((enemy) => {
       if (this.character.isColliding(enemy) && !enemy.isDeadFlag) {
-        if (
-          (enemy instanceof Chicken || enemy instanceof SmallChicken) && this.character.stomp(enemy)) {
+        if ((enemy instanceof Chicken || enemy instanceof SmallChicken) && this.character.stomp(enemy)) {
           AudioHub.playOne(AudioHub.chickenDead2);
           enemy.hit();
           this.character.speedY = 11;
@@ -58,20 +120,21 @@ class World {
     });
   };
 
+  
+  /**
+   * Checks collisions between throwable bottles and enemies.
+   * Applies damage, triggers splash animation, and updates boss health UI.
+   */
   checkCollisionsEnemyBottle() {
     for (let i = 0; i < this.throwableBottle.length; i++) {
       const bottle = this.throwableBottle[i];
       for (let j = 0; j < this.level.enemies.length; j++) {
-        if (
-          bottle.isColliding(this.level.enemies[j]) &&
-          this.level.enemies[j].energy > 0
-        ) {
+        if (bottle.isColliding(this.level.enemies[j]) && this.level.enemies[j].energy > 0) {
           this.level.enemies[j].hit();
           AudioHub.playOne(AudioHub.chickenDead);
-          bottle.collided = true; //flag for splash animation @throwableObject
-          bottle.isThrown = false; // stop throw motion flag for throwable objects
+          bottle.collided = true; 
+          bottle.isThrown = false;
           if (this.level.enemies[j] instanceof Endboss) {
-            //instanceof fixed the bug displaying boss hp 0 until the first attack
             this.endbossHealthbar.setPercentage(this.level.enemies[j].energy, ImageHub.BOSS_IMAGES_STATUS_HEALTH);
           }
           this.deleteSplashAnimation(bottle);
@@ -81,6 +144,10 @@ class World {
     }
   };
 
+    /**
+   * Checks if the character collects any bottles.
+   * Updates the UI and removes collected bottles from the level.
+   */
   checkCollectibleBottleCollision() {
     for (let i = 0; i < this.level.bottles.length; i++) {
       if (this.character.isColliding(this.level.bottles[i])) {
@@ -97,6 +164,10 @@ class World {
     }
   };
 
+    /**
+   * Checks if the character collects any coins.
+   * Updates the UI and removes collected coins from the level.
+   */
   checkCollectibleCoinCollision() {
     for (let i = 0; i < this.level.coins.length; i++) {
       if (this.character.isColliding(this.level.coins[i])) {
@@ -112,6 +183,9 @@ class World {
     }
   };
 
+    /**
+   * Checks if the character is near the boss to trigger boss behaviors.
+   */
   checkBossProximity() {
     let boss = this.level.enemies.find((enemy) => enemy instanceof Endboss);
     if (boss) {
@@ -126,6 +200,11 @@ class World {
   };
 
   //#endregion
+
+  /**
+   * Main game loop executed regularly.
+   * Checks collisions, collectibles, and enemy states.
+   */
   run = () => {
     // runs the methods in setInterval
     this.checkCollisions();
@@ -136,6 +215,9 @@ class World {
     this.checkBossProximity();
   };
 
+    /**
+   * Handles throwing bottles when the player presses the throw key.
+   */
   checkThrowObjects() {
     if (Keyboard.F && this.character.bottles < 100 ) {
       // new ThrowableObject with character's otherDirection
@@ -147,6 +229,10 @@ class World {
     Keyboard.F = false; // no fullauto
   }
 
+    /**
+   * Removes bottles after splash animation ends.
+   * @param {ThrowableObject} bottle - The bottle to delete.
+   */
   deleteSplashAnimation(bottle) {
     setTimeout(() => {
       // find current index of the bottle to avoid wrong removal due to array changes
@@ -158,14 +244,17 @@ class World {
     }, 150);
   };
 
+    /**
+   * Handles drawing the entire game world each frame,
+   * including UI, background, characters, and enemies.
+   */
   draw() {
     if (!this.isRunning) return;
     this.ctxTranlase();
     let endboss = this.level.enemies.find((enemy) => enemy instanceof Endboss); // check if any enemy is an instance of Endboss and has energy equal to 0 with the method find()
     if (endboss && endboss.energy === 0) {
       this.youWonScreenWorld();
-    }
-    if (this.character.energy <= 0) {
+    } if (this.character.energy <= 0) {
       this.youLoseScreenWorld();
     }
     this.addUiStatusBar();
@@ -177,6 +266,9 @@ class World {
     requestAnimationFrame(() => this.draw()); //draw() wird immer wieder aufgerufen
   };
 
+    /**
+   * Clears and translates the canvas context for camera movement.
+   */
   ctxTranlase() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.ctx.translate(this.camera_x, 0);
@@ -184,6 +276,9 @@ class World {
     this.ctx.translate(-this.camera_x, 0);
   };
 
+    /**
+   * Displays the winning screen and stops the game.
+   */
   youWonScreenWorld() {
     this.addToMap(this.youWonScreen);
     IntervalHub.stoppAllIntervals();
@@ -194,7 +289,9 @@ class World {
     displayRestartButton();
   };
 
-
+  /**
+   * Displays the losing screen and stops the game.
+   */
   youLoseScreenWorld() {
     this.addToMap(this.youLoseScreen);
     IntervalHub.stoppAllIntervals();
@@ -207,6 +304,9 @@ class World {
     displayRestartButton();
   };
 
+    /**
+   * Adds all UI status bars to the canvas.
+   */
   addUiStatusBar() {
     //ad User Interface statusbar
     this.addToMap(this.healtbar);
@@ -214,6 +314,9 @@ class World {
     this.addToMap(this.bottlebar);
   };
 
+    /**
+   * Adds all visible world objects to the canvas.
+   */
   addWorldToMap() {
     this.addObjectsToMap(this.backgroundObjects);
     this.addObjectsToMap(this.level.clouds);
@@ -224,28 +327,40 @@ class World {
     this.addObjectsToMap(this.level.enemies);
   };
 
+    /**
+   * Links this world instance to the character.
+   */
   setWorld() {
     this.character.world = this; //why? this is die instanz aus world?
   };
 
+    /**
+   * Adds an array of objects to the canvas.
+   * @param {Array<MovableObject>} mo - Objects to add.
+   */
   addObjectsToMap(mo) {
     mo.forEach((o) => {
       this.addToMap(o);
     });
   };
 
+    /**
+   * Adds a single object to the canvas, handling flipping if needed.
+   * @param {MovableObject} mo - Object to add.
+   */
   addToMap(mo) {
     if (mo.otherDirection) {
       this.flipImage(mo);
-    }
-
-    mo.draw(this.ctx);
+    } mo.draw(this.ctx);
     /*     mo.drawFrame(this.ctx);
      */ if (mo.otherDirection) {
       this.flipImageBack(mo);
     }
   };
 
+  /**
+   * Repeats background images to create a scrolling effect.
+   */
   repeatMap() {
     const startPoint = 719; // value for second half of the background elements
     const mapLength = 3595; // endpoint so the map does not keep on loading
@@ -262,6 +377,10 @@ class World {
     }
   };
 
+    /**
+   * Flips the image horizontally for mirrored objects.
+   * @param {MovableObject} mo - Object to flip.
+   */
   flipImage(mo) {
     this.ctx.save();
     this.ctx.translate(mo.width, 0);
@@ -269,11 +388,18 @@ class World {
     mo.x = mo.x * -1;
   };
 
+    /**
+   * Restores the image flip transformation.
+   * @param {MovableObject} mo - Object to restore.
+   */
   flipImageBack(mo) {
     mo.x = mo.x * -1; // flip the x-coordinate here
     this.ctx.restore();
   };
 
+    /**
+   * Starts a loop to respawn bottles if none remain.
+   */
   startBottleRespawnLoop() {
     setInterval(() => {
       if (this.level.bottles.length === 0) {

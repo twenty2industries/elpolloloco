@@ -213,33 +213,33 @@ class IntervalHub {
 }
 
 //#region AudioHub
+/**
+ * Manages all game audio: sounds, music, volume, and playback.
+ */
 class AudioHub {
   //#region attributes
-  //collectibles
+  /** @type {HTMLAudioElement} Audio for coin collection */
   static coinCollect = new Audio("sounds/collectibles/collectSound.wav");
-  static collectBottle = new Audio(
-    "sounds/collectibles/bottleCollectSound.wav"
-  );
+  static collectBottle = new Audio("sounds/collectibles/bottleCollectSound.wav");
   static bottleBreak = new Audio("sounds/throwable/bottleBreak.mp3");
-
   //character
   static characterJump = new Audio("sounds/character/characterJump.wav");
   static characterDead = new Audio("sounds/character/characterDead.wav");
   static characterRunning = new Audio("sounds/character/characterRun.mp3");
   static characterDamage = new Audio("sounds/character/characterDamage.mp3");
   static characterSnoring = new Audio("sounds/character/characterSnoring.mp3");
-
   //endboss
   static bossApproach = new Audio("sounds/endboss/endbossApproach.wav");
-
   //chicken
   static chickenDead = new Audio("sounds/chicken/chickenDead.mp3");
   static chickenDead2 = new Audio("sounds/chicken/chickenDead2.mp3");
-
   //game UI
   static gameStart = new Audio("sounds/game/gameStart.mp3");
   static gameStartscreen = new Audio("sounds/game/gameHomeScreen.mp3");
-
+  /**
+   * Array of all sound audio objects for easy management.
+   * @type {HTMLAudioElement[]}
+   */
   static allSounds = [
     AudioHub.coinCollect,
     AudioHub.collectBottle,
@@ -255,10 +255,21 @@ class AudioHub {
     AudioHub.characterSnoring,
   ];
 
+  /**
+   * Array of sounds used for start screen music.
+   * @type {HTMLAudioElement[]}
+   */
   static startscreenMusic = [AudioHub.gameStartscreen];
 
+  /**
+   * Indicates whether sounds are enabled or muted.
+   * @type {boolean}
+   */
   static sounds = true;
 
+  /**
+   * Initializes AudioHub by loading sound settings from localStorage and setting volumes.
+   */
   static init() {
     const storedSounds = localStorage.getItem("sounds");
     const storedVolume = localStorage.getItem("volume");
@@ -271,71 +282,93 @@ class AudioHub {
     if (volumeInput) {
       volumeInput.value = volume;
     }
-    
   };
 
-  //#endregion
-  //#region methods
-static playOne(sound) {
-  if (!sound) return;
-  sound.currentTime = 0; 
-  sound.volume = AudioHub.sounds ? parseFloat(localStorage.getItem("volume") || 0.2) : 0;
-  const playPromise = sound.play();
-  if (playPromise !== undefined) { 
-    playPromise.catch(err => {
+  /**
+   * Plays a single sound from the start.
+   * @param {HTMLAudioElement} sound - The audio object to play.
+   */
+  static playOne(sound) {
+    if (!sound) return;
+    sound.currentTime = 0;
+    sound.volume = AudioHub.sounds ? parseFloat(localStorage.getItem("volume") || 0.2) : 0;
+    const playPromise = sound.play();
+    if (playPromise !== undefined) {
+      playPromise.catch(err => {
+        if (err.name !== 'AbortError') {
+          console.warn("Audio could not be played:", err);
+        }
+      });
+    }
+  };
+
+  /**
+   * Plays looping music with a preset volume.
+   * @param {HTMLAudioElement} sound - The audio object to play as music.
+   */
+  static playMusic(sound) {
+    sound.volume = 0.02;
+    sound.loop = true;
+    sound.play().catch(err => {
       if (err.name !== 'AbortError') {
-        console.warn("Audio konnte nicht abgespielt werden:", err);
+        console.warn("Music could not start:", err);
       }
     });
-  }
-}
+  };
 
-static playMusic(sound) {
-  sound.volume = 0.02;
-  sound.loop = true;
-  sound.play().catch(err => {
-    if (err.name !== 'AbortError') {
-      console.warn("Musik konnte nicht gestartet werden:", err);
-    }
-  });
-}
-
+  /**
+   * Stops playback of a single sound.
+   * @param {HTMLAudioElement} sound - The audio object to stop.
+   */
   static stopOne(sound) {
     if (!sound) return;
-    sound.pause(); // ur pausieren
-  }
+    sound.pause();
+  };
 
+  /**
+   * Sets volume for an array of sounds based on volume slider input.
+   * @param {HTMLAudioElement[]} volumeSlider - Array of audio objects to set volume on.
+   */
   static objSetVolume(volumeSlider) {
-    let volumeValue = document.getElementById("volume").value; // Holt den aktuellen Lautstärkewert aus dem Inputfeld
-    localStorage.setItem("volume", volumeValue); // Speichert die Lautstärke
+    let volumeValue = document.getElementById("volume").value;
+    localStorage.setItem("volume", volumeValue);
     volumeSlider.forEach((sound) => {
-      sound.volume = AudioHub.sounds ? volumeValue : 0; // Setzt die Lautstärke für jedes Audio wie im Slider angegeben
+      sound.volume = AudioHub.sounds ? volumeValue : 0;
     });
-  }
+  };
 
+  /**
+   * Toggles sound on/off and updates localStorage and all sounds' volume.
+   */
   static toggleVolume() {
     this.sounds = !this.sounds;
-    localStorage.setItem("sounds", this.sounds); 
+    localStorage.setItem("sounds", this.sounds);
     const volume = parseFloat(localStorage.getItem("volume") || 0.2);
     AudioHub.allSounds.forEach((sound) => {
       sound.volume = this.sounds ? volume : 0;
     });
-  }
+  };
 
+  /**
+   * Stops all currently playing sounds.
+   */
   static stopAll() {
     AudioHub.allSounds.forEach((sound) => {
-      sound.pause(); 
+      sound.pause();
     });
-  }
+  };
 
+  /**
+   * Plays all sounds with default volume and saves volume setting.
+   */
   static playAll() {
     const volume = 0.015;
     AudioHub.allSounds.forEach((sound) => {
       sound.volume = AudioHub.sounds ? volume : 0;
-      sound.play(); 
+      sound.play();
     });
-    document.getElementById("volume").value = volume; 
-    localStorage.setItem("volume", volume); 
-  }
+    document.getElementById("volume").value = volume;
+    localStorage.setItem("volume", volume);
+  };
 }
 //#endregion
