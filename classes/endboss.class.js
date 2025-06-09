@@ -60,7 +60,6 @@ class Endboss extends MovableObject {
     this.height = 400;
     this.width = 300;
     this.y = 50;
-
     IntervalHub.startInterval(this.animate, 200);
     IntervalHub.startInterval(this.bossDashMechanic, 1000 / 60);
     IntervalHub.startInterval(this.bossDashMechanicProximity, 1000 / 60);
