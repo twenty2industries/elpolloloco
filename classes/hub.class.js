@@ -364,6 +364,7 @@ class AudioHub {
     AudioHub.allSounds.forEach((sound) => {
       sound.volume = this.sounds ? volume : 0;
     });
+    switchSoundButton();
   };
 
   /**

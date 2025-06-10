@@ -113,6 +113,13 @@ function switchPlayButton() {
   resumeButtonRef.classList.toggle("d_none");
 }
 
+function switchSoundButton() {
+  const pauseButtonRef = document.getElementById("soundOn");
+  pauseButtonRef.classList.toggle("d_none");
+  const resumeButtonRef = document.getElementById("soundOff");
+  resumeButtonRef.classList.toggle("d_none");
+}
+
 /**
  * Switches pause button, resumes game start screen music, and updates local storage.
  */

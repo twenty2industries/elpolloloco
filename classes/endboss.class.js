@@ -128,7 +128,7 @@ animate = () => {
    */
   bossDashMechanic = () => {
     if (this.isHurt()) {
-      this.speed = 10;
+      this.speed = 5;
       this.moveLeft();
       this.bossWalkTrigger = true;
       this.otherDirection = false;
@@ -141,7 +141,7 @@ animate = () => {
    */
   bossDashMechanicProximity = () => {
     if (this.bossProximity) {
-      this.speed = 6;
+      this.speed = 2;
       this.moveLeft();
       this.bossWalkTrigger = true;
       this.otherDirection = false;

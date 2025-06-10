@@ -155,7 +155,7 @@ canvas {
   }
 
   .volumeControl {
-    @media (max-width: 1366px) {
+    @media (max-width: 720px) {
       display: none;
     }
   }
@@ -229,7 +229,7 @@ canvas {
   display: none;
   justify-content: space-between;
 
-  @media (max-width: 1366px) {
+  @media (max-width: 720px) {
     display: block;
     width: 100%;
   }

@@ -45,7 +45,7 @@
           <span class="soundControlMobile">
             <button class="controlHud" onclick="switchPlayButtonMobile()" class="stop_all d_none" id="pauseMobile"> | | </button>
             <button class="controlHud" onclick="switchPauseButtonMobile()" class="stop_all " id="continueMobile"> ♫ </button>
-            <button class="controlHud" onclick="AudioHub.toggleVolume();">Sound</button>
+            <button class="controlHud" onclick="AudioHub.toggleVolume();">Sound on</button>
           </span>
           <div class="movementHud">
             <button class="controlHud" id="btnThrow">THROW</button>
@@ -62,15 +62,16 @@
           <span><button class="impressumButton" onclick="toggleImpressum()">Impressum</button></span>
 
           <span>
-              <span>
+<!--               <span>
                 Master Volume
                 <span class="key">
                 <input type="range" oninput="AudioHub.objSetVolume(AudioHub.allSounds)" id="volume" min="0" max="0.2" step="0.01" value="0.015"/></span>
-              </span>
+              </span> -->
             <div class="volumeControl">
-              <button onclick="switchPlayButton()" class="stop_all  d_none" id="pause"> | | </button>
-              <button onclick="switchPauseButton()" class="stop_all" id="continue"> ♫ </button>
-              <button onclick="AudioHub.toggleVolume();">Sound</button>
+              <button onclick="switchPlayButton()" class="stop_all  d_none" id="pause"> Music off</button>
+              <button onclick="switchPauseButton()" class="stop_all" id="continue"> Music on</button>
+              <button onclick="AudioHub.toggleVolume()" id="soundOn"  class="d_none">Sound on</button>
+              <button onclick="AudioHub.toggleVolume()" id="soundOff">Sound off </button>
             </div>
           </span>
         </div>
