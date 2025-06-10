@@ -85,6 +85,7 @@ function bindBtsPressEvents() {
  * initializing the game and binding mobile button events.
  */
 function startGame() {
+  restoreSoundState()
   restoreMusicState();
   toggleHomeScreen();
   init();
@@ -137,6 +138,12 @@ function switchPauseButtonMobile() {
   AudioHub.playMusic(AudioHub.gameStartscreen);
   localStorage.setItem('musicPlaying', 'true');
 }
+/* 
+initButtons(){
+  if (localStorage.getItem('')) {
+    
+  }
+} */
 
 /**
  * Switches play button for mobile UI, stops game start screen music,
@@ -155,18 +162,41 @@ function switchPlayButtonMobile() {
  * Restores music playback state from local storage and updates mobile UI buttons accordingly.
  */
 function restoreMusicState() {
-  if (localStorage.getItem('musicPlaying') === 'true') {
+  const isMusicPlaying = localStorage.getItem('musicPlaying') === 'true';
+  const pauseButton = document.getElementById("pause");
+  const continueButton = document.getElementById("continue");
+  if (isMusicPlaying) {
     AudioHub.playMusic(AudioHub.gameStartscreen);
-    document.getElementById("pauseMobile").classList.add("d_none");
+    pauseButton.classList.remove("d_none");
+    continueButton.classList.add("d_none");
   } else {
-    document.getElementById("continueMobile").classList.toggle("d_none");
+    pauseButton.classList.add("d_none"); 
+    continueButton.classList.remove("d_none");
   }
+}
+
+function restoreSoundState() {
+  const isMusicPlaying = localStorage.getItem('sounds') === 'true';
+  const pauseButton = document.getElementById("soundOff");
+  const continueButton = document.getElementById("soundOn");
+  if (isMusicPlaying) {
+    pauseButton.classList.remove("d_none");
+    continueButton.classList.add("d_none");
+  } else {
+    pauseButton.classList.add("d_none"); 
+    continueButton.classList.remove("d_none");
+  }
+}
+
+function initSoundStartScreen(){
+  restoreSoundState();
 }
 
 /**
  * Restarts the game by restoring music state, toggling restart button, and initializing the game.
  */
 function restartGame() {
+  restoreSoundState()
   restoreMusicState();
   displayRestartButton();
   init();
